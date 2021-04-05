@@ -60,6 +60,9 @@ namespace AIS
 
         public List<Perch> Pool = new List<Perch>();
 
+
+        
+        /// <summary>Все стаи с окунями</summary>
         public Perch[,] flock;
 
         public AlgorithmPerch() { }
