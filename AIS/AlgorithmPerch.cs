@@ -183,9 +183,66 @@ namespace AIS
             Sort(flock, i);
         }
 
+        /// <summary>Движение средних окуней</summary>
+        private void AverFlockSwim()
+        {
+            sigma = rand.NextDouble() / 20 + 0.6; // sigma [0.6,  0.8]
+
+            for (int l = 1; l < NumFlocks - 1; l++)
+            {
+                double x = 0;
+                double y = 0;
+                int moveCount = (int)Math.Floor(sigma * NStep);
+
+                List<Perch> move = new List<Perch>();
+                for (int k = 0; k < moveCount; ++k)
+                {
+                    x = flock[l, 0].coords[0] + k * ((flock[0, 0].coords[0] - flock[l, 0].coords[0]) / (NStep));
+                    y = flock[l, 0].coords[1] + k * ((flock[0, 0].coords[1] - flock[l, 0].coords[1]) / (NStep));
+                    move.Add(new Perch(x, y, function(x, y, f)));
+                }
+
+                Sort(move);
+                flock[l, 0] = move[0];
+
+
+                for (int j = 0; j < NumPerchInFlock; j++)
+                {
+                    double x1 = 0;
+                    double y1 = 0;
+                    int moveCount1 = (int)Math.Floor(sigma * NStep);
+
+                    List<Perch> move1 = new List<Perch>();
+                    for (int k = 0; k < moveCount1; ++k)
+                    {
+                        x1 = flock[l, j].coords[0] + k * ((flock[l, 0].coords[0] - flock[l, j].coords[0]) / (NStep));
+                        y1 = flock[l, j].coords[1] + k * ((flock[l, 0].coords[1] - flock[l, j].coords[1]) / (NStep));
+                        move1.Add(new Perch(x1, y1, function(x1, y1, f)));
+                    }
+                    Sort(move1);
+                    flock[l, j] = move1[0];
+                }
+                Sort(flock, l);
+            }
+            SortFlocks();
+        }
+
         private void PoorFlockSwim()
         {
+            PoorLeaderSwim();
+
             sigma = rand.NextDouble() * 0.4 + 0.1; // sigma [0.1,  0.5]
+
+            double xMin = Math.Min((flock[NumFlocks, 0].coords[0] - D[0, 0]), (D[0, 1] - flock[NumFlocks, 0].coords[0]));
+            double yMin = Math.Min((flock[NumFlocks, 0].coords[1] - D[1, 0]), (D[1, 1] - flock[NumFlocks, 0].coords[1]));
+
+            for (int j = 1; j < NumPerchInFlock; j++)
+            {
+                double x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks, 0].coords[0] - xMin);
+                double y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks, 0].coords[1] - yMin);
+                flock[NumFlocks, j] = new Perch(x, y, function(x, y, f));
+            }
+
             int i = 1;
 
 
@@ -208,20 +265,33 @@ namespace AIS
             Sort(flock, i);
         }
 
-        /// <summary>Распределение Леви для худшей стаи</summary>
-        public void Levi()
+        /// <summary>Новые координаты лидера худшей стаи</summary>
+        public void PoorLeaderSwim()
         {
-            R1 = rand.Next(Convert.ToInt32(D[0,0] * 100), Convert.ToInt32(D[0,1] * 100)) / 100f;
-            R2 = rand.Next(Convert.ToInt32(D[1, 0] * 100), Convert.ToInt32(D[1, 1] * 100)) / 100f;
-            thetta1 = R1 * 2 * Math.PI;
-            thetta2 = R2 * 2 * Math.PI;
+            flock[NumFlocks, 0].coords[0] = flock[NumFlocks, 0].coords[0] + (alfa / currentIteration) * LeviX();
+            flock[NumFlocks, 0].coords[1] = flock[NumFlocks, 0].coords[1] + (alfa / currentIteration) * LeviY();
+        }
 
+        /// <summary>Распределение Леви, координата х,  для худшей стаи</summary>
+        public double LeviX()
+        {
+            R1 = rand.Next(Convert.ToInt32(D[0, 0] * 100), Convert.ToInt32(D[0,1] * 100)) / 100f;
+            thetta1 = R1 * 2 * Math.PI;
             L1 = Math.Pow(R1, -1 / lambda);
-            L2 = Math.Pow(R2, -1 / lambda);
 
             x = L1 * Math.Sin(thetta1);
-            y = L2 * Math.Cos(thetta2); // TODO: странна, менять, если что
+            return x;
+        }
 
+        /// <summary>Распределение Леви, координата y,  для худшей стаи</summary>
+        public double LeviY()
+        {
+            R2 = rand.Next(Convert.ToInt32(D[1, 0] * 100), Convert.ToInt32(D[1, 1] * 100)) / 100f;
+            thetta2 = R2 * 2 * Math.PI;
+            L2 = Math.Pow(R2, -1 / lambda);
+
+            y = L2 * Math.Cos(thetta2); // TODO: странна, менять, если что
+            return y;
         }
 
         /// <summary>Начальное формирование популяции </summary>
@@ -237,6 +307,20 @@ namespace AIS
 
                 Perch perch = new Perch(x, y, function(x, y, f)); // TODO: добавить iter += 1
                 individuals.Add(perch);
+            }
+        }
+
+        public void BestAnswer()
+        {
+            for (int pr  = 0; pr < PRmax; pr++)
+            {
+                List<Perch> answers = new List<Perch>();
+                for (int i = 0; i < 3; i++)
+                {
+                    int randomIndex = rand.Next(0, Pool.Count());
+                    answers.Add(Pool[randomIndex]);
+                }
+                // TODO: добавить конец перекоммутации
             }
         }
 
@@ -262,10 +346,17 @@ namespace AIS
             this.PRmax = PRmax;
             this.deltapr = deltapr;
 
+            
             FormingPopulation();
-            MakeFlocks();
-            MoveEPerchEFlock();
+            for (int currentIteration = 0; currentIteration < MaxCount; currentIteration++)
+            {
+                MakeFlocks();
+                MoveEPerchEFlock();
 
+                Pool.Add(flock[0, 0]);
+                currentIteration++;
+            }
+            
             return perch;
         }
 
