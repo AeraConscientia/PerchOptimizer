@@ -47,7 +47,7 @@ namespace AIS
         public int MaxCount { get; set; }
 
         /// <summary>Текущая итерация </summary>
-        public int currentIteration = 0;
+        public int currentIteration = 1;
 
         /// <summary>Массив средней приспособленности</summary>
         public List<double> averageFitness = new List<double>();
@@ -132,7 +132,7 @@ namespace AIS
 
         }
 
-        /// <summary>Движения каждого окуня в каждой стае</summary>
+        /// <summary>Движения каждого окуня в каждой стае, создание котлов</summary>
         public void MoveEPerchEFlock()
         {
             sigma = rand.NextDouble()*0.4 + 0.1; // sigma [0.1,  0.5]
@@ -233,14 +233,14 @@ namespace AIS
 
             sigma = rand.NextDouble() * 0.4 + 0.1; // sigma [0.1,  0.5]
 
-            double xMin = Math.Min((flock[NumFlocks, 0].coords[0] - D[0, 0]), (D[0, 1] - flock[NumFlocks, 0].coords[0]));
-            double yMin = Math.Min((flock[NumFlocks, 0].coords[1] - D[1, 0]), (D[1, 1] - flock[NumFlocks, 0].coords[1]));
+            double xMin = Math.Min((flock[NumFlocks - 1, 0].coords[0] - D[0, 0]), (D[0, 1] - flock[NumFlocks - 1, 0].coords[0]));
+            double yMin = Math.Min((flock[NumFlocks - 1, 0].coords[1] - D[1, 0]), (D[1, 1] - flock[NumFlocks - 1, 0].coords[1]));
 
             for (int j = 1; j < NumPerchInFlock; j++)
             {
-                double x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks, 0].coords[0] - xMin);
-                double y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks, 0].coords[1] - yMin);
-                flock[NumFlocks, j] = new Perch(x, y, function(x, y, f));
+                double x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[0] - xMin);
+                double y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[1] - yMin);
+                flock[NumFlocks - 1, j] = new Perch(x, y, function(x, y, f));
             }
 
             int i = 1;
@@ -268,8 +268,10 @@ namespace AIS
         /// <summary>Новые координаты лидера худшей стаи</summary>
         public void PoorLeaderSwim()
         {
-            flock[NumFlocks, 0].coords[0] = flock[NumFlocks, 0].coords[0] + (alfa / currentIteration) * LeviX();
-            flock[NumFlocks, 0].coords[1] = flock[NumFlocks, 0].coords[1] + (alfa / currentIteration) * LeviY();
+
+            //TODO: ПОЛУЧАЕТСЯ NAN, ПРОБЛЕМА С ВОЗВЕДЕНИЕМ В ДРОБНУЮ СТЕПЕНЬ ОТРИЦАТЕЛЬНОГО ЧИСЛА 
+            flock[NumFlocks - 1, 0].coords[0] = flock[NumFlocks - 1, 0].coords[0] + (alfa / currentIteration) * LeviX();
+            flock[NumFlocks - 1, 0].coords[1] = flock[NumFlocks - 1, 0].coords[1] + (alfa / currentIteration) * LeviY();
         }
 
         /// <summary>Распределение Леви, координата х,  для худшей стаи</summary>
@@ -277,7 +279,7 @@ namespace AIS
         {
             R1 = rand.Next(Convert.ToInt32(D[0, 0] * 100), Convert.ToInt32(D[0,1] * 100)) / 100f;
             thetta1 = R1 * 2 * Math.PI;
-            L1 = Math.Pow(R1, -1 / lambda);
+            L1 = Math.Pow(Math.Abs(R1), -1 / lambda);       //!
 
             x = L1 * Math.Sin(thetta1);
             return x;
@@ -288,7 +290,7 @@ namespace AIS
         {
             R2 = rand.Next(Convert.ToInt32(D[1, 0] * 100), Convert.ToInt32(D[1, 1] * 100)) / 100f;
             thetta2 = R2 * 2 * Math.PI;
-            L2 = Math.Pow(R2, -1 / lambda);
+            L2 = Math.Pow(Math.Abs(R2), -1 / lambda);   //!
 
             y = L2 * Math.Cos(thetta2); // TODO: странна, менять, если что
             return y;
@@ -348,16 +350,26 @@ namespace AIS
 
             
             FormingPopulation();
-            for (int currentIteration = 0; currentIteration < MaxCount; currentIteration++)
+
+
+            for (int currentIteration = 1; currentIteration < MaxCount; currentIteration++)
             {
                 MakeFlocks();
                 MoveEPerchEFlock();
+                FlocksSwim();
+                this.currentIteration++;
+            }  
 
-                Pool.Add(flock[0, 0]);
-                currentIteration++;
-            }
-            
+            perch = individuals[0];
             return perch;
+        }
+
+        public void FlocksSwim()
+        {
+
+            BestFlockSwim();
+            PoorFlockSwim();
+            AverFlockSwim();
         }
 
         private float function(double x1, double x2, int f)
@@ -365,44 +377,40 @@ namespace AIS
             float funct = 0;
             if (f == 0) // Швефель
             {
-                funct = (float)(x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2))));
+                funct = (float)(-(x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2)))));
             }
             else if (f == 1) // Мульти
-            {
-                funct = (float)(x1 * Math.Sin(4 * Math.PI * x1) - x2 * Math.Sin(4 * Math.PI * x2 + Math.PI) + 1);
-            }
+                funct = (float)(-(x1 * Math.Sin(4 * Math.PI * x1) - x2 * Math.Sin(4 * Math.PI * x2 + Math.PI) + 1));
             else if (f == 2) // корневая
             {
                 double[] c6 = Cpow(x1, x2, 6);
-                funct = (float)(1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
+                funct = (float)(-1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
             }
             else if (f == 3) // Шафер
-            {
-                funct = (float)(0.5 - (Math.Pow(Math.Sin(Math.Sqrt(x1 * x1 + x2 * x2)), 2) - 0.5) / (1 + 0.001 * (x1 * x1 + x2 * x2)));
-            }
+                funct = (float)(-(0.5 - (Math.Pow(Math.Sin(Math.Sqrt(x1 * x1 + x2 * x2)), 2) - 0.5) / (1 + 0.001 * (x1 * x1 + x2 * x2))));
             else if (f == 4) // Растригин
             {
-                funct = (float)((-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2 * Math.PI * x2)));
+                funct = (float)(-((-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2 * Math.PI * x2))));
             }
             else if (f == 5) // Эклея
             {
-                funct = (float)(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2));
+                funct = (float)(-(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2)));
             }
             else if (f == 6) // skin
             {
-                funct = (float)(Math.Pow(Math.Cos(2 * x1 * x1) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x1) - 1.2, 2) - Math.Pow(Math.Cos(2 * x2 * x2) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x2) - 1.2, 2));
+                funct = (float)(-(Math.Pow(Math.Cos(2 * x1 * x1) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x1) - 1.2, 2) - Math.Pow(Math.Cos(2 * x2 * x2) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x2) - 1.2, 2)));
             }
             else if (f == 7) //Trapfall
             {
-                funct = (float)(-Math.Sqrt(Math.Abs(Math.Sin(Math.Sin(Math.Sqrt(Math.Abs(Math.Sin(x1 - 1))) + Math.Sqrt(Math.Abs(Math.Sin(x2 + 2))))))) + 1);
+                funct = (float)(-(-Math.Sqrt(Math.Abs(Math.Sin(Math.Sin(Math.Sqrt(Math.Abs(Math.Sin(x1 - 1))) + Math.Sqrt(Math.Abs(Math.Sin(x2 + 2))))))) + 1));
             }
             else if (f == 8) // Розенброк
             {
-                funct = (float)(-(1 - x1) * (1 - x1) - 100 * (x2 - x1 * x1) * (x2 - x1 * x1));
+                funct = (float)(-(-(1 - x1) * (1 - x1) - 100 * (x2 - x1 * x1) * (x2 - x1 * x1)));
             }
             else if (f == 9) // Параболическая
             {
-                funct = (float)(-x1 * x1 - x2 * x2);
+                funct = (float)(x1 * x1 + x2 * x2);
             }
             return funct;
         }
