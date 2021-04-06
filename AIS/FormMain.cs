@@ -10,7 +10,9 @@ namespace AIS
     {
         //Мое
         private Algoritm alg;
-        
+
+        private AlgorithmPerch algPerch;
+
         private int MaxIteration = 0;
         private Wolf result;
         private double[,] obl = new double[2, 2];
@@ -40,6 +42,7 @@ namespace AIS
         //Не мое
         private bool[] flines = new bool[8];
         private float k = 1;
+        /// <summary>Константы для линий уровня. Тут - для минимума функции сделаны. Нужно переделать под максимум - умножить все коэффициенты на -1</summary>
         private float[] Ar = new float[8];
         private double[,] showobl = new double[2, 2];
         private bool flag = false;
@@ -95,10 +98,6 @@ namespace AIS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if( dataGridView1.Rows[0].Cells[1].Value != null  &&
-                dataGridView1.Rows[0].Cells[2].Value != null  &&
-                dataGridView1.Rows[1].Cells[1].Value != null  &&
-                dataGridView1.Rows[1].Cells[2].Value!= null)
             {
                 //создать начальную популяцию
                 if ((comboBox1.SelectedIndex != -1) )
@@ -126,20 +125,30 @@ namespace AIS
                     deltapr =           Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
 
                     //Params param = (comboBoxSelectParams.SelectedIndex == 0) ? Params.Linear : Params.Quadratic;
-                    Params param = Params.Linear;
-                    alg = new Algoritm();
-
-                    result = alg.StartAlg(population, MaxIteration, obl, z, param);
-                    dataGridView3.Rows[0].Cells[1].Value = string.Format($"{result.coords[0]:F8}");
-                    dataGridView3.Rows[1].Cells[1].Value = string.Format($"{result.coords[1]:F8}");
-                    dataGridView3.Rows[2].Cells[1].Value = string.Format($"{result.fitness:F8}");
+                    //Params param = Params.Linear;
+                    algPerch = new AlgorithmPerch();
+                    algPerch.D = obl;
+                    
+                    algPerch.MaxCount = MaxIteration;
+                    algPerch.NumFlocks = NumFlocks;
+                    algPerch.NumPerchInFlock = NumPerchInFlock;
+                    algPerch.NStep = NStep;
+                    algPerch.sigma = sigma;
+                    algPerch.lambda = lambda;
+                    algPerch.alfa = alfa;
+                    algPerch.PRmax = PRmax;
+                    algPerch.deltapr = deltapr;
+                    algPerch.population = NumFlocks * NumPerchInFlock;
+                    algPerch.FormingPopulation();
                     flag2 = true;
+
+                    //result = algPerch.StartAlg(population, MaxIteration, obl, z, param);
+                    //dataGridView3.Rows[0].Cells[1].Value = string.Format($"{result.coords[0]:F8}");
+                    //dataGridView3.Rows[1].Cells[1].Value = string.Format($"{result.coords[1]:F8}");
+                    //dataGridView3.Rows[2].Cells[1].Value = string.Format($"{result.fitness:F8}");
+                    //flag2 = true;
                     pictureBox1.Refresh();
                 }
-            }
-            else
-            {
-                MessageBox.Show("Введите корректные параметры области определения", "Ошибка три запуске алгоритма", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -159,11 +168,11 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "500";
                 exact = 837.9658;
 
-                Ar[0] = -200;
-                Ar[1] = -1;
-                Ar[2] = 300;
-                Ar[3] = 600;
-                Ar[4] = 800;
+                Ar[0] = 200;
+                Ar[1] = 1;
+                Ar[2] = -300;
+                Ar[3] = -600;
+                Ar[4] = -800;
                 flag = true;
                 pictureBox2.Image = Properties.Resources.швефель;
             }
@@ -176,10 +185,10 @@ namespace AIS
                 exact = 4.253888;
 
                 Ar[0] = 0;
-                Ar[1] = 1;
-                Ar[2] = 2;
-                Ar[3] = 3;
-                Ar[4] = 4;
+                Ar[1] = -1;
+                Ar[2] = -2;
+                Ar[3] = -3;
+                Ar[4] = -4;
                 flag = true;
                 pictureBox2.Image = Properties.Resources.мульти;
 
@@ -192,11 +201,11 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "2";
                 exact = 1;
 
-                Ar[0] = 0.2F;
-                Ar[1] = 0.45F;
-                Ar[2] = 0.499999F;//0.5000001F;
-                Ar[3] = 0.6F;
-                Ar[4] = 0.9F;
+                Ar[0] = -0.2F;
+                Ar[1] = -0.45F;
+                Ar[2] = -0.499999F;//0.5000001F;
+                Ar[3] = -0.6F;
+                Ar[4] = -0.9F;
                 flag = true;
                 pictureBox2.Image = Properties.Resources.рут;
 
@@ -209,11 +218,11 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "10";
                 exact = 1;
 
-                Ar[0] = 0.2F;
-                Ar[1] = 0.4F;
-                Ar[2] = 0.6F;//0.5000001F;
-                Ar[3] = 0.8F;
-                Ar[4] = 0.99F;
+                Ar[0] = -0.2F;
+                Ar[1] = -0.4F;
+                Ar[2] = -0.6F;//0.5000001F;
+                Ar[3] = -0.8F;
+                Ar[4] = -0.99F;
                 flag = true;
                 pictureBox2.Image = Properties.Resources.шафер;
 
@@ -226,11 +235,11 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "5";
                 exact = 20;
 
-                Ar[0] = -20F;
-                Ar[1] = -10F;
-                Ar[2] = 0F;//0.5000001F;
-                Ar[3] = 10F;
-                Ar[4] = 19F;
+                Ar[0] = 20F;
+                Ar[1] = 10F;
+                Ar[2] = -0F;//0.5000001F;
+                Ar[3] = -10F;
+                Ar[4] = -19F;
                 flag = true;
                 pictureBox2.Image = Properties.Resources.Растринг1;
 
@@ -243,11 +252,11 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "10";
                 exact = 0;
 
-                Ar[0] = 4F;
-                Ar[1] = 7F;
-                Ar[2] = 10F;//0.5000001F;
-                Ar[3] = 14F;
-                Ar[4] = 19F;
+                Ar[0] = -4F;
+                Ar[1] = -7F;
+                Ar[2] = -10F;//0.5000001F;
+                Ar[3] = -14F;
+                Ar[4] = -19F;
                 flag = true;
                 pictureBox2.Image = Properties.Resources.Аклей31;
             }
@@ -259,11 +268,11 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "5";
                 exact = 14.060606;
 
-                Ar[0] = 2F;
-                Ar[1] = 8F;
-                Ar[2] = 10F;//0.5000001F;
-                Ar[3] = 12F;
-                Ar[4] = 14F;
+                Ar[0] = -2F;
+                Ar[1] = -8F;
+                Ar[2] = -10F;//0.5000001F;
+                Ar[3] = -12F;
+                Ar[4] = -14F;
                 flag = true;
                 //pictureBox2.Image = Properties.Resources.Аклей31;
             }
@@ -275,13 +284,13 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "5";
                 exact = 1;
 
-                Ar[0] = 0.1F;
-                Ar[1] = 0.15F;
-                Ar[2] = 0.2F;//0.5000001F;
-                Ar[3] = 0.3F;
-                Ar[4] = 0.5F;
+                Ar[0] = -0.1F;
+                Ar[1] = -0.15F;
+                Ar[2] = -0.2F;//0.5000001F;
+                Ar[3] = -0.3F;
+                Ar[4] = -0.5F;
                 flag = true;
-                //pictureBox2.Image = Properties.Resources.Аклей31;
+                pictureBox2.Image = Properties.Resources.Trapfall;
             }
             else if (comboBox1.SelectedIndex == 8)
             {
@@ -291,11 +300,11 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "5";
                 exact = 0;
 
-                Ar[0] = -350F;
-                Ar[1] = -180F;
-                Ar[2] = -30F;//0.5000001F;
-                Ar[3] = -4F;
-                Ar[4] = -0.5F;
+                Ar[0] = 350F;
+                Ar[1] = 180F;
+                Ar[2] = 30F;//0.5000001F;
+                Ar[3] = 4F;
+                Ar[4] = 0.5F;
                 flag = true;
                 //pictureBox2.Image = Properties.Resources.Аклей31;
             }
@@ -307,11 +316,11 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "5";
                 exact = 0;
 
-                Ar[0] = -7F;
-                Ar[1] = -4F;
-                Ar[2] = -2F;//0.5000001F;
-                Ar[3] = -0.8F;
-                Ar[4] = -0.1F;
+                Ar[0] = 7F;
+                Ar[1] = 4F;
+                Ar[2] = 2F;//0.5000001F;
+                Ar[3] = 0.8F;
+                Ar[4] = 0.1F;
                 flag = true;
             }
             Ar[5] = 0;
@@ -448,10 +457,10 @@ namespace AIS
                         //Отрисовка результата работы алгоритма
                         if (flag2 == true)
                         {
-                            for (int i = 0; i < (int)alg.population; i++)
-                                e.Graphics.FillEllipse(Brushes.Blue, (float)((alg.individuals[i].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (alg.individuals[i].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);                            
+                            for (int i = 0; i < (int)algPerch.population; i++)
+                                e.Graphics.FillEllipse(Brushes.Blue, (float)((algPerch.individuals[i].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.individuals[i].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);                            
                     
-                            e.Graphics.FillEllipse(Brushes.Red, (float)((alg.alfa.coords.vector[0] * k - x1) * w / (x2 - x1) - 4), (float)(h - (alg.alfa.coords.vector[1] * k - y1) * h / (y2 - y1) - 4), 8, 8);
+                            //e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.alfa.coords.vector[0] * k - x1) * w / (x2 - x1) - 4), (float)(h - (algPerch.alfa.coords.vector[1] * k - y1) * h / (y2 - y1) - 4), 8, 8);
                         }                        
 
                         //отрисовка Осей
@@ -477,28 +486,28 @@ namespace AIS
         { 
             float funct = 0;
             if (f == 0)
-                funct = (float) (x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2))));
+                funct = (float) (-(x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2)))));
             else if (f == 1)
-                funct = (float)(x1 * Math.Sin(4 * Math.PI * x1) - x2 * Math.Sin(4 * Math.PI * x2 + Math.PI) + 1);
+                funct = (float)(-(x1 * Math.Sin(4 * Math.PI * x1) - x2 * Math.Sin(4 * Math.PI * x2 + Math.PI) + 1));
             else if (f == 2)
             { 
                 double[] c6 = Cpow(x1,x2,6);
-                funct = (float)(1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
+                funct = (float)(-1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
             }
             else if (f == 3)
-                funct = (float)(0.5-(Math.Pow(Math.Sin(Math.Sqrt(x1*x1+x2*x2)),2)-0.5)/(1+0.001*(x1*x1+x2*x2)));
+                funct = (float)(-(0.5-(Math.Pow(Math.Sin(Math.Sqrt(x1*x1+x2*x2)),2)-0.5)/(1+0.001*(x1*x1+x2*x2))));
             else if (f == 4)
-                funct = (float)((-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2*Math.PI * x2)));
+                funct = (float)(-((-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2*Math.PI * x2))));
             else if (f == 5)
-                funct = (float)(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2));
+                funct = (float)(-(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2)));
             else if (f == 6)
-                funct = (float)(Math.Pow(Math.Cos(2 * x1 * x1) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x1) - 1.2, 2) - Math.Pow(Math.Cos(2 * x2 * x2) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x2) - 1.2, 2));
+                funct = (float)(-(Math.Pow(Math.Cos(2 * x1 * x1) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x1) - 1.2, 2) - Math.Pow(Math.Cos(2 * x2 * x2) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x2) - 1.2, 2)));
             else if (f == 7)
-                funct = (float)(-Math.Sqrt(Math.Abs(Math.Sin(Math.Sin(Math.Sqrt(Math.Abs(Math.Sin(x1-1)))+Math.Sqrt(Math.Abs(Math.Sin(x2+2)))))))+1);
+                funct = (float)(-(-Math.Sqrt(Math.Abs(Math.Sin(Math.Sin(Math.Sqrt(Math.Abs(Math.Sin(x1-1)))+Math.Sqrt(Math.Abs(Math.Sin(x2+2)))))))+1));
             else if (f == 8)
-                funct = (float)(-(1 - x1) * (1 - x1) - 100 * (x2 - x1 * x1) * (x2 - x1 * x1));
+                funct = (float)(-(-(1 - x1) * (1 - x1) - 100 * (x2 - x1 * x1) * (x2 - x1 * x1)));
             else if (f == 9)
-                funct = (float)(-x1 * x1 - x2 * x2);
+                funct = (float)(x1 * x1 + x2 * x2);
             return funct;
         }
 
