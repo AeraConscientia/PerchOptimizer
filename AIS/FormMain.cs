@@ -163,7 +163,7 @@ namespace AIS
                 Ar[3] = -600;
                 Ar[4] = -800;
                 flag = true;
-                pictureBox2.Image = Properties.Resources.швефель;
+                pictureBox2.Image = Properties.Resources.ШвефельМин;
             }
             else if (comboBox1.SelectedIndex == 1)
             {
@@ -179,7 +179,7 @@ namespace AIS
                 Ar[3] = -3;
                 Ar[4] = -4;
                 flag = true;
-                pictureBox2.Image = Properties.Resources.мульти;
+                pictureBox2.Image = Properties.Resources.МультиМин;
 
             }
             else if (comboBox1.SelectedIndex == 2)
@@ -196,7 +196,7 @@ namespace AIS
                 Ar[3] = -0.6F;
                 Ar[4] = -0.9F;
                 flag = true;
-                pictureBox2.Image = Properties.Resources.рут;
+                pictureBox2.Image = Properties.Resources.КорневаяМин;
 
             }
             else if (comboBox1.SelectedIndex == 3)
@@ -213,7 +213,7 @@ namespace AIS
                 Ar[3] = -0.8F;
                 Ar[4] = -0.99F;
                 flag = true;
-                pictureBox2.Image = Properties.Resources.шафер;
+                pictureBox2.Image = Properties.Resources.ШаферМин;
 
             }
             else if (comboBox1.SelectedIndex == 4)
@@ -230,7 +230,7 @@ namespace AIS
                 Ar[3] = -10F;
                 Ar[4] = -19F;
                 flag = true;
-                pictureBox2.Image = Properties.Resources.Растринг1;
+                pictureBox2.Image = Properties.Resources.РастригинМин;
 
             }
             else if (comboBox1.SelectedIndex == 5)
@@ -247,7 +247,7 @@ namespace AIS
                 Ar[3] = -14F;
                 Ar[4] = -19F;
                 flag = true;
-                pictureBox2.Image = Properties.Resources.Аклей31;
+                pictureBox2.Image = Properties.Resources.ЭклеяМин;
             }
             else if (comboBox1.SelectedIndex == 6)
             {
@@ -263,7 +263,8 @@ namespace AIS
                 Ar[3] = -12F;
                 Ar[4] = -14F;
                 flag = true;
-                //pictureBox2.Image = Properties.Resources.Аклей31;
+                //pictureBox2.Image = Properties.Resources.;
+                //TODO: добавить картинку для Skin
             }
             else if (comboBox1.SelectedIndex == 7)
             {
@@ -279,7 +280,7 @@ namespace AIS
                 Ar[3] = -0.3F;
                 Ar[4] = -0.5F;
                 flag = true;
-                pictureBox2.Image = Properties.Resources.Trapfall;
+                pictureBox2.Image = Properties.Resources.TrapfallMin;
             }
             else if (comboBox1.SelectedIndex == 8)
             {
@@ -295,7 +296,7 @@ namespace AIS
                 Ar[3] = 4F;
                 Ar[4] = 0.5F;
                 flag = true;
-                //pictureBox2.Image = Properties.Resources.Аклей31;
+                pictureBox2.Image = Properties.Resources.РозенброкМин;
             }
             else if (comboBox1.SelectedIndex == 9)
             {
@@ -311,6 +312,7 @@ namespace AIS
                 Ar[3] = 0.8F;
                 Ar[4] = 0.1F;
                 flag = true;
+                pictureBox2.Image = Properties.Resources.ПараболическаяМин;
             }
             Ar[5] = 0;
             Ar[6] = 0;
@@ -580,6 +582,11 @@ namespace AIS
         {
             FormHelp formHelp = new FormHelp();
             formHelp.ShowDialog();
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

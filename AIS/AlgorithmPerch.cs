@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AIS
 {
-    class AlgorithmPerch
+    public class AlgorithmPerch
     {
         public double R1, R2;
         public double thetta1, thetta2;
@@ -279,7 +279,7 @@ namespace AIS
         {
             R1 = rand.Next(Convert.ToInt32(D[0, 0] * 100), Convert.ToInt32(D[0,1] * 100)) / 100f;
             thetta1 = R1 * 2 * Math.PI;
-            L1 = Math.Pow(Math.Abs(R1), -1 / lambda);       //!
+            L1 = Math.Pow(Math.Abs(R1), -1 / lambda);       // TODO: точно можно ставить abs?
 
             x = L1 * Math.Sin(thetta1);
             return x;

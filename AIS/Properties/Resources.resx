@@ -154,4 +154,34 @@
   <data name="Trapfall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Trapfall.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="КорневаяМин" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\КорневаяМин.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="МультиМин" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\МультиМин.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ПараболическаяМин" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\ПараболическаяМин.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ПостановкаМинимум" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\ПостановкаМинимум.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="РастригинМин" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\РастригинМин.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="РозенброкМин" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\РозенброкМин.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ШаферМин" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\ШаферМин.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ШвефельМин" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\ШвефельМин.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ЭклеяМин" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\ЭклеяМин.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrapfallMin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Min\TrapfallMin.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -190,6 +190,36 @@
   <ItemGroup>
     <None Include="Resources\Trapfall.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\КорневаяМин.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\МультиМин.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\ПараболическаяМин.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\ПостановкаМинимум.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\РастригинМин.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\РозенброкМин.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\ШаферМин.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\ШвефельМин.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\ЭклеяМин.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\TrapfallMin.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
