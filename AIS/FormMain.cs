@@ -588,5 +588,38 @@ namespace AIS
         {
 
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {/*
+            obl = new double[2, 2];
+
+            obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
+            obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
+            obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
+            obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
+            //population = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+            //MaxIteration = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
+            MaxIteration = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
+
+            NumFlocks = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
+            NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
+            population = NumFlocks * NumPerchInFlock;
+            NStep = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value); // TODO: добавить в таблицу ВНИЗ
+            sigma = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
+
+            lambda = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+            alfa = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+
+            PRmax = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
+            deltapr = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
+            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+            {
+                flines = flines, // хер знает, почему оно агрится
+                showobl = showobl,
+                Ar = Ar
+            };
+            formPerch.Show();
+            */
+        }
     }
 }
