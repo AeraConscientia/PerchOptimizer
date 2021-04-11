@@ -590,7 +590,7 @@ namespace AIS
         }
 
         private void button1_Click_1(object sender, EventArgs e)
-        {/*
+        {
             obl = new double[2, 2];
 
             obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
@@ -612,14 +612,14 @@ namespace AIS
 
             PRmax = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
             deltapr = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
-            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr)
             {
                 flines = flines, // хер знает, почему оно агрится
                 showobl = showobl,
                 Ar = Ar
             };
             formPerch.Show();
-            */
+            
         }
     }
 }

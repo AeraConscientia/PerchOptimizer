@@ -272,6 +272,7 @@
             this.pictureBoxDiagramm.Size = new System.Drawing.Size(363, 581);
             this.pictureBoxDiagramm.TabIndex = 8;
             this.pictureBoxDiagramm.TabStop = false;
+            this.pictureBoxDiagramm.Click += new System.EventHandler(this.pictureBoxDiagramm_Click);
             this.pictureBoxDiagramm.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox3_Paint);
             // 
             // pictureBox1

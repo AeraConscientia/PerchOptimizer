@@ -61,48 +61,53 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "Деление популяции на стаи";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(24, 208);
+            this.button3.Location = new System.Drawing.Point(24, 207);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(127, 61);
             this.button3.TabIndex = 1;
-            this.button3.Text = "Реализация окуневого котла в стаях";
+            this.button3.Text = "Реализация окуневого котла \r\nв стаях";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(24, 301);
+            this.button4.Location = new System.Drawing.Point(24, 296);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(127, 61);
             this.button4.TabIndex = 1;
             this.button4.Text = "Плавание стай";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(24, 393);
+            this.button5.Location = new System.Drawing.Point(24, 385);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(127, 61);
             this.button5.TabIndex = 1;
-            this.button5.Text = "Помещение лидера популяции в множество Pool";
+            this.button5.Text = "Помещение лидера популяции \r\nв множество Pool";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(206, 184);
+            this.button6.Location = new System.Drawing.Point(206, 208);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(117, 61);
             this.button6.TabIndex = 1;
             this.button6.Text = "Проверка условий завершения поиска";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
             this.button7.Location = new System.Drawing.Point(206, 515);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(127, 60);
+            this.button7.Size = new System.Drawing.Size(117, 60);
             this.button7.TabIndex = 1;
             this.button7.Text = "Интенсивный поиск в Pool";
             this.button7.UseVisualStyleBackColor = true;
@@ -118,15 +123,16 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(349, 584);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // pictureBox2
             // 
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBox2.Location = new System.Drawing.Point(719, 12);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(467, 487);
@@ -148,6 +154,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormStepPerch";
             this.Text = "FormStepPerch";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

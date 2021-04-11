@@ -631,5 +631,10 @@ namespace AIS
                 flag = false;
             }
         }
+
+        private void pictureBoxDiagramm_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

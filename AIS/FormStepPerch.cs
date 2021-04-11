@@ -46,6 +46,8 @@ namespace AIS
 
         int PRmax;
         int deltapr;
+
+
         /// <summary>Номер функции</summary>
         public int z;
 
@@ -55,9 +57,15 @@ namespace AIS
         public double[,] showoblbase = new double[2, 2];
         public double[,] oblbase = new double[2, 2];
         public double[,] obl;
-        public int stepsCount = 5; // TODO: Что это вообще?
+        public int stepsCount = 8; // TODO: Что это вообще?
 
         public AlgorithmPerch algo = new AlgorithmPerch();
+
+        public double[,] showobl = new double[2, 2];
+        
+        bool flag = false;
+        /// <summary>Массив состояний</summary>
+        bool[] Red = new bool[8];
 
         /*
         private void InitDataGridView()
@@ -80,46 +88,42 @@ namespace AIS
         private float function(double x1, double x2, int f)
         {
             float funct = 0;
-            if (f == 0)
+            if (f == 0) // Швефель
             {
-                funct = (float)(x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2))));
+                funct = (float)(-(x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2)))));
             }
-            else if (f == 1)
-            {
-                funct = (float)(x1 * Math.Sin(4 * Math.PI * x1) - x2 * Math.Sin(4 * Math.PI * x2 + Math.PI) + 1);
-            }
-            else if (f == 2)
+            else if (f == 1) // Мульти
+                funct = (float)(-(x1 * Math.Sin(4 * Math.PI * x1) - x2 * Math.Sin(4 * Math.PI * x2 + Math.PI) + 1));
+            else if (f == 2) // корневая
             {
                 double[] c6 = Cpow(x1, x2, 6);
-                funct = (float)(1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
+                funct = (float)(-1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
             }
-            else if (f == 3)
+            else if (f == 3) // Шафер
+                funct = (float)(-(0.5 - (Math.Pow(Math.Sin(Math.Sqrt(x1 * x1 + x2 * x2)), 2) - 0.5) / (1 + 0.001 * (x1 * x1 + x2 * x2))));
+            else if (f == 4) // Растригин
             {
-                funct = (float)(0.5 - (Math.Pow(Math.Sin(Math.Sqrt(x1 * x1 + x2 * x2)), 2) - 0.5) / (1 + 0.001 * (x1 * x1 + x2 * x2)));
+                funct = (float)(-((-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2 * Math.PI * x2))));
             }
-            else if (f == 4)
+            else if (f == 5) // Эклея
             {
-                funct = (float)((-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2 * Math.PI * x2)));
+                funct = (float)(-(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2)));
             }
-            else if (f == 5)
+            else if (f == 6) // skin
             {
-                funct = (float)(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2));
+                funct = (float)(-(Math.Pow(Math.Cos(2 * x1 * x1) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x1) - 1.2, 2) - Math.Pow(Math.Cos(2 * x2 * x2) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x2) - 1.2, 2)));
             }
-            else if (f == 6)
+            else if (f == 7) //Trapfall
             {
-                funct = (float)(Math.Pow(Math.Cos(2 * x1 * x1) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x1) - 1.2, 2) - Math.Pow(Math.Cos(2 * x2 * x2) - 1.1, 2) + Math.Pow(Math.Sin(0.5 * x2) - 1.2, 2));
+                funct = (float)(-(-Math.Sqrt(Math.Abs(Math.Sin(Math.Sin(Math.Sqrt(Math.Abs(Math.Sin(x1 - 1))) + Math.Sqrt(Math.Abs(Math.Sin(x2 + 2))))))) + 1));
             }
-            else if (f == 7)
+            else if (f == 8) // Розенброк
             {
-                funct = (float)(-Math.Sqrt(Math.Abs(Math.Sin(Math.Sin(Math.Sqrt(Math.Abs(Math.Sin(x1 - 1))) + Math.Sqrt(Math.Abs(Math.Sin(x2 + 2))))))) + 1);
+                funct = (float)(-(-(1 - x1) * (1 - x1) - 100 * (x2 - x1 * x1) * (x2 - x1 * x1)));
             }
-            else if (f == 8)
+            else if (f == 9) // Параболическая
             {
-                funct = (float)(-(1 - x1) * (1 - x1) - 100 * (x2 - x1 * x1) * (x2 - x1 * x1));
-            }
-            else if (f == 9)
-            {
-                funct = (float)(-x1 * x1 - x2 * x2);
+                funct = (float)(x1 * x1 + x2 * x2);
             }
             return funct;
         }
@@ -145,12 +149,136 @@ namespace AIS
             Pen pGray = new Pen(Color.Gray, 2);
             Pen pRed = new Pen(Color.Red, 2);
             Font f1 = new Font("TimesNewRoman", 12, FontStyle.Bold);
-            e.Graphics.DrawLine(pBlack, 70, 30, 70, 119);
+
+            e.Graphics.DrawLine(pBlack, 250, 250, 250, 135); // проверка -> деление  вертик 
+            e.Graphics.DrawLine(pBlack, 250, 135, 140, 135); // проверка -> деление  горизонт НУЖНА СТРЕЛОЧКА
+
+            if (Red[6] == true)
+            {
+                e.Graphics.DrawLine(pRed, 250, 250, 250, 135); // проверка -> деление  вертик 
+                e.Graphics.DrawLine(pRed, 250, 135, 140, 135); // проверка -> деление  горизонт НУЖНА СТРЕЛОЧКА
+            }
+
+            e.Graphics.DrawLine(pBlack, 140, 405, 250, 405); // лидер Pool -> проверка горизонт
+
+            e.Graphics.DrawLine(pBlack, 250, 405, 250, 210); // лидер Pool -> проверка вертик
+            e.Graphics.DrawLine(pBlack, 250, 260, 255, 270);
+            e.Graphics.DrawLine(pBlack, 249, 260, 244, 270);
+
+            if (Red[4] == true)
+            {
+                e.Graphics.DrawLine(pRed, 140, 405, 250, 405); // лидер Pool -> проверка горизонт
+                                     
+                e.Graphics.DrawLine(pRed, 250, 405, 250, 210); // лидер Pool -> проверка вертик
+                e.Graphics.DrawLine(pRed, 250, 260, 255, 270);
+                e.Graphics.DrawLine(pRed, 249, 260, 244, 270);
+            }
+
+            e.Graphics.DrawLine(pBlack, 70, 300, 70, 373); // плаванье -> лидер Pool 
+            e.Graphics.DrawLine(pBlack, 70, 370, 75, 360);
+            e.Graphics.DrawLine(pBlack, 69, 370, 64, 360);
+
+            if (Red[3] == true)
+            {
+                e.Graphics.DrawLine(pRed, 70, 300, 70, 373); // плаванье -> лидер Pool 
+                e.Graphics.DrawLine(pRed, 70, 370, 75, 360);
+                e.Graphics.DrawLine(pRed, 69, 370, 64, 360);
+            }
+
+            e.Graphics.DrawLine(pBlack, 70, 210, 70, 283); // котлы -> плаванье !!!
+            e.Graphics.DrawLine(pBlack, 70, 280, 75, 270);
+            e.Graphics.DrawLine(pBlack, 69, 280, 64, 270);
+
+            if (Red[2] == true)
+            {
+                e.Graphics.DrawLine(pRed, 70, 210, 70, 283); // котлы -> плаванье !!!
+                e.Graphics.DrawLine(pRed, 70, 280, 75, 270);
+                e.Graphics.DrawLine(pRed, 69, 280, 64, 270);
+            }
+
+            e.Graphics.DrawLine(pBlack, 70, 120, 70, 193); // деление -> котлы
+            e.Graphics.DrawLine(pBlack, 70, 195, 75, 185);
+            e.Graphics.DrawLine(pBlack, 69, 195, 64, 185);
+
+            if (Red[1] == true)
+            {
+                e.Graphics.DrawLine(pRed, 70, 120, 70, 193); // деление -> котлы
+                e.Graphics.DrawLine(pRed, 70, 195, 75, 185);
+                e.Graphics.DrawLine(pRed, 69, 195, 64, 185);
+            }
+
+            e.Graphics.DrawLine(pBlack, 70, 30, 70, 105); // генерация -> деление
+            e.Graphics.DrawLine(pBlack, 70, 102, 75, 92);
+            e.Graphics.DrawLine(pBlack, 69, 102, 64, 92);
+
+            if (Red[0] == true)
+            {
+                e.Graphics.DrawLine(pRed, 70, 30, 70, 105); // генерация -> деление
+                e.Graphics.DrawLine(pRed, 70, 102, 75, 92);
+                e.Graphics.DrawLine(pRed, 69, 102, 64, 92);
+            }
+
+            e.Graphics.DrawLine(pBlack, 310, 225, 340, 225); // проверка -> интенсивный поиск  горизонт
+            e.Graphics.DrawLine(pBlack, 340, 225, 340, 530); // проверка -> интенсивный поиск  вертик
+            e.Graphics.DrawLine(pBlack, 310, 530, 340, 530); // проверка -> интенсивный поиск  горизонт НУЖНА СТРЕЛОЧКА
+
+            e.Graphics.DrawLine(pBlack, 70, 530, 340, 530); // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Red[0] = true;
+            for (int i = 1; i < stepsCount; i++)
+                Red[i] = false;
 
+            flag = true;
+            pictureBox1.Refresh();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+            Red[3] = false;
+            Red[4] = true;
+            pictureBox1.Refresh();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Red[0] = false;
+            Red[1] = true;
+            Red[6] = false;
+            pictureBox1.Refresh();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            Red[1] = false;
+            Red[2] = true;
+            pictureBox1.Refresh();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+            Red[2] = false;
+            Red[3] = true;
+            pictureBox1.Refresh();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (true) 
+            {
+                Red[6] = true;
+            }
+            else 
+            {
+                Red[7] = true;
+            }
+            Red[4] = false;
+            pictureBox1.Refresh();
         }
     }
 }
