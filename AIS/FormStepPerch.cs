@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -31,13 +32,15 @@ namespace AIS
 
             this.PRmax = PRmax;
             this.deltapr = deltapr;
+            int population = NumFlocks * NumPerchInFlock;
         }
 
-        int population;
+        
         int MaxIteration;
 
         int NumFlocks;
         int NumPerchInFlock;
+        int population;
         int NStep;
         double sigma;
 
@@ -128,6 +131,7 @@ namespace AIS
             return funct;
         }
 
+        /// <summary>Степень для комплексного числа</summary>
         private double[] Cpow(double x, double y, int p)
         {
             double[] Cp = new double[2];
@@ -143,6 +147,7 @@ namespace AIS
             return Cp;
         }
 
+        /// <summary>Отрисовка стрелочек</summary>
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             Pen pBlack = new Pen(Color.Black, 2);
@@ -225,17 +230,175 @@ namespace AIS
             e.Graphics.DrawLine(pBlack, 70, 530, 340, 530); // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void pictureBox2_Paint(object sender, PaintEventArgs e)
         {
-            Red[0] = true;
-            for (int i = 1; i < stepsCount; i++)
-                Red[i] = false;
+            float w = pictureBox2.Width;
+            float h = pictureBox2.Height;
+            float x0 = w / 2;
+            float y0 = h / 2;
+            float a = 30;
+            float k = 1;
 
-            flag = true;
-            pictureBox1.Refresh();
+            List<PointF> points = new List<PointF>();
+            Pen p1 = new Pen(Color.PaleGreen, 1);
+            Pen p2 = new Pen(Color.GreenYellow, 1);
+            Pen p3 = new Pen(Color.YellowGreen, 1);
+            Pen p4 = new Pen(Color.Yellow, 1);
+            Pen p5 = new Pen(Color.Orange, 1);
+            Pen p6 = new Pen(Color.OrangeRed, 1);
+            Pen p7 = new Pen(Color.Red, 1);
+            Pen p8 = new Pen(Color.Brown, 1);
+            Pen p9 = new Pen(Color.Maroon, 1);
+            Pen p10 = new Pen(Color.Black, 1);
+            Pen p11 = new Pen(Color.Blue, 4);
+
+            Pen p12 = new Pen(Color.DarkOrange, 2);
+            Pen p13 = new Pen(Color.DarkGreen, 2);
+            Pen p14 = new Pen(Color.Red, 2);
+
+            Font font1 = new Font("TimesNewRoman", 10, FontStyle.Bold);
+            Font font2 = new Font("TimesNewRoman", 8);
+
+            pictureBox2.BackColor = Color.White;
+
+            //TODO: ShowObl == Obl?
+            double x1 = showobl[0, 0];
+            double x2 = showobl[0, 1];
+            double y1 = showobl[1, 0];
+            double y2 = showobl[1, 1];
+
+            double a1 = Ar[0];//5
+            double a3 = Ar[1];//4
+            double a5 = Ar[2];//3
+            double a7 = Ar[3];//2
+            double a9 = Ar[4];//1
+
+            double a10 = Ar[5];//6  
+            double a11 = Ar[6];//7
+            double a12 = Ar[7];//8
+
+            double dx = x2 - x1;
+            double dy = y2 - y1;
+            double dxy = dx - dy;
+
+            double bxy = Math.Max(dx, dy);
+            double step = 0;
+            if (bxy < 1.1) step = 0.1;
+            else if (bxy < 2.1) step = 0.2;
+            else if (bxy < 5.1) step = 0.5;
+            else if (bxy < 10.1) step = 1;
+            else if (bxy < 20.1) step = 2;
+            else if (bxy < 50.1) step = 5;
+            else if (bxy < 100.1) step = 10;
+            else if (bxy < 200.1) step = 20;
+            else if (bxy < 500.1) step = 50;
+            else if (bxy < 1000.1) step = 100;
+            else if (bxy < 2000.1) step = 200;
+            else step = 1000;
+
+            if (dxy > 0)
+            {
+                y1 = y1 - dxy / 2;
+                y2 = y2 + dxy / 2;
+            }
+            else if (dxy < 0)
+            {
+                x1 = x1 - Math.Abs(dxy) / 2;
+                x2 = x2 + Math.Abs(dxy) / 2;
+            }
+            x1 = x1 - 0.05 * Math.Abs(x2 - x1);
+            x2 = x2 + 0.05 * Math.Abs(x2 - x1);
+            y1 = y1 - 0.05 * Math.Abs(y2 - y1);
+            y2 = y2 + 0.05 * Math.Abs(y2 - y1);
+
+            float mw = k * (w) / ((float)(Math.Max(x2 - x1, y2 - y1)));
+            float mh = k * (h) / ((float)(Math.Max(x2 - x1, y2 - y1)));
+            for (int ii = 0; ii < w; ii++)
+                for (int jj = 0; jj < h; jj++)
+                {
+                    double i = (ii * (Math.Max(x2 - x1, y2 - y1)) / w + x1) / k;
+                    double j = (jj * (Math.Max(x2 - x1, y2 - y1)) / h + y1) / k;
+                    double i1 = ((ii + 1) * (Math.Max(x2 - x1, y2 - y1)) / w + x1) / k;
+                    double j1 = ((jj + 1) * (Math.Max(x2 - x1, y2 - y1)) / h + y1) / k;
+                    double i0 = ((ii - 1) * (Math.Max(x2 - x1, y2 - y1)) / w + x1) / k;
+                    double j0 = ((jj - 1) * (Math.Max(x2 - x1, y2 - y1)) / h + y1) / k;
+                    double f = function(i, j, z);
+                    double f2 = function(i0, j, z);
+                    double f3 = function(i, j0, z);
+                    double f4 = function(i1, j, z);
+                    double f5 = function(i, j1, z);
+                    double f6 = function(i1, j1, z);
+                    double f7 = function(i0, j1, z);
+                    double f8 = function(i1, j0, z);
+                    double f9 = function(i0, j0, z);
+
+                    if (((f2 < a1) || (f3 < a1) || (f4 < a1) || (f5 < a1) || (f6 < a1) || (f7 < a1) || (f8 < a1) || (f9 < a1)) && (f > a1) && (flines[4] == true)) e.Graphics.FillRectangle(Brushes.PaleGreen, (float)(ii), (float)(h - jj), 1, 1);
+                    else if (((f2 < a3) || (f3 < a3) || (f4 < a3) || (f5 < a3) || (f6 < a3) || (f7 < a3) || (f8 < a3) || (f9 < a3)) && (f > a3) && (flines[3] == true)) e.Graphics.FillRectangle(Brushes.YellowGreen, (float)(ii), (float)(h - jj), 1, 1);
+                    else if (((f2 < a5) || (f3 < a5) || (f4 < a5) || (f5 < a5) || (f6 < a5) || (f7 < a5) || (f8 < a5) || (f9 < a5)) && (f > a5) && (flines[2] == true)) e.Graphics.FillRectangle(Brushes.Orange, (float)(ii), (float)(h - jj), 1, 1);
+                    else if (((f2 < a7) || (f3 < a7) || (f4 < a7) || (f5 < a7) || (f6 < a7) || (f7 < a7) || (f8 < a7) || (f9 < a7)) && (f > a7) && (flines[1] == true)) e.Graphics.FillRectangle(Brushes.Red, (float)(ii), (float)(h - jj), 1, 1);
+                    else if (((f2 < a9) || (f3 < a9) || (f4 < a9) || (f5 < a9) || (f6 < a9) || (f7 < a9) || (f8 < a9) || (f9 < a9)) && (f > a9) && (flines[0] == true)) e.Graphics.FillRectangle(Brushes.Maroon, (float)(ii), (float)(h - jj), 1, 1);
+                    else if (((f2 < a10) || (f3 < a10) || (f4 < a10) || (f5 < a10) || (f6 < a10) || (f7 < a10) || (f8 < a10) || (f9 < a10)) && (f > a10) && (flines[5] == true)) e.Graphics.FillRectangle(Brushes.Pink, (float)(ii), (float)(h - jj), 1, 1);
+                    else if (((f2 < a11) || (f3 < a11) || (f4 < a11) || (f5 < a11) || (f6 < a11) || (f7 < a11) || (f8 < a11) || (f9 < a11)) && (f > a11) && (flines[6] == true)) e.Graphics.FillRectangle(Brushes.Violet, (float)(ii), (float)(h - jj), 1, 1);
+                    else if (((f2 < a12) || (f3 < a12) || (f4 < a12) || (f5 < a12) || (f6 < a12) || (f7 < a12) || (f8 < a12) || (f9 < a12)) && (f > a12) && (flines[7] == true)) e.Graphics.FillRectangle(Brushes.MediumOrchid, (float)(ii), (float)(h - jj), 1, 1);
+                }
+
+            if (flag == true)
+            {
+                for (int i = 0; i < algo.population; i++)
+                    e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.individuals[i].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[i].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                e.Graphics.FillEllipse(Brushes.Red, (float)((algo.individuals[0].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[0].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 8, 8);
+            }
+
+            for (int i = -6; i < 12; i++)
+            {
+                e.Graphics.DrawLine(p10, (float)((x1 - i * step) * w / (x1 - x2)), h - a - 5, (float)((x1 - i * step) * w / (x1 - x2)), h - a + 5);
+                e.Graphics.DrawLine(p10, a - 5, (float)(h - (y1 - i * step) * h / (y1 - y2)), a + 5, (float)(h - (y1 - i * step) * h / (y1 - y2)));
+                e.Graphics.DrawString((i * step).ToString(), font2, Brushes.Black, (float)((x1 - i * step) * w / (x1 - x2)), h - a + 5);
+                e.Graphics.DrawString((i * step).ToString(), font2, Brushes.Black, a - 30, (float)(h - 5 - (y1 - i * step) * h / (y1 - y2)));
+            }
+
+            //Стрелочки абцисс и ординат
+            e.Graphics.DrawLine(p10, 0, h - a, w, h - a);
+            e.Graphics.DrawLine(p10, a, h, a, 0);
+            e.Graphics.DrawLine(p10, a, 0, a - 5, 10);
+            e.Graphics.DrawLine(p10, a, 0, a + 5, 10);
+            e.Graphics.DrawLine(p10, w - 5, h - a, w - 15, h - a - 5);
+            e.Graphics.DrawLine(p10, w - 5, h - a, w - 15, h - a + 5);
+            e.Graphics.DrawString("x", font1, Brushes.Black, w - 20, h - a + 5);
+            e.Graphics.DrawString("y", font1, Brushes.Black, a - 20, 1);
+
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        /// <summary>Создание начальной популяции</summary>
+        private void buttonInitialPopulation_Click(object sender, EventArgs e)
+        {
+            
+            if (!flag)
+            {
+                Red[0] = true;
+                for (int i = 1; i < stepsCount; i++)
+                    Red[i] = false;
+
+                flag = true;                   //Начало работы алгоритма
+            
+                algo = new AlgorithmPerch //TODO: тут пока бред. Я в тупике. Ну что-то делает
+                {
+                    MaxCount = MaxIteration,
+                    NumFlocks = NumFlocks,
+                    NumPerchInFlock = NumPerchInFlock,
+                    population = NumFlocks * NumPerchInFlock,
+                    f = z,
+                    D = obl
+                };
+                algo.FormingPopulation();
+               
+                pictureBox1.Refresh();
+                pictureBox2.Refresh();
+            }
+        }
+
+        /// <summary>Помещение лидера в множество Pool</summary>
+        private void buttonLeaderToPool_Click(object sender, EventArgs e)
         {
 
             Red[3] = false;
@@ -243,7 +406,8 @@ namespace AIS
             pictureBox1.Refresh();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        /// <summary>Разбивка на стаи</summary>
+        private void buttonMakeFlocks_Click(object sender, EventArgs e)
         {
             Red[0] = false;
             Red[1] = true;
@@ -251,7 +415,8 @@ namespace AIS
             pictureBox1.Refresh();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        /// <summary>Реализация котлов</summary>
+        private void buttonKettle_Click(object sender, EventArgs e)
         {
 
             Red[1] = false;
@@ -259,7 +424,8 @@ namespace AIS
             pictureBox1.Refresh();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        /// <summary>Плавание стай</summary>
+        private void buttonFlocksSwim_Click(object sender, EventArgs e)
         {
 
             Red[2] = false;
@@ -267,7 +433,8 @@ namespace AIS
             pictureBox1.Refresh();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        /// <summary>Проверка условий окончания</summary>
+        private void buttonCheckEndConditions_Click(object sender, EventArgs e)
         {
             if (true) 
             {
@@ -279,6 +446,18 @@ namespace AIS
             }
             Red[4] = false;
             pictureBox1.Refresh();
+        }
+
+        /// <summary>Поиск самого лучшего окуня</summary>
+        private void buttonSearchInPool_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>Выбор самого лучшего окуня</summary>
+        private void buttonChooseTheBest_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

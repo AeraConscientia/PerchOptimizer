@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace AIS
 {
     public partial class FormHelp : Form
@@ -14,6 +15,17 @@ namespace AIS
         public FormHelp()
         {
             InitializeComponent();
+        }
+
+        private void FormHelp_Load(object sender, EventArgs e)
+        {
+            /*
+            string filename = Application.StartupPath;
+            filename = Path.GetFullPath(
+                Path.Combine(filename, ".\\Test.pdf"));
+            wbrPdf.Navigate(filename);
+            */
+            // да сука блять, как эту хуйню делать
         }
     }
 }

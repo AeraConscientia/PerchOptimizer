@@ -74,7 +74,7 @@ namespace AIS
             dataGridView2.Rows[3].Cells[0].Value = "Количество окуней в стае";
             dataGridView2.Rows[3].Cells[1].Value = 3;
 
-            dataGridView2.Rows[4].Cells[0].Value = "Параметр котла  -  σ";
+            dataGridView2.Rows[4].Cells[0].Value = "Параметр котла";
             dataGridView2.Rows[4].Cells[1].Value = (1.9).ToString();
 
             dataGridView2.Rows[5].Cells[0].Value = "Число перекоммутаций";
@@ -89,10 +89,10 @@ namespace AIS
             dataGridView3.Rows[2].Cells[0].Value = "f*";
 
             dataGridView4.RowCount = 2;
-            dataGridView4.Rows[0].Cells[0].Value = "Параметр распределения  -  λ";
+            dataGridView4.Rows[0].Cells[0].Value = "Параметр распределения";
             dataGridView4.Rows[0].Cells[1].Value = (1.5).ToString();
 
-            dataGridView4.Rows[1].Cells[0].Value = "Величина шага  -  α";
+            dataGridView4.Rows[1].Cells[0].Value = "Величина шага";
             dataGridView4.Rows[1].Cells[1].Value = (0.6).ToString();
         }
 
@@ -263,8 +263,7 @@ namespace AIS
                 Ar[3] = -12F;
                 Ar[4] = -14F;
                 flag = true;
-                //pictureBox2.Image = Properties.Resources.;
-                //TODO: добавить картинку для Skin
+                pictureBox2.Image = Properties.Resources.SkinMin;
             }
             else if (comboBox1.SelectedIndex == 7)
             {
@@ -558,11 +557,6 @@ namespace AIS
             Close();
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void comboBoxSelectParams_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -573,20 +567,10 @@ namespace AIS
             }
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonHelp_Click(object sender, EventArgs e)
         {
             FormHelp formHelp = new FormHelp();
             formHelp.ShowDialog();
-        }
-
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void button1_Click_1(object sender, EventArgs e)
