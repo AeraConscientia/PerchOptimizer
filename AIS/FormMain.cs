@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics;
 
 namespace AIS
 {
@@ -343,6 +345,7 @@ namespace AIS
             float a = 30;
             
             List<PointF> points = new List<PointF>();
+
             Pen p1 = new Pen(Color.PaleGreen, 1);
             Pen p2 = new Pen(Color.GreenYellow, 1);
             Pen p3 = new Pen(Color.YellowGreen, 1);
@@ -451,7 +454,7 @@ namespace AIS
                                 e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0,i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
                             for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
-                                e.Graphics.FillEllipse(Brushes.Aqua, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                                e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                             for (int j = 1; j < NumFlocks-1; j++) // раскраска остальных окуней
                             {
 
@@ -567,10 +570,10 @@ namespace AIS
             }
         }
 
+        /// <summary>Вызов pdf файла с алгоритмом</summary>
         private void buttonHelp_Click(object sender, EventArgs e)
         {
-            FormHelp formHelp = new FormHelp();
-            formHelp.ShowDialog();
+            Process.Start("HelpPerchMethod.pdf");
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -598,7 +601,7 @@ namespace AIS
             deltapr = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
             FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr)
             {
-                flines = flines, // хер знает, почему оно агрится
+                flines = flines,
                 showobl = showobl,
                 Ar = Ar
             };

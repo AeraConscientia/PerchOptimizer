@@ -19,13 +19,6 @@ namespace AIS
 
         private void FormHelp_Load(object sender, EventArgs e)
         {
-            /*
-            string filename = Application.StartupPath;
-            filename = Path.GetFullPath(
-                Path.Combine(filename, ".\\Test.pdf"));
-            wbrPdf.Navigate(filename);
-            */
-            // да сука блять, как эту хуйню делать
         }
     }
 }

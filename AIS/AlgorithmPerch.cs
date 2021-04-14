@@ -60,7 +60,7 @@ namespace AIS
 
         public List<Perch> Pool = new List<Perch>();
 
-
+        public bool flagCreate = false;
         
         /// <summary>Все стаи с окунями</summary>
         public Perch[,] flock;
@@ -277,9 +277,18 @@ namespace AIS
         /// <summary>Распределение Леви, координата х,  для худшей стаи</summary>
         public double LeviX()
         {
-            R1 = rand.Next(Convert.ToInt32(D[0, 0] * 100), Convert.ToInt32(D[0,1] * 100)) / 100f;
+            /*
+             *      a       |       b       |       b-a
+             *      -10             -7              3
+             *      0               5               5
+             *      5               17              12
+             */
+
+            //R1 = rand.Next(Convert.ToInt32(D[0, 0] * 100), Convert.ToInt32(D[0,1] * 100)) / 100f;
+            R1 = rand.Next(Convert.ToInt32(0), Convert.ToInt32((D[0,1] - D[0, 0]) * 100)) / 100f; // (0, b1-a1)
             thetta1 = R1 * 2 * Math.PI;
-            L1 = Math.Pow(Math.Abs(R1), -1 / lambda);       // TODO: точно можно ставить abs?
+            L1 = Math.Pow(Math.Abs(R1), -1 / lambda);       // TODO: точно можно ставить abs? Ради эксперимента сниму модуль ниже |
+            L1 = Math.Pow(R1, -1 / lambda);
 
             x = L1 * Math.Sin(thetta1);
             return x;
@@ -288,9 +297,11 @@ namespace AIS
         /// <summary>Распределение Леви, координата y,  для худшей стаи</summary>
         public double LeviY()
         {
-            R2 = rand.Next(Convert.ToInt32(D[1, 0] * 100), Convert.ToInt32(D[1, 1] * 100)) / 100f;
+            //R2 = rand.Next(Convert.ToInt32(D[1, 0] * 100), Convert.ToInt32(D[1, 1] * 100)) / 100f;
+            R2 = rand.Next(Convert.ToInt32(0), Convert.ToInt32((D[1, 1] - D[1, 0]) * 100)) / 100f; // (0, b2-a2)
             thetta2 = R2 * 2 * Math.PI;
-            L2 = Math.Pow(Math.Abs(R2), -1 / lambda);   //!
+            //L2 = Math.Pow(Math.Abs(R2), -1 / lambda);   //!
+            L2 = Math.Pow(R2, -1 / lambda);   //!
 
             y = L2 * Math.Cos(thetta2); // TODO: странна, менять, если что
             return y;
@@ -355,8 +366,8 @@ namespace AIS
             for (int currentIteration = 1; currentIteration < MaxCount; currentIteration++)
             {
                 MakeFlocks();
-                MoveEPerchEFlock();
-                FlocksSwim();
+                //MoveEPerchEFlock();
+                //FlocksSwim();
                 this.currentIteration++;
             }  
 
@@ -370,6 +381,17 @@ namespace AIS
             BestFlockSwim();
             PoorFlockSwim();
             AverFlockSwim();
+
+            individuals = new List<Perch>();
+
+            for (int i = 0; i < NumFlocks; i++)
+            {
+                for (int j = 0; j < NumPerchInFlock; j++)
+                {
+                    individuals.Add(flock[i, j]);
+                }
+            }
+            //flocks -> individuals
         }
 
         private float function(double x1, double x2, int f)

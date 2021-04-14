@@ -50,6 +50,8 @@ namespace AIS
         int PRmax;
         int deltapr;
 
+        //bool flagCreate;
+
 
         /// <summary>Номер функции</summary>
         public int z;
@@ -342,11 +344,36 @@ namespace AIS
                     else if (((f2 < a12) || (f3 < a12) || (f4 < a12) || (f5 < a12) || (f6 < a12) || (f7 < a12) || (f8 < a12) || (f9 < a12)) && (f > a12) && (flines[7] == true)) e.Graphics.FillRectangle(Brushes.MediumOrchid, (float)(ii), (float)(h - jj), 1, 1);
                 }
 
-            if (flag == true)
+            if (flag) 
             {
-                for (int i = 0; i < algo.population; i++)
-                    e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.individuals[i].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[i].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                e.Graphics.FillEllipse(Brushes.Red, (float)((algo.individuals[0].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[0].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 8, 8);
+                if ((Red[1] == true) || (Red[2] == true) || (Red[3] == true))
+                {
+
+                    for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
+                        e.Graphics.FillEllipse(Brushes.Red, (float)((algo.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+
+                    for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
+                        e.Graphics.FillEllipse(Brushes.Aqua, (float)((algo.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                    for (int j = 1; j < NumFlocks - 1; j++) // раскраска остальных окуней
+                    {
+
+                        for (int i = 0; i < NumPerchInFlock; i++)
+                            e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.flock[j, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[j, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                    }
+                    //for (int i = 0; i < algo.population; i++)
+                    //    e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.individuals[i].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[i].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                    //e.Graphics.FillEllipse(Brushes.Red, (float)((algo.individuals[0].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[0].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 8, 8);
+                }
+                else
+                {
+                    if (algo.flock != null)
+                        for (int j = 0; j < NumFlocks; j++) // раскраска остальных окуней
+                            for (int i = 0; i < NumPerchInFlock; i++)
+                                e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.flock[j, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[j, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                    else
+                        for (int i = 0; i < algo.individuals.Count; i++)
+                            e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.individuals[i].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[i].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                }
             }
 
             for (int i = -6; i < 12; i++)
@@ -380,7 +407,7 @@ namespace AIS
                     Red[i] = false;
 
                 flag = true;                   //Начало работы алгоритма
-            
+
                 algo = new AlgorithmPerch //TODO: тут пока бред. Я в тупике. Ну что-то делает
                 {
                     MaxCount = MaxIteration,
@@ -388,13 +415,32 @@ namespace AIS
                     NumPerchInFlock = NumPerchInFlock,
                     population = NumFlocks * NumPerchInFlock,
                     f = z,
-                    D = obl
+                    D = obl,
+                    NStep = NStep,
+                    sigma = sigma,
+                    lambda = lambda,
+                    alfa = alfa,
+                    PRmax = PRmax,
+                    deltapr = deltapr
+                    //flagCreate = flagCreate
                 };
                 algo.FormingPopulation();
                
                 pictureBox1.Refresh();
                 pictureBox2.Refresh();
             }
+        }
+
+        /// <summary>Разбивка на стаи</summary>
+        private void buttonMakeFlocks_Click(object sender, EventArgs e)
+        {
+            Red[0] = false;
+            Red[1] = true;
+            Red[6] = false;
+            algo.MakeFlocks();
+
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
         }
 
         /// <summary>Помещение лидера в множество Pool</summary>
@@ -406,22 +452,15 @@ namespace AIS
             pictureBox1.Refresh();
         }
 
-        /// <summary>Разбивка на стаи</summary>
-        private void buttonMakeFlocks_Click(object sender, EventArgs e)
-        {
-            Red[0] = false;
-            Red[1] = true;
-            Red[6] = false;
-            pictureBox1.Refresh();
-        }
-
         /// <summary>Реализация котлов</summary>
         private void buttonKettle_Click(object sender, EventArgs e)
         {
 
             Red[1] = false;
             Red[2] = true;
+            algo.MoveEPerchEFlock();
             pictureBox1.Refresh();
+            pictureBox2.Refresh();
         }
 
         /// <summary>Плавание стай</summary>
@@ -430,7 +469,9 @@ namespace AIS
 
             Red[2] = false;
             Red[3] = true;
+            algo.FlocksSwim();
             pictureBox1.Refresh();
+            pictureBox2.Refresh();
         }
 
         /// <summary>Проверка условий окончания</summary>
@@ -451,13 +492,14 @@ namespace AIS
         /// <summary>Поиск самого лучшего окуня</summary>
         private void buttonSearchInPool_Click(object sender, EventArgs e)
         {
-
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
         }
 
         /// <summary>Выбор самого лучшего окуня</summary>
         private void buttonChooseTheBest_Click(object sender, EventArgs e)
         {
-
+            pictureBox1.Refresh();
         }
     }
 }
