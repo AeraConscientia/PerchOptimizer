@@ -158,27 +158,31 @@ namespace AIS
             Font f1 = new Font("TimesNewRoman", 12, FontStyle.Bold);
 
             e.Graphics.DrawLine(pBlack, 250, 250, 250, 135); // проверка -> деление  вертик 
-            e.Graphics.DrawLine(pBlack, 250, 135, 140, 135); // проверка -> деление  горизонт НУЖНА СТРЕЛОЧКА
+            e.Graphics.DrawLine(pBlack, 250, 135, 135, 135); // проверка -> деление  горизонт
+            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 130-1); // Верхнее крыло повернутой стрелочки
+            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 140); // Нижнее крыло повернутой стрелочки
 
             if (Red[6] == true)
             {
                 e.Graphics.DrawLine(pRed, 250, 250, 250, 135); // проверка -> деление  вертик 
-                e.Graphics.DrawLine(pRed, 250, 135, 140, 135); // проверка -> деление  горизонт НУЖНА СТРЕЛОЧКА
+                e.Graphics.DrawLine(pRed, 250, 135, 140, 135); // проверка -> деление  горизонт
+                e.Graphics.DrawLine(pRed, 135 + 2, 134, 145 + 3, 130 - 1);
+                e.Graphics.DrawLine(pRed, 135 + 2, 134, 145 + 3, 140);
             }
 
             e.Graphics.DrawLine(pBlack, 140, 405, 250, 405); // лидер Pool -> проверка горизонт
 
             e.Graphics.DrawLine(pBlack, 250, 405, 250, 210); // лидер Pool -> проверка вертик
-            e.Graphics.DrawLine(pBlack, 250, 260, 255, 270);
-            e.Graphics.DrawLine(pBlack, 249, 260, 244, 270);
+            e.Graphics.DrawLine(pBlack, 250, 258, 255, 268);
+            e.Graphics.DrawLine(pBlack, 249, 258, 244, 268);
 
             if (Red[4] == true)
             {
                 e.Graphics.DrawLine(pRed, 140, 405, 250, 405); // лидер Pool -> проверка горизонт
                                      
                 e.Graphics.DrawLine(pRed, 250, 405, 250, 210); // лидер Pool -> проверка вертик
-                e.Graphics.DrawLine(pRed, 250, 260, 255, 270);
-                e.Graphics.DrawLine(pRed, 249, 260, 244, 270);
+                e.Graphics.DrawLine(pRed, 250, 258, 255, 268);
+                e.Graphics.DrawLine(pRed, 249, 258, 244, 268);
             }
 
             e.Graphics.DrawLine(pBlack, 70, 300, 70, 373); // плаванье -> лидер Pool 
@@ -228,8 +232,15 @@ namespace AIS
             e.Graphics.DrawLine(pBlack, 310, 225, 340, 225); // проверка -> интенсивный поиск  горизонт
             e.Graphics.DrawLine(pBlack, 340, 225, 340, 530); // проверка -> интенсивный поиск  вертик
             e.Graphics.DrawLine(pBlack, 310, 530, 340, 530); // проверка -> интенсивный поиск  горизонт НУЖНА СТРЕЛОЧКА
+            e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 300+224); // Верхнее крыло повернутой стрелочки   ********
+            e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 311+225); // Нижнее крыло повернутой стрелочки   ********
 
             e.Graphics.DrawLine(pBlack, 70, 530, 340, 530); // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
+            //e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 300 + 224); // Верхнее крыло повернутой стрелочки ********
+            //e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 311 + 225); // Нижнее крыло повернутой стрелочки ********
+            e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 300 + 224); // Верхнее крыло повернутой стрелочки 
+            e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 311 + 225); // Нижнее крыло повернутой стрелочки 
+
         }
 
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
@@ -353,7 +364,7 @@ namespace AIS
                         e.Graphics.FillEllipse(Brushes.Red, (float)((algo.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
                     for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
-                        e.Graphics.FillEllipse(Brushes.Aqua, (float)((algo.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                        e.Graphics.FillEllipse(Brushes.Black, (float)((algo.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                     for (int j = 1; j < NumFlocks - 1; j++) // раскраска остальных окуней
                     {
 
@@ -422,7 +433,6 @@ namespace AIS
                     alfa = alfa,
                     PRmax = PRmax,
                     deltapr = deltapr
-                    //flagCreate = flagCreate
                 };
                 algo.FormingPopulation();
                

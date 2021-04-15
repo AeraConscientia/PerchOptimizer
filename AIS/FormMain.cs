@@ -454,7 +454,7 @@ namespace AIS
                                 e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0,i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
                             for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
-                                e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                                e.Graphics.FillEllipse(Brushes.Black, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                             for (int j = 1; j < NumFlocks-1; j++) // раскраска остальных окуней
                             {
 
