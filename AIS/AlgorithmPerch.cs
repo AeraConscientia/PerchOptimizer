@@ -12,8 +12,11 @@ namespace AIS
         public double L1, L2;
         public double x, y;
 
+        public double Xp_pool, Xq_pool, Xr_pool;
+
         private Random rand = new Random();
         public Perch perch = new Perch();
+        public Perch best = new Perch();
 
         /// <summary>Размер популяции окуней </summary>
         public int population;
@@ -366,8 +369,8 @@ namespace AIS
             for (int currentIteration = 1; currentIteration < MaxCount; currentIteration++)
             {
                 MakeFlocks();
-                //MoveEPerchEFlock();
-                //FlocksSwim();
+                MoveEPerchEFlock();
+                FlocksSwim();
                 this.currentIteration++;
             }  
 
@@ -391,7 +394,6 @@ namespace AIS
                     individuals.Add(flock[i, j]);
                 }
             }
-            //flocks -> individuals
         }
 
         private float function(double x1, double x2, int f)
@@ -450,14 +452,51 @@ namespace AIS
             }
             return Cp;
         }
+
         public double AverageFitness()
         {
             double sum = 0;
-            for (int i = 0; i < population; i++)
-                sum += individuals[i].fitness;
+            for (int i = 0; i < NumFlocks; i++)
+                for (int j = 0; j < NumPerchInFlock; j++)
+                {
+                    sum += flock[i, j].fitness;
+                }
+
             double fitness = (sum / population);
             averageFitness.Add(fitness);
             return fitness;
+        }
+
+        public void Recommutation()
+        {
+            int p, q, r; // TODO: три несовпадающих решения? Или могут быть одинаковые?
+            p = rand.Next(0, MaxCount);
+            q = rand.Next(0, MaxCount);
+            r = rand.Next(0, MaxCount);
+            Xp_pool = bestFitness[p];
+            Xq_pool = bestFitness[q];
+            Xr_pool = bestFitness[r];
+            double Xnew = 0;
+
+
+            /**/
+            int pr = 0; 
+            for (int i = 0; i < deltapr - 1; i++)
+            {
+                double f = Xq_pool + i * (Xq_pool - Xq_pool) / deltapr; //min
+            }
+            double Xpq = f; //min(f)
+            for (int i = 0; i < deltapr - 1; i++)
+            {
+                Xnew = Xpq + i * (Xr_pool - Xpq) / deltapr; //min
+            }
+            pr++;
+            /**/ // надо вынести в метод
+
+            if (pr >= PRmax)
+            {
+                double answer = Xnew; //min
+            }
         }
     }
 }

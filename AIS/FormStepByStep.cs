@@ -580,7 +580,6 @@ namespace AIS
                     if (algst.bestFitness.Count >= 2 && algst.averageFitness.Count >= 2)
                     for (int i = 0; i < algst.averageFitness.Count - 1; i++)
                     {
-
                         {
                             e.Graphics.DrawLine(p2, (float)(x0 + mx * i), (float)(y0 - mh * (algst.averageFitness[i] - Math.Min(0, algst.averageFitness[0]))), (float)(x0 + mx * (i + 1)), (float)(y0 - mh * (algst.averageFitness[i + 1] - Math.Min(0, algst.averageFitness[0]))));
                             e.Graphics.DrawLine(p3, (float)(x0 + mx * i), (float)(y0 - mh * (algst.bestFitness[i] - Math.Min(0, algst.averageFitness[0]))), (float)(x0 + mx * (i + 1)), (float)(y0 - mh * (algst.bestFitness[i + 1] - Math.Min(0, algst.averageFitness[0]))));

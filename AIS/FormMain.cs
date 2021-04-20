@@ -454,7 +454,7 @@ namespace AIS
                                 e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0,i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
                             for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
-                                e.Graphics.FillEllipse(Brushes.Black, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                                e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                             for (int j = 1; j < NumFlocks-1; j++) // раскраска остальных окуней
                             {
 
@@ -599,7 +599,7 @@ namespace AIS
 
             PRmax = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
             deltapr = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
-            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr)
+            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr, exact)
             {
                 flines = flines,
                 showobl = showobl,

@@ -12,10 +12,10 @@ namespace AIS
 {
     public partial class FormStepPerch : Form
     {
-        public FormStepPerch(int z, double[,] obl, int MaxIteration, int NumFlocks, int NumPerchInFlock, int NStep, double sigma, double lambda, double alfa, int PRmax, int deltapr)
+        public FormStepPerch(int z, double[,] obl, int MaxIteration, int NumFlocks, int NumPerchInFlock, int NStep, double sigma, double lambda, double alfa, int PRmax, int deltapr, double exact)
         {
             InitializeComponent();
-
+            
             //population.this = population;
 
             this.z = z;
@@ -33,6 +33,7 @@ namespace AIS
             this.PRmax = PRmax;
             this.deltapr = deltapr;
             int population = NumFlocks * NumPerchInFlock;
+            this.exact = exact;
         }
 
         
@@ -49,6 +50,8 @@ namespace AIS
 
         int PRmax;
         int deltapr;
+
+        double exact;
 
         //bool flagCreate;
 
@@ -104,7 +107,7 @@ namespace AIS
                 double[] c6 = Cpow(x1, x2, 6);
                 funct = (float)(-1 / (1 + Math.Sqrt((c6[0] - 1) * (c6[0] - 1) + c6[1] * c6[1])));
             }
-            else if (f == 3) // Шафер
+            else if (f == 3) // Шаффер
                 funct = (float)(-(0.5 - (Math.Pow(Math.Sin(Math.Sqrt(x1 * x1 + x2 * x2)), 2) - 0.5) / (1 + 0.001 * (x1 * x1 + x2 * x2))));
             else if (f == 4) // Растригин
             {
@@ -364,7 +367,7 @@ namespace AIS
                         e.Graphics.FillEllipse(Brushes.Red, (float)((algo.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
                     for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
-                        e.Graphics.FillEllipse(Brushes.Black, (float)((algo.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                        e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algo.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                     for (int j = 1; j < NumFlocks - 1; j++) // раскраска остальных окуней
                     {
 
@@ -480,6 +483,12 @@ namespace AIS
             Red[2] = false;
             Red[3] = true;
             algo.FlocksSwim();
+
+            algo.best = algo.flock[0, 0];
+            algo.bestFitness.Add(algo.best.fitness);
+            algo.AverageFitness();
+
+            pictureBoxGraph.Refresh();
             pictureBox1.Refresh();
             pictureBox2.Refresh();
         }
@@ -510,6 +519,110 @@ namespace AIS
         private void buttonChooseTheBest_Click(object sender, EventArgs e)
         {
             pictureBox1.Refresh();
+        }
+
+        private void pictureBoxGraph_Paint(object sender, PaintEventArgs e)
+        {
+            //TODO: добавить exact в formMain
+            //double exact = 0.1;
+            if (flag == true)
+            {
+                float w = pictureBoxGraph.Width;
+                float h = pictureBoxGraph.Height;
+                Pen p1 = new Pen(Color.Black, 1);
+                Pen p2 = new Pen(Color.Green, 2);
+                Pen p3 = new Pen(Color.Blue, 2);
+                Font f1 = new Font("TimesNewRoman", 7);
+                Font f2 = new Font("TimesNewRoman", 7, FontStyle.Bold);
+                float x0 = 25;
+                float y0 = h - 20;
+                e.Graphics.DrawLine(p1, x0, y0, w, y0);
+                e.Graphics.DrawLine(p1, x0, y0, x0, 0);
+                e.Graphics.DrawLine(p1, x0, 0, x0 - 5, 10);
+                e.Graphics.DrawLine(p1, x0, 0, x0 + 5, 10);
+                e.Graphics.DrawLine(p1, w - 5, y0, w - 15, y0 + 5);
+                e.Graphics.DrawLine(p1, w - 5, y0, w - 15, y0 - 5);
+
+                float mx = (w - 60) / (algo.currentIteration + 5);//(algo.MaxCount);
+                float mh = 0;
+                try { mh = (float)((h - 60) / ((1.1 * exact - Math.Max(0, algo.averageFitness[0])))); }
+                catch { mh = (float)((h - 60) / (1.1 * exact)); }
+
+                double a = 1;
+
+
+                if (algo.currentIteration < 31) a = 2;
+                else if (algo.currentIteration < 101) a = 5;
+                else if (algo.currentIteration < 151) a = 10;
+                else if (algo.currentIteration < 301) a = 20;
+                else if (algo.currentIteration < 501) a = 50;
+                else if (algo.currentIteration < 1001) a = 100;
+                else if (algo.currentIteration < 2001) a = 200;
+                else a = 1000;
+
+                double b = 0;
+                try { b = 1.1 * exact - Math.Max(0, algo.averageFitness[0]); }
+                catch { b = 1.1 * exact; }
+                double c = 1;
+                if (b < 0.1) c = 0.01;
+                else if (b < 0.2) c = 0.02;
+                else if (b < 1) c = 0.1;
+                else if (b < 2) c = 0.2;
+                else if (b < 11) c = 1;
+                else if (b < 21) c = 2;
+                else if (b < 51) c = 5;
+                else if (b < 101) c = 10;
+                else if (b < 200) c = 20;
+                else if (b < 1000) c = 100;
+                else if (b < 2000) c = 200;
+                else c = 500;
+
+                for (int i = 0; i < algo.population; i++)
+                {
+
+                    //float s = i / a;
+                    if (Math.Floor((decimal)(i / a)) - (decimal)(i / a) == 0)
+                    {
+                        e.Graphics.DrawLine(p1, (float)(x0 + (mx) * (i)), y0 + 2, (float)(x0 + mx * (i)), y0 - 2);
+                        e.Graphics.DrawString(Convert.ToString(i), f1, Brushes.Black, (float)(x0 + mx * (i)), (float)(y0 + 4));
+
+                    }
+                }
+
+                if (Math.Floor((decimal)((algo.MaxCount) / a)) - (decimal)((algo.MaxCount) / a) == 0)
+                {
+                    e.Graphics.DrawLine(p1, (float)(x0 + (mx) * (algo.MaxCount)), y0 + 2, (float)(x0 + mx * (algo.MaxCount)), y0 - 2);
+                    e.Graphics.DrawString(Convert.ToString(algo.MaxCount), f1, Brushes.Black, (float)(x0 + mx * (algo.MaxCount)), (float)(y0 + 4));
+                }
+
+                if (flag == true)
+                {
+                    e.Graphics.FillEllipse(Brushes.Green, (float)(x0), (float)(y0 - 1 - mh * (-algo.averageFitness[0] - Math.Max(0,-algo.averageFitness[0]))), 3, 3);
+                    e.Graphics.FillEllipse(Brushes.Blue, (float)(x0), (float)(y0 - 1 - mh * (-algo.best.coords[0] - Math.Max(0, -algo.averageFitness[0]))), 3, 3);
+
+
+                    if (algo.bestFitness.Count >= 2 && algo.averageFitness.Count >= 2)
+                        for (int i = 0; i < algo.averageFitness.Count - 1; i++)
+                        {
+                            {
+                                e.Graphics.DrawLine(p2, (float)(x0 + mx * i), (float)(y0 - mh * (-algo.averageFitness[i] - Math.Max(0, algo.averageFitness[0]))), (float)(x0 + mx * (i + 1)), (float)(y0 - mh * (-algo.averageFitness[i + 1] - Math.Max(0, -algo.averageFitness[0]))));
+                                e.Graphics.DrawLine(p3, (float)(x0 + mx * i), (float)(y0 - mh * (-algo.bestFitness[i] - Math.Max(0, algo.averageFitness[0]))), (float)(x0 + mx * (i + 1)), (float)(y0 - mh * (-algo.bestFitness[i + 1] - Math.Max(0, -algo.averageFitness[0]))));
+                            }
+                        }
+                }
+
+                float zero = 0;
+                try { zero = (float)(y0 + mh * Math.Max(0, algo.averageFitness[0])); }
+                catch { zero = (float)(y0); }
+
+                for (int i = -6; i < 12; i++)
+                {
+                    e.Graphics.DrawLine(p1, (float)(x0 + 2), (float)(zero - mh * c * i), (float)(x0 - 2), (float)(zero - mh * c * i));
+                    if ((zero - mh * c * i - 8 > 11) && (zero - mh * c * i - 8 < h - 20)) e.Graphics.DrawString(Convert.ToString((c * i)), f1, Brushes.Black, (float)(x0 - 24), (float)(zero - mh * c * i - 8));
+                }
+                e.Graphics.DrawString("MaxCount", f2, Brushes.Black, (float)(w - 15), (float)(y0 + 4));
+                e.Graphics.DrawString("f", f2, Brushes.Black, (float)(x0 - 24), (float)(2));
+            }
         }
     }
 }
