@@ -65,7 +65,7 @@ namespace AIS
         public double[,] showoblbase = new double[2, 2];
         public double[,] oblbase = new double[2, 2];
         public double[,] obl;
-        public int stepsCount = 8; // TODO: Что это вообще?
+        public int stepsCount = 9; // TODO: Что это вообще?
 
         public AlgorithmPerch algo = new AlgorithmPerch();
 
@@ -73,7 +73,7 @@ namespace AIS
         
         bool flag = false;
         /// <summary>Массив состояний</summary>
-        bool[] Red = new bool[8];
+        bool[] Red = new bool[9];
 
         /*
         private void InitDataGridView()
@@ -232,17 +232,31 @@ namespace AIS
                 e.Graphics.DrawLine(pRed, 69, 102, 64, 92);
             }
 
+
             e.Graphics.DrawLine(pBlack, 310, 225, 340, 225); // проверка -> интенсивный поиск  горизонт
             e.Graphics.DrawLine(pBlack, 340, 225, 340, 530); // проверка -> интенсивный поиск  вертик
             e.Graphics.DrawLine(pBlack, 310, 530, 340, 530); // проверка -> интенсивный поиск  горизонт НУЖНА СТРЕЛОЧКА
             e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 300+224); // Верхнее крыло повернутой стрелочки   ********
             e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 311+225); // Нижнее крыло повернутой стрелочки   ********
+            
+            if (Red[7] == true)
+            {
+                e.Graphics.DrawLine(pRed, 310, 225, 340, 225); // проверка -> интенсивный поиск  горизонт
+                e.Graphics.DrawLine(pRed, 340, 225, 340, 530); // проверка -> интенсивный поиск  вертик
+                e.Graphics.DrawLine(pRed, 310, 530, 340, 530); // проверка -> интенсивный поиск  горизонт НУЖНА СТРЕЛОЧКА
+                e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 300 + 224); // Верхнее крыло повернутой стрелочки   ********
+                e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 311 + 225); // Нижнее крыло повернутой стрелочки   ********
+            }
 
-            e.Graphics.DrawLine(pBlack, 70, 530, 340, 530); // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
-            //e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 300 + 224); // Верхнее крыло повернутой стрелочки ********
-            //e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 311 + 225); // Нижнее крыло повернутой стрелочки ********
+            e.Graphics.DrawLine(pBlack, 70, 530, 310, 530); // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
             e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 300 + 224); // Верхнее крыло повернутой стрелочки 
             e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 311 + 225); // Нижнее крыло повернутой стрелочки 
+            if (Red[8] == true) 
+            {
+                e.Graphics.DrawLine(pRed, 70, 530, 310, 530); // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
+                e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 300 + 224); // Верхнее крыло повернутой стрелочки 
+                e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 311 + 225); // Нижнее крыло повернутой стрелочки 
+            }
 
         }
 
@@ -438,7 +452,10 @@ namespace AIS
                     deltapr = deltapr
                 };
                 algo.FormingPopulation();
-               
+                buttonMakeFlocks.Enabled = true;
+                buttonInitialPopulation.Enabled = false;
+
+
                 pictureBox1.Refresh();
                 pictureBox2.Refresh();
             }
@@ -452,6 +469,9 @@ namespace AIS
             Red[6] = false;
             algo.MakeFlocks();
 
+            buttonMakeFlocks.Enabled = false;
+            buttonKettle.Enabled = true;
+
             pictureBox1.Refresh();
             pictureBox2.Refresh();
         }
@@ -462,6 +482,11 @@ namespace AIS
 
             Red[3] = false;
             Red[4] = true;
+            this.buttonAnswer.Enabled = true;
+
+            buttonLeaderToPool.Enabled = false;
+            buttonCheckEndConditions.Enabled = true;
+
             pictureBox1.Refresh();
         }
 
@@ -472,6 +497,10 @@ namespace AIS
             Red[1] = false;
             Red[2] = true;
             algo.MoveEPerchEFlock();
+
+            buttonFlocksSwim.Enabled = true;
+            buttonKettle.Enabled = false;
+
             pictureBox1.Refresh();
             pictureBox2.Refresh();
         }
@@ -483,10 +512,14 @@ namespace AIS
             Red[2] = false;
             Red[3] = true;
             algo.FlocksSwim();
+            algo.currentIteration++;
 
             algo.best = algo.flock[0, 0];
             algo.bestFitness.Add(algo.best.fitness);
             algo.AverageFitness();
+
+            buttonFlocksSwim.Enabled = false;
+            buttonLeaderToPool.Enabled = true;
 
             pictureBoxGraph.Refresh();
             pictureBox1.Refresh();
@@ -496,21 +529,44 @@ namespace AIS
         /// <summary>Проверка условий окончания</summary>
         private void buttonCheckEndConditions_Click(object sender, EventArgs e)
         {
-            if (true) 
+            this.buttonAnswer.Enabled = false;
+            buttonCheckEndConditions.Enabled = false;
+            if (algo.currentIteration < algo.MaxCount) 
             {
                 Red[6] = true;
+                buttonMakeFlocks.Enabled = true;
             }
             else 
             {
                 Red[7] = true;
+                buttonSearchInPool.Enabled = true;
             }
             Red[4] = false;
+            dataGridView3.RowCount = 4;
+            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
+            dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
+            dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
+            dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
+
+            dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
+            dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
+            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+            dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count-1]:F8}");
             pictureBox1.Refresh();
         }
 
         /// <summary>Поиск самого лучшего окуня</summary>
         private void buttonSearchInPool_Click(object sender, EventArgs e)
         {
+            if (Red[7] == true)
+            {
+                Red[7] = false;
+                Red[8] = true;
+            }
+
+            buttonSearchInPool.Enabled = false;
+            buttonChooseTheBest.Enabled = true;
+
             pictureBox1.Refresh();
             pictureBox2.Refresh();
         }
@@ -518,7 +574,18 @@ namespace AIS
         /// <summary>Выбор самого лучшего окуня</summary>
         private void buttonChooseTheBest_Click(object sender, EventArgs e)
         {
-            pictureBox1.Refresh();
+            if (Red[8] == true) 
+            {
+                pictureBox1.Refresh();
+                flag = false;
+
+                dataGridView3.RowCount = 2;
+                dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
+                dataGridView3.Rows[1].Cells[0].Value = "f*";
+
+                dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
+                dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+            }
         }
 
         private void pictureBoxGraph_Paint(object sender, PaintEventArgs e)
@@ -536,16 +603,17 @@ namespace AIS
                 Font f2 = new Font("TimesNewRoman", 7, FontStyle.Bold);
                 float x0 = 25;
                 float y0 = h - 20;
-                e.Graphics.DrawLine(p1, x0, y0, w, y0);
-                e.Graphics.DrawLine(p1, x0, y0, x0, 0);
-                e.Graphics.DrawLine(p1, x0, 0, x0 - 5, 10);
-                e.Graphics.DrawLine(p1, x0, 0, x0 + 5, 10);
-                e.Graphics.DrawLine(p1, w - 5, y0, w - 15, y0 + 5);
-                e.Graphics.DrawLine(p1, w - 5, y0, w - 15, y0 - 5);
+                e.Graphics.DrawLine(p1, x0, y0, w, y0); // ось х
+                e.Graphics.DrawLine(p1, x0, y0, x0, 0); // ось у
+                e.Graphics.DrawLine(p1, x0, 0, x0 - 5, 10); // ось у, стрелочка
+                e.Graphics.DrawLine(p1, x0, 0, x0 + 5, 10); // ось у, стрелочка
+                e.Graphics.DrawLine(p1, w - 5, y0, w - 15, y0 + 5); // ось х, стрелочка
+                e.Graphics.DrawLine(p1, w - 5, y0, w - 15, y0 - 5); // ось х, стрелочка
 
                 float mx = (w - 60) / (algo.currentIteration + 5);//(algo.MaxCount);
                 float mh = 0;
-                try { mh = (float)((h - 60) / ((1.1 * exact - Math.Max(0, algo.averageFitness[0])))); }
+                //try { mh = (float)((h - 60) / ((1.1 * exact - Math.Min(0, algo.averageFitness[0])))); }
+                try { mh = (float)(Math.Abs((h - 60) / ((1.1 * exact - Math.Max(0, algo.averageFitness[0]))))); } // я хз уже
                 catch { mh = (float)((h - 60) / (1.1 * exact)); }
 
                 double a = 1;
@@ -561,7 +629,8 @@ namespace AIS
                 else a = 1000;
 
                 double b = 0;
-                try { b = 1.1 * exact - Math.Max(0, algo.averageFitness[0]); }
+                //try { b = 1.1 * exact - Math.Max(0, algo.averageFitness[0]); }
+                try { b = 1.1 * exact - Math.Min(0, algo.averageFitness[0]); }
                 catch { b = 1.1 * exact; }
                 double c = 1;
                 if (b < 0.1) c = 0.01;
@@ -584,7 +653,7 @@ namespace AIS
                     if (Math.Floor((decimal)(i / a)) - (decimal)(i / a) == 0)
                     {
                         e.Graphics.DrawLine(p1, (float)(x0 + (mx) * (i)), y0 + 2, (float)(x0 + mx * (i)), y0 - 2);
-                        e.Graphics.DrawString(Convert.ToString(i), f1, Brushes.Black, (float)(x0 + mx * (i)), (float)(y0 + 4));
+                        e.Graphics.DrawString(Convert.ToString(i), f1, Brushes.Black, (float)(x0 + mx * (i)), (float)(y0 + 4)); // ось х, числа
 
                     }
                 }
@@ -597,32 +666,68 @@ namespace AIS
 
                 if (flag == true)
                 {
-                    e.Graphics.FillEllipse(Brushes.Green, (float)(x0), (float)(y0 - 1 - mh * (-algo.averageFitness[0] - Math.Max(0,-algo.averageFitness[0]))), 3, 3);
-                    e.Graphics.FillEllipse(Brushes.Blue, (float)(x0), (float)(y0 - 1 - mh * (-algo.best.coords[0] - Math.Max(0, -algo.averageFitness[0]))), 3, 3);
+                    e.Graphics.FillEllipse(Brushes.Green,   (float)(x0),    (float)(-(y0 - 1 - mh * (algo.averageFitness[0]   - Math.Max(0, algo.averageFitness[0])))), 3, 3); // мин/макс не влияет на М
+                    e.Graphics.FillEllipse(Brushes.Blue,    (float)(x0),    (float)(-(y0 - 1 - mh * (algo.best.coords[0]      - Math.Max(0, algo.averageFitness[0])))), 3, 3); // мин/макс не влияет на М
 
 
                     if (algo.bestFitness.Count >= 2 && algo.averageFitness.Count >= 2)
                         for (int i = 0; i < algo.averageFitness.Count - 1; i++)
                         {
                             {
-                                e.Graphics.DrawLine(p2, (float)(x0 + mx * i), (float)(y0 - mh * (-algo.averageFitness[i] - Math.Max(0, algo.averageFitness[0]))), (float)(x0 + mx * (i + 1)), (float)(y0 - mh * (-algo.averageFitness[i + 1] - Math.Max(0, -algo.averageFitness[0]))));
-                                e.Graphics.DrawLine(p3, (float)(x0 + mx * i), (float)(y0 - mh * (-algo.bestFitness[i] - Math.Max(0, algo.averageFitness[0]))), (float)(x0 + mx * (i + 1)), (float)(y0 - mh * (-algo.bestFitness[i + 1] - Math.Max(0, -algo.averageFitness[0]))));
+                                // TODO: переполнение
+                                e.Graphics.DrawLine(p2, (float)(x0 + mx * i), (float)(-(y0 - mh * (algo.averageFitness[i] - Math.Max(0, algo.averageFitness[0])))), (float)(x0 + mx * (i + 1)), (float)(-(y0 - mh * (algo.averageFitness[i + 1]  - Math.Max(0, algo.averageFitness[0])))));
+                                e.Graphics.DrawLine(p3, (float)(x0 + mx * i), (float)(-(y0 - mh * (algo.bestFitness[i]    - Math.Max(0, algo.averageFitness[0])))), (float)(x0 + mx * (i + 1)), (float)(-(y0 - mh * (algo.bestFitness[i + 1]     - Math.Max(0, algo.averageFitness[0])))));
                             }
                         }
                 }
 
                 float zero = 0;
-                try { zero = (float)(y0 + mh * Math.Max(0, algo.averageFitness[0])); }
+                try { zero = (float)(y0 + mh * Math.Max(0, -algo.averageFitness[0])); } // вроде, мин сделал нужную ось у
                 catch { zero = (float)(y0); }
 
                 for (int i = -6; i < 12; i++)
                 {
-                    e.Graphics.DrawLine(p1, (float)(x0 + 2), (float)(zero - mh * c * i), (float)(x0 - 2), (float)(zero - mh * c * i));
-                    if ((zero - mh * c * i - 8 > 11) && (zero - mh * c * i - 8 < h - 20)) e.Graphics.DrawString(Convert.ToString((c * i)), f1, Brushes.Black, (float)(x0 - 24), (float)(zero - mh * c * i - 8));
+                    //e.Graphics.DrawLine(p1, (float)(x0 + 2), (float)((zero + mh * c * i)), (float)(x0 - 2), (float)((zero + mh * c * i))); // TODO: возникает переполнение
+                    if ((zero - mh * c * i - 8 > 11) && (zero - mh * c * i - 8 < h - 20)) 
+                    //if ((zero - mh * c * i - 8 < 11) && (zero - mh * c * i - 8 < h - 20))
+                        e.Graphics.DrawString(Convert.ToString((c * i)), f1, Brushes.Black, (float)(x0 - 24), (float)(zero - mh * c * i - 8)); // ось y, числа
                 }
-                e.Graphics.DrawString("MaxCount", f2, Brushes.Black, (float)(w - 15), (float)(y0 + 4));
-                e.Graphics.DrawString("f", f2, Brushes.Black, (float)(x0 - 24), (float)(2));
+                e.Graphics.DrawString("MaxCount", f2, Brushes.Black, (float)(w - 15), (float)(y0 + 4)); // буква М на оси х
+                e.Graphics.DrawString("f", f2, Brushes.Black, (float)(x0 - 24), (float)(2)); // буква f на оси у
             }
+        }
+
+        private void buttonAnswer_Click(object sender, EventArgs e)
+        {
+            this.buttonAnswer.Enabled = false;
+            for (int i = algo.currentIteration; i < algo.MaxCount; i++)
+            {
+                algo.MakeFlocks();
+                algo.MoveEPerchEFlock();
+                algo.FlocksSwim();
+                algo.currentIteration++;
+
+                algo.best = algo.flock[0, 0];
+                algo.bestFitness.Add(algo.best.fitness);
+                algo.AverageFitness();
+            }
+
+            buttonCheckEndConditions.Enabled = false;
+
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
+
+            flag = false;
+
+            dataGridView3.RowCount = 2;
+            dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
+            dataGridView3.Rows[1].Cells[0].Value = "f*";
+
+            dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
+            dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+
+            dataGridView3.Refresh();
+
         }
     }
 }

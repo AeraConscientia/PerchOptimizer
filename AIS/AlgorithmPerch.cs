@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using System.Text;
 
 namespace AIS
@@ -12,12 +13,10 @@ namespace AIS
         public double L1, L2;
         public double x, y;
 
-        public double Xp_pool, Xq_pool, Xr_pool;
-
         private Random rand = new Random();
         public Perch perch = new Perch();
         public Perch best = new Perch();
-
+        public Perch result = new Perch();
         /// <summary>Размер популяции окуней </summary>
         public int population;
 
@@ -71,8 +70,10 @@ namespace AIS
         public AlgorithmPerch() { }
 
         /// <summary>Сортировка ВСЕХ окуней</summary>
+        
         private void Sort(List<Perch> list) // TODO: протестить на предмет правильно сортировки
         {
+
             for (int i = 0; i < list.Count; i++)
                 for (int j = 0; j < list.Count - i - 1; j++)
                     if (list[j].fitness > list[j + 1].fitness)
@@ -82,6 +83,7 @@ namespace AIS
                         list[j + 1] = tmp;
                     }
         }
+        
 
         /// <summary>Сортировка всех окуней в своей стае</summary>
         private void Sort(Perch[,] perches, int flockIndex)
@@ -120,6 +122,7 @@ namespace AIS
         public void MakeFlocks() 
         {
             Sort(individuals);
+            //individuals = individuals.OrderBy(s => s.fitness).ToList();
             flock = new Perch[NumFlocks, NumPerchInFlock];
 
             for (int i = 0; i < individuals.Count; i++)
@@ -127,9 +130,21 @@ namespace AIS
                 int tmp;
                 Math.DivRem(i, NumFlocks, out tmp);
                 flock[tmp, i / (NumFlocks)] = individuals[i];
-            }
-            
+                if (Double.IsNaN(flock[tmp, i / (NumFlocks)].coords[0]) || Double.IsNaN(flock[tmp, i / (NumFlocks)].coords[1]))
+                    throw new Exception();
 
+                if (Double.IsInfinity(flock[tmp, i / (NumFlocks)].coords[0]) || Double.IsInfinity(flock[tmp, i / (NumFlocks)].coords[1]))
+                    throw new Exception();
+            }
+
+            for (int m = 0; m < NumFlocks; m++)
+            {
+                for (int p = 0; p < NumPerchInFlock; p++)
+                {
+                    if (Double.IsInfinity(flock[m, p].coords[0]) || Double.IsInfinity(flock[m, p].coords[1]))
+                        throw new Exception();
+                }
+            }
             //flock[0][i] - перебор окуней в первой стае
             //flock[-1][i] - перебор окуней в первой стае
 
@@ -153,18 +168,40 @@ namespace AIS
                     {
                         x = flock[i, j].coords[0] + k * ((flock[i, 0].coords[0] - flock[i, j].coords[0]) / (NStep));
                         y = flock[i, j].coords[1] + k * ((flock[i, 0].coords[1] - flock[i, j].coords[1]) / (NStep));
+                        if (Double.IsNaN(x) || Double.IsNaN(y))
+                            throw new Exception();
                         move.Add(new Perch(x, y, function(x, y, f)));
                     }
                     Sort(move);
+                    //move = move.OrderBy(s => s.fitness).ToList();
                     flock[i, j] = move[0];
                 }
                 Sort(flock, i);
             }
             SortFlocks();
+            if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
+                throw new Exception();
+
+            for (int m = 0; m < NumFlocks; m++)
+            {
+                for (int p = 0; p < NumPerchInFlock; p++)
+                {
+                    if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+                        throw new Exception();
+                }
+            }
         }
 
         private void BestFlockSwim()
         {
+            for (int m = 0; m < NumFlocks; m++)
+            {
+                for (int p = 0; p < NumPerchInFlock; p++)
+                {
+                    if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+                        throw new Exception();
+                }
+            }
             sigma = rand.NextDouble() * 0.5 + 1; // sigma [1,  1.5]
             int i = 0;
             for (int j = 0; j < NumPerchInFlock; j++)
@@ -178,12 +215,35 @@ namespace AIS
                 {
                     x = flock[i, j].coords[0] + k * ((flock[i, 0].coords[0] - flock[i, j].coords[0]) / (NStep));
                     y = flock[i, j].coords[1] + k * ((flock[i, 0].coords[1] - flock[i, j].coords[1]) / (NStep));
+                    if (Double.IsNaN(x) || Double.IsNaN(y))
+                        throw new Exception();
                     move.Add(new Perch(x, y, function(x, y, f)));
                 }
+                for (int m = 0; m < NumFlocks; m++)
+                {
+                    for (int p = 0; p < NumPerchInFlock; p++)
+                    {
+                        if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+                            throw new Exception();
+                    }
+                }
                 Sort(move);
+                //move = move.OrderBy(s => s.fitness).ToList();
                 flock[i, j] = move[0];
+                if (Double.IsNaN(flock[i, j].coords[0]) || Double.IsNaN(flock[i, j].coords[1]))
+                    throw new Exception();
             }
             Sort(flock, i);
+            if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
+                throw new Exception();
+            for (int m = 0; m < NumFlocks; m++)
+            {
+                for (int p = 0; p < NumPerchInFlock; p++)
+                {
+                    if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+                        throw new Exception();
+                }
+            }
         }
 
         /// <summary>Движение средних окуней</summary>
@@ -202,10 +262,13 @@ namespace AIS
                 {
                     x = flock[l, 0].coords[0] + k * ((flock[0, 0].coords[0] - flock[l, 0].coords[0]) / (NStep));
                     y = flock[l, 0].coords[1] + k * ((flock[0, 0].coords[1] - flock[l, 0].coords[1]) / (NStep));
+                    if (Double.IsNaN(x) || Double.IsNaN(y))
+                        throw new Exception();
                     move.Add(new Perch(x, y, function(x, y, f)));
                 }
 
                 Sort(move);
+                //move = move.OrderBy(s => s.fitness).ToList();
                 flock[l, 0] = move[0];
 
 
@@ -220,19 +283,49 @@ namespace AIS
                     {
                         x1 = flock[l, j].coords[0] + k * ((flock[l, 0].coords[0] - flock[l, j].coords[0]) / (NStep));
                         y1 = flock[l, j].coords[1] + k * ((flock[l, 0].coords[1] - flock[l, j].coords[1]) / (NStep));
+                        if (Double.IsNaN(x1) || Double.IsNaN(y1))
+                            throw new Exception();
                         move1.Add(new Perch(x1, y1, function(x1, y1, f)));
                     }
                     Sort(move1);
+                    //move1 = move1.OrderBy(s => s.fitness).ToList();
                     flock[l, j] = move1[0];
                 }
                 Sort(flock, l);
             }
             SortFlocks();
+            if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
+                throw new Exception();
+
+            for (int i = 0; i < NumFlocks; i++)
+            {
+                for (int j = 0; j < NumPerchInFlock; j++)
+                {
+                    if (Double.IsNaN(flock[i, j].coords[0]) || Double.IsNaN(flock[i, j].coords[1]))
+                        throw new Exception();
+                }
+            }
         }
 
         private void PoorFlockSwim()
         {
+            for (int d = 0; d < NumFlocks; d++)
+            {
+                for (int p = 0; p < NumPerchInFlock; p++)
+                {
+                    if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
+                        throw new Exception();
+                }
+            }
             PoorLeaderSwim();
+            for (int d = 0; d < NumFlocks; d++)
+            {
+                for (int p = 0; p < NumPerchInFlock; p++)
+                {
+                    if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
+                        throw new Exception();
+                }
+            }
 
             sigma = rand.NextDouble() * 0.4 + 0.1; // sigma [0.1,  0.5]
 
@@ -243,6 +336,8 @@ namespace AIS
             {
                 double x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[0] - xMin);
                 double y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[1] - yMin);
+                if (Double.IsNaN(x) || Double.IsNaN(y))
+                    throw new Exception();
                 flock[NumFlocks - 1, j] = new Perch(x, y, function(x, y, f));
             }
 
@@ -260,9 +355,12 @@ namespace AIS
                 {
                     x = flock[i, j].coords[0] + k * ((flock[i, 0].coords[0] - flock[i, j].coords[0]) / (NStep));
                     y = flock[i, j].coords[1] + k * ((flock[i, 0].coords[1] - flock[i, j].coords[1]) / (NStep));
+                    if (Double.IsNaN(x) || Double.IsNaN(y))
+                        throw new Exception();
                     move.Add(new Perch(x, y, function(x, y, f)));
                 }
                 Sort(move);
+                //move = move.OrderBy(s => s.fitness).ToList();
                 flock[i, j] = move[0];
             }
             Sort(flock, i);
@@ -273,25 +371,28 @@ namespace AIS
         {
 
             //TODO: ПОЛУЧАЕТСЯ NAN, ПРОБЛЕМА С ВОЗВЕДЕНИЕМ В ДРОБНУЮ СТЕПЕНЬ ОТРИЦАТЕЛЬНОГО ЧИСЛА 
-            flock[NumFlocks - 1, 0].coords[0] = flock[NumFlocks - 1, 0].coords[0] + (alfa / currentIteration) * LeviX();
-            flock[NumFlocks - 1, 0].coords[1] = flock[NumFlocks - 1, 0].coords[1] + (alfa / currentIteration) * LeviY();
+            double a = LeviX();
+            double b = LeviY();
+            flock[NumFlocks - 1, 0].coords[0] = flock[NumFlocks - 1, 0].coords[0] + (alfa / currentIteration) * a;
+            flock[NumFlocks - 1, 0].coords[1] = flock[NumFlocks - 1, 0].coords[1] + (alfa / currentIteration) * b;
+            for (int d = 0; d < NumFlocks; d++)
+            {
+                for (int p = 0; p < NumPerchInFlock; p++)
+                {
+                    if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
+                        throw new Exception();
+                }
+            }
         }
 
         /// <summary>Распределение Леви, координата х,  для худшей стаи</summary>
         public double LeviX()
         {
-            /*
-             *      a       |       b       |       b-a
-             *      -10             -7              3
-             *      0               5               5
-             *      5               17              12
-             */
-
             //R1 = rand.Next(Convert.ToInt32(D[0, 0] * 100), Convert.ToInt32(D[0,1] * 100)) / 100f;
             R1 = rand.Next(Convert.ToInt32(0), Convert.ToInt32((D[0,1] - D[0, 0]) * 100)) / 100f; // (0, b1-a1)
             thetta1 = R1 * 2 * Math.PI;
-            L1 = Math.Pow(Math.Abs(R1), -1 / lambda);       // TODO: точно можно ставить abs? Ради эксперимента сниму модуль ниже |
-            L1 = Math.Pow(R1, -1 / lambda);
+            //L1 = Math.Pow(Math.Abs(R1 + 0.0001f), -1 / lambda);       // TODO: точно можно ставить abs? Ради эксперимента сниму модуль ниже |
+            L1 = Math.Pow(R1 + 0.0001f, -1 / lambda);
 
             x = L1 * Math.Sin(thetta1);
             return x;
@@ -304,7 +405,7 @@ namespace AIS
             R2 = rand.Next(Convert.ToInt32(0), Convert.ToInt32((D[1, 1] - D[1, 0]) * 100)) / 100f; // (0, b2-a2)
             thetta2 = R2 * 2 * Math.PI;
             //L2 = Math.Pow(Math.Abs(R2), -1 / lambda);   //!
-            L2 = Math.Pow(R2, -1 / lambda);   //!
+            L2 = Math.Pow(R2 + 0.0001f, -1 / lambda);   //!
 
             y = L2 * Math.Cos(thetta2); // TODO: странна, менять, если что
             return y;
@@ -320,7 +421,8 @@ namespace AIS
 
                 x = D[0, 0] + rand.NextDouble() * (D[0, 1] - D[0, 0]);
                 y = D[1, 0] + rand.NextDouble() * (D[1, 1] - D[1, 0]);
-
+                if (Double.IsNaN(x) || Double.IsNaN(y))
+                    throw new Exception();
                 Perch perch = new Perch(x, y, function(x, y, f)); // TODO: добавить iter += 1
                 individuals.Add(perch);
             }
@@ -372,9 +474,10 @@ namespace AIS
                 MoveEPerchEFlock();
                 FlocksSwim();
                 this.currentIteration++;
-            }  
-
-            perch = individuals[0];
+            }
+            Recommutation();
+            //perch = individuals[0];
+            perch = Pool[0];
             return perch;
         }
 
@@ -392,6 +495,17 @@ namespace AIS
                 for (int j = 0; j < NumPerchInFlock; j++)
                 {
                     individuals.Add(flock[i, j]);
+                }
+            }
+            Pool.Add(flock[0, 0]);
+            if (Double.IsNaN(flock[0, 0].coords[0]) || Double.IsNaN(flock[0, 0].coords[1]))
+                throw new Exception();
+            for (int m = 0; m < NumFlocks; m++)
+            {
+                for (int p = 0; p < NumPerchInFlock; p++)
+                {
+                    if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+                        throw new Exception();
                 }
             }
         }
@@ -467,36 +581,71 @@ namespace AIS
             return fitness;
         }
 
+        
+
         public void Recommutation()
         {
             int p, q, r; // TODO: три несовпадающих решения? Или могут быть одинаковые?
-            p = rand.Next(0, MaxCount);
-            q = rand.Next(0, MaxCount);
-            r = rand.Next(0, MaxCount);
-            Xp_pool = bestFitness[p];
-            Xq_pool = bestFitness[q];
-            Xr_pool = bestFitness[r];
-            double Xnew = 0;
 
+            for (int pr = 0; pr < PRmax; pr++)
+            {
+                    Perch perchResult = new Perch();
+                    Perch Xp_pool = new Perch();
+                    Perch Xq_pool = new Perch();
+                    Perch Xr_pool = new Perch(); ;
+                    p = rand.Next(0, MaxCount - 1);
+                    q = rand.Next(0, MaxCount - 1);
+                    //while(q == p)
+                    //{
+                    //    q = rand.Next(0, MaxCount - 1);
+                    //}
+                    r = rand.Next(0, MaxCount - 1);
+                    //while(r == p || r == q)
+                    //{
+                    //    r = rand.Next(0, MaxCount - 1);
+                    //}
 
-            /**/
-            int pr = 0; 
-            for (int i = 0; i < deltapr - 1; i++)
-            {
-                double f = Xq_pool + i * (Xq_pool - Xq_pool) / deltapr; //min
-            }
-            double Xpq = f; //min(f)
-            for (int i = 0; i < deltapr - 1; i++)
-            {
-                Xnew = Xpq + i * (Xr_pool - Xpq) / deltapr; //min
-            }
-            pr++;
-            /**/ // надо вынести в метод
+                    Xp_pool = Pool[p];
+                    Xq_pool = Pool[q];
+                    Xr_pool = Pool[r];
 
-            if (pr >= PRmax)
-            {
-                double answer = Xnew; //min
+                    double min = 1000;
+                    for (int i = 0; i < deltapr - 1; i++)
+                    {
+                        double x = Xq_pool.coords[0] + i * (Xq_pool.coords[0] - Xq_pool.coords[0]) / deltapr;
+                        double y = Xq_pool.coords[1] + i * (Xq_pool.coords[1] - Xq_pool.coords[1]) / deltapr;
+                        double res = function(x, y, f);
+                        if (res < min)
+                        {
+                            perchResult = new Perch(x, y, res);
+                            min = res;
+                        }
+                    }
+
+                    min = 1000;
+                    Perch inPool = new Perch();
+                    for (int i = 0; i < deltapr - 1; i++)
+                    {
+                        double x = perchResult.coords[0] + i * (Xr_pool.coords[0] - perchResult.coords[0]) / deltapr;
+                        double y = perchResult.coords[1] + i * (Xr_pool.coords[1] - perchResult.coords[1]) / deltapr;
+                        if (Double.IsNaN(x) || Double.IsNaN(y))
+                            throw new Exception();
+
+                    double res = function(x, y, f);
+                        if (res < min)
+                        {
+                            inPool = new Perch(x, y, res);
+                            min = res;
+                        }
+                    }
+                    Pool.Add(inPool);
             }
+
+            Sort(Pool);
+            //Pool = Pool.OrderBy(s => s.fitness).ToList();
+            result = Pool[0];
+            if (Double.IsNaN(result.coords[0]) || Double.IsNaN(result.coords[1]))
+                throw new Exception();
         }
     }
 }

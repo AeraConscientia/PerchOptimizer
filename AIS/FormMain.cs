@@ -17,7 +17,10 @@ namespace AIS
 
         private int MaxIteration = 0;
         private Wolf result;
+        private Perch resultBest;
         private double[,] obl = new double[2, 2];
+
+        List<Vector> exactPoints = new List<Vector>();
 
         /// <summary>Количество стай</summary>
         public int NumFlocks = 0;
@@ -55,6 +58,20 @@ namespace AIS
         {
             InitializeComponent();
             InitDataGridView();
+
+            if (File.Exists("protocol.txt"))
+                File.Delete("protocol.txt");
+
+            FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
+
+            StreamWriter r = new StreamWriter(fs);
+            r.Write($"+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\r\n" +
+                    $"| Номер функции | Размер популяции | Количество итераций |        Cреднее значение отклонения     |  Наименьшее значение отклонения  |Среднеквадратическое отклонение | Количество успехов  |\r\n" +
+                    $"|               |                  |                     |            от точного решения          |                                  |                                |                     |\r\n" +
+                    $"+---------------+------------------+---------------------+----------------------------------------+----------------------------------+--------------------------------+---------------------+\r\n");
+            r.Close();
+            fs.Close();
+
         }
 
         private void InitDataGridView()
@@ -68,7 +85,7 @@ namespace AIS
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
             dataGridView2.Rows[1].Cells[0].Value = "Максимальное количество итераций";
-            dataGridView2.Rows[1].Cells[1].Value = 100;
+            dataGridView2.Rows[1].Cells[1].Value = 4;
 
             dataGridView2.Rows[2].Cells[0].Value = "Количество стай";
             dataGridView2.Rows[2].Cells[1].Value = 4;
@@ -130,13 +147,13 @@ namespace AIS
                     //Params param = Params.Linear;
                     algPerch = new AlgorithmPerch();
 
-                    algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+                    resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
                     flag2 = true;
 
                     //result = algPerch.StartAlg(population, MaxIteration, obl, z, param);
-                    //dataGridView3.Rows[0].Cells[1].Value = string.Format($"{result.coords[0]:F8}");
-                    //dataGridView3.Rows[1].Cells[1].Value = string.Format($"{result.coords[1]:F8}");
-                    //dataGridView3.Rows[2].Cells[1].Value = string.Format($"{result.fitness:F8}");
+                    dataGridView3.Rows[0].Cells[1].Value = string.Format($"{resultBest.coords[0]:F8}");
+                    dataGridView3.Rows[1].Cells[1].Value = string.Format($"{resultBest.coords[1]:F8}");
+                    dataGridView3.Rows[2].Cells[1].Value = string.Format($"{resultBest.fitness:F8}");
                     //flag2 = true;
                     pictureBox1.Refresh();
                 }
@@ -157,13 +174,14 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "500";
                 dataGridView1.Rows[1].Cells[1].Value = "-500";
                 dataGridView1.Rows[1].Cells[2].Value = "500";
-                exact = 837.9658;
+                exact = -837.9658;
 
                 Ar[0] = 200;
                 Ar[1] = 1;
                 Ar[2] = -300;
                 Ar[3] = -600;
                 Ar[4] = -800;
+                exactPoints.Add(new Vector(420.9687, 420.9687));
                 flag = true;
                 pictureBox2.Image = Properties.Resources.ШвефельМин;
             }
@@ -173,7 +191,12 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "2";
                 dataGridView1.Rows[1].Cells[1].Value = "-2";
                 dataGridView1.Rows[1].Cells[2].Value = "2";
-                exact = 4.253888;
+                exact = -4.253888;
+
+                exactPoints.Add(new Vector(-1.6288, -1.6288));
+                exactPoints.Add(new Vector(1.6288, 1.6288));
+                exactPoints.Add(new Vector(-1.6288, 1.6288));
+                exactPoints.Add(new Vector(1.6288, -1.6288));
 
                 Ar[0] = 0;
                 Ar[1] = -1;
@@ -190,7 +213,14 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "2";
                 dataGridView1.Rows[1].Cells[1].Value = "-2";
                 dataGridView1.Rows[1].Cells[2].Value = "2";
-                exact = 1;
+                exact = -1;
+
+                exactPoints.Add(new Vector(0.5, -0.866));
+                exactPoints.Add(new Vector(-0.5, 0.866));
+                exactPoints.Add(new Vector(0.5, 0.866));
+                exactPoints.Add(new Vector(-0.5, -0.866));
+                exactPoints.Add(new Vector(1, 0));
+                exactPoints.Add(new Vector(-1, 0));
 
                 Ar[0] = -0.2F;
                 Ar[1] = -0.45F;
@@ -207,7 +237,9 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "10";
                 dataGridView1.Rows[1].Cells[1].Value = "-10";
                 dataGridView1.Rows[1].Cells[2].Value = "10";
-                exact = 1;
+                exact = -1;
+
+                exactPoints.Add(new Vector(0, 0));
 
                 Ar[0] = -0.2F;
                 Ar[1] = -0.4F;
@@ -224,7 +256,9 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "5";
                 dataGridView1.Rows[1].Cells[1].Value = "-5";
                 dataGridView1.Rows[1].Cells[2].Value = "5";
-                exact = 20;
+                exact = -20;
+
+                exactPoints.Add(new Vector(0, 0));
 
                 Ar[0] = 20F;
                 Ar[1] = 10F;
@@ -243,6 +277,8 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "10";
                 exact = 0;
 
+                exactPoints.Add(new Vector(0, 0));
+
                 Ar[0] = -4F;
                 Ar[1] = -7F;
                 Ar[2] = -10F;//0.5000001F;
@@ -257,7 +293,9 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "5";
                 dataGridView1.Rows[1].Cells[1].Value = "-5";
                 dataGridView1.Rows[1].Cells[2].Value = "5";
-                exact = 14.060606;
+                exact = -14.060606;
+
+                exactPoints.Add(new Vector(-3.3157, -3.0725));
 
                 Ar[0] = -2F;
                 Ar[1] = -8F;
@@ -273,7 +311,9 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "5";
                 dataGridView1.Rows[1].Cells[1].Value = "-5";
                 dataGridView1.Rows[1].Cells[2].Value = "5";
-                exact = 1;
+                exact = -1;
+
+                exactPoints.Add(new Vector(1, -2));
 
                 Ar[0] = -0.1F;
                 Ar[1] = -0.15F;
@@ -291,6 +331,8 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[2].Value = "5";
                 exact = 0;
 
+                exactPoints.Add(new Vector(1, 1));
+
                 Ar[0] = 350F;
                 Ar[1] = 180F;
                 Ar[2] = 30F;//0.5000001F;
@@ -306,6 +348,8 @@ namespace AIS
                 dataGridView1.Rows[1].Cells[1].Value = "-5";
                 dataGridView1.Rows[1].Cells[2].Value = "5";
                 exact = 0;
+
+                exactPoints.Add(new Vector(0, 0));
 
                 Ar[0] = 7F;
                 Ar[1] = 4F;
@@ -358,7 +402,7 @@ namespace AIS
             Pen p10 = new Pen(Color.Black, 1);
             Pen p11 = new Pen(Color.Blue, 4);
 
-            Font font1 = new Font("TimesNewRoman", 10, FontStyle.Bold);
+            Font font1 = new Font("TimesNewRoman", 10, FontStyle.Bold | FontStyle.Italic);
             Font font2 = new Font("TimesNewRoman", 8);
             
             pictureBox1.BackColor = Color.White;
@@ -584,8 +628,6 @@ namespace AIS
             obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
             obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
             obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
-            //population = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-            //MaxIteration = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
             MaxIteration = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
 
             NumFlocks = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
@@ -607,6 +649,91 @@ namespace AIS
             };
             formPerch.Show();
             
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            {
+                if (dataGridView1.Rows[0].Cells[1].Value != null &&
+                    dataGridView1.Rows[0].Cells[2].Value != null &&
+                    dataGridView1.Rows[1].Cells[1].Value != null &&
+                    dataGridView1.Rows[1].Cells[2].Value != null)
+                {
+                    if (comboBox1.SelectedIndex != -1)
+                    {
+                        obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
+                        obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
+                        obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
+                        obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
+
+                        List<double> averFuncDeviation = new List<double>();
+                        double minDeviation = 0;
+                        int successCount = 0;
+                        double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / 1000f;
+                        double averDer = 0;
+                        double normalDerivation = 0;
+                        int z = comboBox1.SelectedIndex;
+
+                        population = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+                        MaxIteration = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
+
+                        NumFlocks = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
+                        NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
+                        population = NumFlocks * NumPerchInFlock;
+                        NStep = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+                        sigma = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
+
+                        lambda = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+                        alfa = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+
+                        PRmax = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
+                        deltapr = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
+
+                        for (int i = 0; i < 100; i++)
+                        {
+                            algPerch = new AlgorithmPerch();
+                            Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+
+                            foreach (Vector item in exactPoints)
+                            {
+                                if ((Math.Abs(result.coords[0] - item[0]) < eps) && (Math.Abs(result.coords[1] - item[1]) < eps))
+                                {
+                                    successCount++;
+                                    break;
+                                }
+                            }
+
+                            averFuncDeviation.Add(Math.Abs(result.fitness - exact));
+                        }
+
+                        double deltaSum = 0;
+                        for (int i = 0; i < 100; i++)
+                            deltaSum += averFuncDeviation[i];
+
+                        // СК отлонение?
+                        averDer = deltaSum / 100f;
+
+                        averFuncDeviation.Sort();
+                        minDeviation = averFuncDeviation[0];
+
+                        double dispersion = 0;
+                        for (int i = 0; i < 100; i++)
+                            dispersion += Math.Pow(averFuncDeviation[i] - averDer, 2);
+                        normalDerivation = Math.Sqrt((dispersion / 100f));
+
+                        FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
+                        StreamWriter r = new StreamWriter(fs);
+                        r.Write(String.Format(@"| {0, 4}          |    {1, 6}        |      {2, 6}         |{3, 22:f6}                  |{4, 20:f6}              |{5, 20:f6}            |{6, 12}         |
+|---------------+------------------+---------------------+----------------------------------------+----------------------------------+--------------------------------+---------------------|", z + 1, population, MaxIteration, averDer, minDeviation, normalDerivation, successCount));
+                        r.Write("\r\n");
+                        r.Close();
+                        fs.Close();
+                        Process.Start("protocol.txt");
+                    }
+                }
+                else
+                    MessageBox.Show("Введите корректные параметры", "Ошибка при запуске алгоритма", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

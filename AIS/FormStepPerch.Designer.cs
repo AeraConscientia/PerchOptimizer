@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStepPerch));
             this.buttonInitialPopulation = new System.Windows.Forms.Button();
             this.buttonMakeFlocks = new System.Windows.Forms.Button();
@@ -48,11 +48,16 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBoxGraph = new System.Windows.Forms.PictureBox();
+            this.buttonAnswer = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGraph)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonInitialPopulation
@@ -67,6 +72,7 @@
             // 
             // buttonMakeFlocks
             // 
+            this.buttonMakeFlocks.Enabled = false;
             this.buttonMakeFlocks.Location = new System.Drawing.Point(24, 118);
             this.buttonMakeFlocks.Name = "buttonMakeFlocks";
             this.buttonMakeFlocks.Size = new System.Drawing.Size(127, 61);
@@ -77,6 +83,7 @@
             // 
             // buttonKettle
             // 
+            this.buttonKettle.Enabled = false;
             this.buttonKettle.Location = new System.Drawing.Point(24, 207);
             this.buttonKettle.Name = "buttonKettle";
             this.buttonKettle.Size = new System.Drawing.Size(127, 61);
@@ -87,6 +94,7 @@
             // 
             // buttonFlocksSwim
             // 
+            this.buttonFlocksSwim.Enabled = false;
             this.buttonFlocksSwim.Location = new System.Drawing.Point(24, 296);
             this.buttonFlocksSwim.Name = "buttonFlocksSwim";
             this.buttonFlocksSwim.Size = new System.Drawing.Size(127, 61);
@@ -97,6 +105,7 @@
             // 
             // buttonLeaderToPool
             // 
+            this.buttonLeaderToPool.Enabled = false;
             this.buttonLeaderToPool.Location = new System.Drawing.Point(24, 385);
             this.buttonLeaderToPool.Name = "buttonLeaderToPool";
             this.buttonLeaderToPool.Size = new System.Drawing.Size(127, 61);
@@ -107,6 +116,7 @@
             // 
             // buttonCheckEndConditions
             // 
+            this.buttonCheckEndConditions.Enabled = false;
             this.buttonCheckEndConditions.Location = new System.Drawing.Point(206, 208);
             this.buttonCheckEndConditions.Name = "buttonCheckEndConditions";
             this.buttonCheckEndConditions.Size = new System.Drawing.Size(117, 61);
@@ -117,16 +127,18 @@
             // 
             // buttonSearchInPool
             // 
+            this.buttonSearchInPool.Enabled = false;
             this.buttonSearchInPool.Location = new System.Drawing.Point(206, 515);
             this.buttonSearchInPool.Name = "buttonSearchInPool";
             this.buttonSearchInPool.Size = new System.Drawing.Size(117, 60);
             this.buttonSearchInPool.TabIndex = 1;
-            this.buttonSearchInPool.Text = "Интенсивный поиск в Pool";
+            this.buttonSearchInPool.Text = "Интенсивный поиск в множестве Pool";
             this.buttonSearchInPool.UseVisualStyleBackColor = true;
             this.buttonSearchInPool.Click += new System.EventHandler(this.buttonSearchInPool_Click);
             // 
             // buttonChooseTheBest
             // 
+            this.buttonChooseTheBest.Enabled = false;
             this.buttonChooseTheBest.Location = new System.Drawing.Point(24, 515);
             this.buttonChooseTheBest.Name = "buttonChooseTheBest";
             this.buttonChooseTheBest.Size = new System.Drawing.Size(127, 60);
@@ -139,7 +151,7 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Location = new System.Drawing.Point(744, 12);
+            this.pictureBox2.Location = new System.Drawing.Point(750, 48);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(490, 490);
             this.pictureBox2.TabIndex = 2;
@@ -151,7 +163,7 @@
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(349, 584);
+            this.pictureBox1.Size = new System.Drawing.Size(349, 596);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -162,60 +174,61 @@
             this.dataGridView3.AllowUserToDeleteRows = false;
             this.dataGridView3.AllowUserToResizeColumns = false;
             this.dataGridView3.AllowUserToResizeRows = false;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2});
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle16.NullValue = null;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView3.DefaultCellStyle = dataGridViewCellStyle16;
-            this.dataGridView3.Location = new System.Drawing.Point(380, 407);
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.NullValue = null;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView3.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridView3.Location = new System.Drawing.Point(8, 27);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView3.Size = new System.Drawing.Size(348, 189);
+            this.dataGridView3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridView3.Size = new System.Drawing.Size(331, 189);
             this.dataGridView3.TabIndex = 31;
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewTextBoxColumn1.Frozen = true;
             this.dataGridViewTextBoxColumn1.HeaderText = "Характеристика";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn1.Width = 150;
+            this.dataGridViewTextBoxColumn1.Width = 195;
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle15.Format = "N0";
-            dataGridViewCellStyle15.NullValue = null;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewTextBoxColumn2.HeaderText = "Значения";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
             this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn2.Width = 195;
+            this.dataGridViewTextBoxColumn2.Width = 136;
             // 
             // pictureBox3
             // 
@@ -223,7 +236,7 @@
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.InitialImage")));
-            this.pictureBox3.Location = new System.Drawing.Point(744, 515);
+            this.pictureBox3.Location = new System.Drawing.Point(750, 563);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(490, 81);
             this.pictureBox3.TabIndex = 32;
@@ -233,21 +246,68 @@
             // 
             this.pictureBoxGraph.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBoxGraph.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBoxGraph.Location = new System.Drawing.Point(380, 12);
+            this.pictureBoxGraph.Location = new System.Drawing.Point(380, 48);
             this.pictureBoxGraph.Name = "pictureBoxGraph";
-            this.pictureBoxGraph.Size = new System.Drawing.Size(348, 348);
+            this.pictureBoxGraph.Size = new System.Drawing.Size(348, 339);
             this.pictureBoxGraph.TabIndex = 33;
             this.pictureBoxGraph.TabStop = false;
             this.pictureBoxGraph.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxGraph_Paint);
+            // 
+            // buttonAnswer
+            // 
+            this.buttonAnswer.Enabled = false;
+            this.buttonAnswer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAnswer.Location = new System.Drawing.Point(12, 614);
+            this.buttonAnswer.Name = "buttonAnswer";
+            this.buttonAnswer.Size = new System.Drawing.Size(349, 30);
+            this.buttonAnswer.TabIndex = 34;
+            this.buttonAnswer.Text = "Получить ответ";
+            this.buttonAnswer.UseVisualStyleBackColor = true;
+            this.buttonAnswer.Click += new System.EventHandler(this.buttonAnswer_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.dataGridView3);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox1.Location = new System.Drawing.Point(380, 413);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(348, 231);
+            this.groupBox1.TabIndex = 35;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Информация о текущей популяции";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(377, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(354, 30);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "График изменения средней (зеленый) и наилучшей (синий) \r\nприспособленности популя" +
+    "ции:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(747, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(296, 15);
+            this.label2.TabIndex = 37;
+            this.label2.Text = "Графическое изображение популяции и функции ";
             // 
             // FormStepPerch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 633);
+            this.ClientSize = new System.Drawing.Size(1262, 667);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.buttonAnswer);
             this.Controls.Add(this.pictureBoxGraph);
             this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.buttonChooseTheBest);
             this.Controls.Add(this.buttonSearchInPool);
@@ -266,7 +326,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGraph)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -283,9 +345,13 @@
         private System.Windows.Forms.Button buttonChooseTheBest;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBoxGraph;
+        private System.Windows.Forms.Button buttonAnswer;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
