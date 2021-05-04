@@ -78,24 +78,6 @@ namespace AIS
 
         public int iterationGraph = 0;
 
-        /*
-        private void InitDataGridView()
-        {
-            dataGridViewAnswer.RowCount = 3;
-            dataGridViewAnswer.Rows[0].Cells[0].Value = "x";
-            dataGridViewAnswer.Rows[1].Cells[0].Value = "y";
-            dataGridViewAnswer.Rows[2].Cells[0].Value = "f*";
-
-            dataGridViewIterationInfo.RowCount = 6;
-            dataGridViewIterationInfo.Rows[0].Cells[0].Value = "Номер популяции:"; // не надо
-            dataGridViewIterationInfo.Rows[1].Cells[0].Value = "Размер популяции:";
-            dataGridViewIterationInfo.Rows[2].Cells[0].Value = "Количество итераций:";
-            dataGridViewIterationInfo.Rows[3].Cells[0].Value = "Окунь с лучшей приспособленностью:";
-            dataGridViewIterationInfo.Rows[4].Cells[0].Value = "Приспособленность лучшего окуня:";
-            dataGridViewIterationInfo.Rows[5].Cells[0].Value = "Средняя приспособленность популяции:";
-        }
-        */
-
         private float function(double x1, double x2, int f)
         {
             float funct = 0;
@@ -159,14 +141,14 @@ namespace AIS
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             Pen pBlack = new Pen(Color.Black, 2);
-            Pen pGray = new Pen(Color.Gray, 2);
-            Pen pRed = new Pen(Color.Red, 2);
-            Font f1 = new Font("TimesNewRoman", 12, FontStyle.Bold);
+            Pen pGray  = new Pen(Color.Gray, 2);
+            Pen pRed   = new Pen(Color.Red, 2);
+            Font f1    = new Font("TimesNewRoman", 12, FontStyle.Bold);
 
             e.Graphics.DrawLine(pBlack, 250, 250, 250, 135); // проверка -> деление  вертик 
             e.Graphics.DrawLine(pBlack, 250, 135, 135, 135); // проверка -> деление  горизонт
-            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 130-1); // Верхнее крыло повернутой стрелочки
-            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 140); // Нижнее крыло повернутой стрелочки
+            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 130-1);  // Верхнее крыло повернутой стрелочки
+            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 140);    // Нижнее крыло повернутой стрелочки
 
             if (Red[6] == true)
             {
@@ -273,15 +255,15 @@ namespace AIS
             float k = 1;
 
             List<PointF> points = new List<PointF>();
-            Pen p1 = new Pen(Color.PaleGreen, 1);
-            Pen p2 = new Pen(Color.GreenYellow, 1);
-            Pen p3 = new Pen(Color.YellowGreen, 1);
-            Pen p4 = new Pen(Color.Yellow, 1);
-            Pen p5 = new Pen(Color.Orange, 1);
-            Pen p6 = new Pen(Color.OrangeRed, 1);
-            Pen p7 = new Pen(Color.Red, 1);
-            Pen p8 = new Pen(Color.Brown, 1);
-            Pen p9 = new Pen(Color.Maroon, 1);
+            Pen p1  = new Pen(Color.PaleGreen, 1);
+            Pen p2  = new Pen(Color.GreenYellow, 1);
+            Pen p3  = new Pen(Color.YellowGreen, 1);
+            Pen p4  = new Pen(Color.Yellow, 1);
+            Pen p5  = new Pen(Color.Orange, 1);
+            Pen p6  = new Pen(Color.OrangeRed, 1);
+            Pen p7  = new Pen(Color.Red, 1);
+            Pen p8  = new Pen(Color.Brown, 1);
+            Pen p9  = new Pen(Color.Maroon, 1);
             Pen p10 = new Pen(Color.Black, 1);
             Pen p11 = new Pen(Color.Blue, 4);
 
@@ -294,7 +276,6 @@ namespace AIS
 
             pictureBox2.BackColor = Color.White;
 
-            //TODO: ShowObl == Obl?
             double x1 = showobl[0, 0];
             double x2 = showobl[0, 1];
             double y1 = showobl[1, 0];
@@ -430,7 +411,9 @@ namespace AIS
         /// <summary>Создание начальной популяции</summary>
         private void buttonInitialPopulation_Click(object sender, EventArgs e)
         {
-            
+            iterationGraph = 0;
+            this.chart1.Series[0].Points.Clear();
+            this.chart1.Series[1].Points.Clear();
             if (!flag)
             {
                 Red[0] = true;
@@ -511,7 +494,7 @@ namespace AIS
         /// <summary>Плавание стай</summary>
         private void buttonFlocksSwim_Click(object sender, EventArgs e)
         {
-            iterationGraph++;
+           
             Red[2] = false;
             Red[3] = true;
             algo.FlocksSwim();
@@ -529,6 +512,8 @@ namespace AIS
             pictureBox2.Refresh();
             this.chart1.Series[0].Points.AddXY(iterationGraph, algo.bestFitness[algo.bestFitness.Count - 1]);
             this.chart1.Series[1].Points.AddXY(iterationGraph, algo.averageFitness[algo.averageFitness.Count - 1]);
+
+            iterationGraph++;
             //chart1.Update();
             //chart1.Refresh();
         }
@@ -592,6 +577,9 @@ namespace AIS
 
                 dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
                 dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+
+                buttonChooseTheBest.Enabled = false;
+                buttonInitialPopulation.Enabled = true;
             }
         }
 
@@ -725,6 +713,9 @@ namespace AIS
                 algo.best = algo.flock[0, 0];
                 algo.bestFitness.Add(algo.best.fitness);
                 algo.AverageFitness();
+                this.chart1.Series[0].Points.AddXY(iterationGraph, algo.bestFitness[algo.bestFitness.Count - 1]);
+                this.chart1.Series[1].Points.AddXY(iterationGraph, algo.averageFitness[algo.averageFitness.Count - 1]);
+                iterationGraph++;
             }
 
             buttonCheckEndConditions.Enabled = false;

@@ -121,8 +121,8 @@ namespace AIS
         /// <summary>Разбивка окуней на стаи</summary>
         public void MakeFlocks() 
         {
-            Sort(individuals);
-            //individuals = individuals.OrderBy(s => s.fitness).ToList();
+            //Sort(individuals);
+            individuals = individuals.OrderBy(s => s.fitness).ToList();
             flock = new Perch[NumFlocks, NumPerchInFlock];
 
             for (int i = 0; i < individuals.Count; i++)
@@ -172,8 +172,8 @@ namespace AIS
                             throw new Exception();
                         move.Add(new Perch(x, y, function(x, y, f)));
                     }
-                    Sort(move);
-                    //move = move.OrderBy(s => s.fitness).ToList();
+                    //Sort(move);
+                    move = move.OrderBy(s => s.fitness).ToList();
                     flock[i, j] = move[0];
                 }
                 Sort(flock, i);
@@ -227,8 +227,8 @@ namespace AIS
                             throw new Exception();
                     }
                 }
-                Sort(move);
-                //move = move.OrderBy(s => s.fitness).ToList();
+                //Sort(move);
+                move = move.OrderBy(s => s.fitness).ToList();
                 flock[i, j] = move[0];
                 if (Double.IsNaN(flock[i, j].coords[0]) || Double.IsNaN(flock[i, j].coords[1]))
                     throw new Exception();
@@ -267,8 +267,8 @@ namespace AIS
                     move.Add(new Perch(x, y, function(x, y, f)));
                 }
 
-                Sort(move);
-                //move = move.OrderBy(s => s.fitness).ToList();
+                //Sort(move);
+                move = move.OrderBy(s => s.fitness).ToList();
                 flock[l, 0] = move[0];
 
 
@@ -287,8 +287,8 @@ namespace AIS
                             throw new Exception();
                         move1.Add(new Perch(x1, y1, function(x1, y1, f)));
                     }
-                    Sort(move1);
-                    //move1 = move1.OrderBy(s => s.fitness).ToList();
+                    //Sort(move1);
+                    move1 = move1.OrderBy(s => s.fitness).ToList();
                     flock[l, j] = move1[0];
                 }
                 Sort(flock, l);
@@ -359,8 +359,8 @@ namespace AIS
                         throw new Exception();
                     move.Add(new Perch(x, y, function(x, y, f)));
                 }
-                Sort(move);
-                //move = move.OrderBy(s => s.fitness).ToList();
+                //Sort(move);
+                move = move.OrderBy(s => s.fitness).ToList();
                 flock[i, j] = move[0];
             }
             Sort(flock, i);
@@ -641,8 +641,8 @@ namespace AIS
                     Pool.Add(inPool);
             }
 
-            Sort(Pool);
-            //Pool = Pool.OrderBy(s => s.fitness).ToList();
+            //Sort(Pool);
+            Pool = Pool.OrderBy(s => s.fitness).ToList();
             result = Pool[0];
             if (Double.IsNaN(result.coords[0]) || Double.IsNaN(result.coords[1]))
                 throw new Exception();

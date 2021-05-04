@@ -66,9 +66,9 @@ namespace AIS
 
             StreamWriter r = new StreamWriter(fs);
             r.Write($"+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\r\n" +
-                    $"| Номер функции | Размер популяции | Количество итераций |        Cреднее значение отклонения     |  Наименьшее значение отклонения  |Среднеквадратическое отклонение | Количество успехов  |\r\n" +
-                    $"|               |                  |                     |            от точного решения          |                                  |                                |                     |\r\n" +
-                    $"+---------------+------------------+---------------------+----------------------------------------+----------------------------------+--------------------------------+---------------------+\r\n");
+                    $"| Номер функции | Размер популяции | Количество итераций |  Cреднее значение отклонения   |  Наименьшее значение отклонения  |Среднеквадратическое отклонение | Количество успехов  |\r\n" +
+                    $"|               |                  |                     |      от точного решения        |                                  |                                |                     |\r\n" +
+                    $"+---------------+------------------+---------------------+--------------------------------+----------------------------------+--------------------------------+---------------------+\r\n");
             r.Close();
             fs.Close();
 
@@ -80,8 +80,8 @@ namespace AIS
             dataGridView1.Rows[0].Cells[0].Value = "x";
             dataGridView1.Rows[1].Cells[0].Value = "y";
 
-            dataGridView2.RowCount = 7;
-            dataGridView2.Rows[0].Cells[0].Value = "Размер начальной популяции"; // s
+            dataGridView2.RowCount = 6;
+            dataGridView2.Rows[0].Cells[0].Value = "Кол-во шагов до окончания движения"; // s
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
             dataGridView2.Rows[1].Cells[0].Value = "Максимальное количество итераций";
@@ -93,14 +93,11 @@ namespace AIS
             dataGridView2.Rows[3].Cells[0].Value = "Количество окуней в стае";
             dataGridView2.Rows[3].Cells[1].Value = 3;
 
-            dataGridView2.Rows[4].Cells[0].Value = "Параметр котла";
-            dataGridView2.Rows[4].Cells[1].Value = (1.9).ToString();
+            dataGridView2.Rows[4].Cells[0].Value = "Число перекоммутаций";
+            dataGridView2.Rows[4].Cells[1].Value = 10;
 
-            dataGridView2.Rows[5].Cells[0].Value = "Число перекоммутаций";
-            dataGridView2.Rows[5].Cells[1].Value = 10;
-
-            dataGridView2.Rows[6].Cells[0].Value = "Число шагов в перекоммутации";
-            dataGridView2.Rows[6].Cells[1].Value = 5;
+            dataGridView2.Rows[5].Cells[0].Value = "Число шагов в перекоммутации";
+            dataGridView2.Rows[5].Cells[1].Value = 5;
 
             dataGridView3.RowCount = 3;
             dataGridView3.Rows[0].Cells[0].Value = "x";
@@ -129,25 +126,20 @@ namespace AIS
                     obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
                     obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
-                    population =    Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                    MaxIteration =  Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
+                    NStep           =   Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+                    MaxIteration    =   Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
 
-                    NumFlocks =         Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
+                    NumFlocks       =   Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
                     NumPerchInFlock =   Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
-                    NStep =             Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value); // TODO: добавить в таблицу ВНИЗ
-                    sigma =             Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
 
-                    lambda =            Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
-                    alfa =              Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+                    lambda          =   Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+                    alfa            =   Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
 
-                    PRmax =             Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
-                    deltapr =           Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
+                    PRmax           =   Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
+                    deltapr         =   Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
 
-                    //Params param = (comboBoxSelectParams.SelectedIndex == 0) ? Params.Linear : Params.Quadratic;
-                    //Params param = Params.Linear;
                     algPerch = new AlgorithmPerch();
 
-                    //resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
                     resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
                     flag2 = true;
 
@@ -557,6 +549,7 @@ namespace AIS
             return funct;
         }
 
+        /// <summary>Степень для комплексного числа</summary>
         private double[] Cpow(double x, double y, int p)
         {
             double[] Cp = new double[2];
@@ -629,20 +622,20 @@ namespace AIS
             obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
             obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
             obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
-            MaxIteration = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
 
-            NumFlocks = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
+            NStep           = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+            MaxIteration    = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
+
+            NumFlocks       = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
             NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
-            population = NumFlocks * NumPerchInFlock;
-            NStep = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value); // TODO: добавить в таблицу ВНИЗ
-            sigma = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
+            population      = NumFlocks * NumPerchInFlock;
+            
+            lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+            alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
 
-            lambda = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
-            alfa = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
-
-            PRmax = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
-            deltapr = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
-            //FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr, exact)
+            PRmax           = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
+            deltapr         = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
+           
             FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr, exact)
             {
                 flines = flines,
@@ -676,25 +669,23 @@ namespace AIS
                         double normalDerivation = 0;
                         int z = comboBox1.SelectedIndex;
 
-                        population = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                        MaxIteration = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
+                        NStep           = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+                        MaxIteration    = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
 
-                        NumFlocks = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
+                        NumFlocks       = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
                         NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
-                        population = NumFlocks * NumPerchInFlock;
-                        NStep = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                        sigma = Convert.ToDouble(dataGridView2.Rows[4].Cells[1].Value);
+                        population      = NumFlocks * NumPerchInFlock;
 
-                        lambda = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
-                        alfa = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+                        PRmax           = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
+                        deltapr         = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
 
-                        PRmax = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
-                        deltapr = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
+                        lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+                        alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
 
                         for (int i = 0; i < 100; i++)
                         {
                             algPerch = new AlgorithmPerch();
-                            //Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+                            
                             Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
 
                             foreach (Vector item in exactPoints)
@@ -726,8 +717,8 @@ namespace AIS
 
                         FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
                         StreamWriter r = new StreamWriter(fs);
-                        r.Write(String.Format(@"| {0, 4}          |    {1, 6}        |      {2, 6}         |{3, 22:f6}                  |{4, 20:f6}              |{5, 20:f6}            |{6, 12}         |
-|---------------+------------------+---------------------+----------------------------------------+----------------------------------+--------------------------------+---------------------|", z + 1, population, MaxIteration, averDer, minDeviation, normalDerivation, successCount));
+                        r.Write(String.Format(@"| {0, 4}          |    {1, 6}        |      {2, 6}         |     {3, 14:f6}             |{4, 20:f6}              |{5, 20:f6}            |{6, 12}         |
+|---------------+------------------+---------------------+--------------------------------+----------------------------------+--------------------------------+---------------------|", z + 1, population, MaxIteration, averDer, minDeviation, normalDerivation, successCount));
                         r.Write("\r\n");
                         r.Close();
                         fs.Close();
