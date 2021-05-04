@@ -444,7 +444,7 @@ namespace AIS
 
         public Perch StartAlg(int MaxCount, double[,] D, int f, 
             int NumFlocks, int NumPerchInFlock, 
-            int NStep, double sigma, 
+            int NStep, //double sigma, 
             double lambda, double alfa, 
             int PRmax, int deltapr)
         {
@@ -458,7 +458,7 @@ namespace AIS
             population = NumFlocks * NumPerchInFlock;
 
             this.NStep = NStep;
-            this.sigma = sigma;
+            //this.sigma = sigma;
             this.lambda = lambda;
             this.alfa = alfa;
             this.PRmax = PRmax;

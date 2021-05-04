@@ -16,7 +16,7 @@ namespace AIS
         private AlgorithmPerch algPerch;
 
         private int MaxIteration = 0;
-        private Wolf result;
+        private Wolf result; // TODO: убрать
         private Perch resultBest;
         private double[,] obl = new double[2, 2];
 
@@ -147,7 +147,8 @@ namespace AIS
                     //Params param = Params.Linear;
                     algPerch = new AlgorithmPerch();
 
-                    resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+                    //resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+                    resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
                     flag2 = true;
 
                     //result = algPerch.StartAlg(population, MaxIteration, obl, z, param);
@@ -641,7 +642,8 @@ namespace AIS
 
             PRmax = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
             deltapr = Convert.ToInt32(dataGridView2.Rows[6].Cells[1].Value);
-            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr, exact)
+            //FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr, exact)
+            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr, exact)
             {
                 flines = flines,
                 showobl = showobl,
@@ -692,7 +694,8 @@ namespace AIS
                         for (int i = 0; i < 100; i++)
                         {
                             algPerch = new AlgorithmPerch();
-                            Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+                            //Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, sigma, lambda, alfa, PRmax, deltapr);
+                            Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
 
                             foreach (Vector item in exactPoints)
                             {
