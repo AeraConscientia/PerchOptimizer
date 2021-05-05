@@ -52,6 +52,7 @@ namespace AIS
         private double[,] showobl = new double[2, 2];
         private bool flag = false;
         private bool flag2 = false;
+        /// <summary>Точное значение функции в минимуме. Нужно переделать на максимум - домножить на -1</summary>
         private double exact = 0;
 
         public FormMain()
@@ -81,7 +82,7 @@ namespace AIS
             dataGridView1.Rows[1].Cells[0].Value = "y";
 
             dataGridView2.RowCount = 6;
-            dataGridView2.Rows[0].Cells[0].Value = "Кол-во шагов до окончания движения"; // s
+            dataGridView2.Rows[0].Cells[0].Value = "Кол-во шагов до окончания движения";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
             dataGridView2.Rows[1].Cells[0].Value = "Максимальное количество итераций";

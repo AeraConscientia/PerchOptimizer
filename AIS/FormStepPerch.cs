@@ -16,8 +16,6 @@ namespace AIS
         public FormStepPerch(int z, double[,] obl, int MaxIteration, int NumFlocks, int NumPerchInFlock, int NStep, double lambda, double alfa, int PRmax, int deltapr, double exact)
         {
             InitializeComponent();
-            
-            //population.this = population;
 
             this.z = z;
             this.obl = obl;
@@ -26,7 +24,6 @@ namespace AIS
             this.NumFlocks = NumFlocks;
             this.NumPerchInFlock = NumPerchInFlock;
             this.NStep = NStep;
-            //this.sigma = sigma;
 
             this.lambda = lambda;
             this.alfa = alfa;
@@ -44,7 +41,6 @@ namespace AIS
         int NumPerchInFlock;
         int population;
         int NStep;
-        //double sigma;
 
         double lambda;
         double alfa;
@@ -53,8 +49,6 @@ namespace AIS
         int deltapr;
 
         double exact;
-
-        //bool flagCreate;
 
 
         /// <summary>Номер функции</summary>
@@ -145,102 +139,102 @@ namespace AIS
             Pen pRed   = new Pen(Color.Red, 2);
             Font f1    = new Font("TimesNewRoman", 12, FontStyle.Bold);
 
-            e.Graphics.DrawLine(pBlack, 250, 250, 250, 135); // проверка -> деление  вертик 
-            e.Graphics.DrawLine(pBlack, 250, 135, 135, 135); // проверка -> деление  горизонт
-            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 130-1);  // Верхнее крыло повернутой стрелочки
-            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 140);    // Нижнее крыло повернутой стрелочки
+            e.Graphics.DrawLine(pBlack, 250, 250, 250, 135);        // проверка -> деление  вертик 
+            e.Graphics.DrawLine(pBlack, 250, 135, 135, 135);        // проверка -> деление  горизонт
+            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 130-1);          // Верхнее крыло повернутой стрелочки
+            e.Graphics.DrawLine(pBlack, 135+2, 134, 145+3, 140);            // Нижнее крыло повернутой стрелочки
 
             if (Red[6] == true)
             {
-                e.Graphics.DrawLine(pRed, 250, 250, 250, 135); // проверка -> деление  вертик 
-                e.Graphics.DrawLine(pRed, 250, 135, 140, 135); // проверка -> деление  горизонт
+                e.Graphics.DrawLine(pRed, 250, 250, 250, 135);      // проверка -> деление  вертик 
+                e.Graphics.DrawLine(pRed, 250, 135, 140, 135);      // проверка -> деление  горизонт
                 e.Graphics.DrawLine(pRed, 135 + 2, 134, 145 + 3, 130 - 1);
                 e.Graphics.DrawLine(pRed, 135 + 2, 134, 145 + 3, 140);
             }
 
-            e.Graphics.DrawLine(pBlack, 140, 405, 250, 405); // лидер Pool -> проверка горизонт
+            e.Graphics.DrawLine(pBlack, 140, 405, 250, 405);        // лидер Pool -> проверка горизонт
 
-            e.Graphics.DrawLine(pBlack, 250, 405, 250, 210); // лидер Pool -> проверка вертик
+            e.Graphics.DrawLine(pBlack, 250, 405, 250, 210);        // лидер Pool -> проверка вертик
             e.Graphics.DrawLine(pBlack, 250, 258, 255, 268);
             e.Graphics.DrawLine(pBlack, 249, 258, 244, 268);
 
             if (Red[4] == true)
             {
-                e.Graphics.DrawLine(pRed, 140, 405, 250, 405); // лидер Pool -> проверка горизонт
+                e.Graphics.DrawLine(pRed, 140, 405, 250, 405);      // лидер Pool -> проверка горизонт
                                      
-                e.Graphics.DrawLine(pRed, 250, 405, 250, 210); // лидер Pool -> проверка вертик
+                e.Graphics.DrawLine(pRed, 250, 405, 250, 210);      // лидер Pool -> проверка вертик
                 e.Graphics.DrawLine(pRed, 250, 258, 255, 268);
                 e.Graphics.DrawLine(pRed, 249, 258, 244, 268);
             }
 
-            e.Graphics.DrawLine(pBlack, 70, 300, 70, 373); // плаванье -> лидер Pool 
+            e.Graphics.DrawLine(pBlack, 70, 300, 70, 373);          // плаванье -> лидер Pool 
             e.Graphics.DrawLine(pBlack, 70, 370, 75, 360);
             e.Graphics.DrawLine(pBlack, 69, 370, 64, 360);
 
             if (Red[3] == true)
             {
-                e.Graphics.DrawLine(pRed, 70, 300, 70, 373); // плаванье -> лидер Pool 
+                e.Graphics.DrawLine(pRed, 70, 300, 70, 373);        // плаванье -> лидер Pool 
                 e.Graphics.DrawLine(pRed, 70, 370, 75, 360);
                 e.Graphics.DrawLine(pRed, 69, 370, 64, 360);
             }
 
-            e.Graphics.DrawLine(pBlack, 70, 210, 70, 283); // котлы -> плаванье !!!
+            e.Graphics.DrawLine(pBlack, 70, 210, 70, 283);          // котлы -> плаванье !!!
             e.Graphics.DrawLine(pBlack, 70, 280, 75, 270);
             e.Graphics.DrawLine(pBlack, 69, 280, 64, 270);
 
             if (Red[2] == true)
             {
-                e.Graphics.DrawLine(pRed, 70, 210, 70, 283); // котлы -> плаванье !!!
+                e.Graphics.DrawLine(pRed, 70, 210, 70, 283);        // котлы -> плаванье !!!
                 e.Graphics.DrawLine(pRed, 70, 280, 75, 270);
                 e.Graphics.DrawLine(pRed, 69, 280, 64, 270);
             }
 
-            e.Graphics.DrawLine(pBlack, 70, 120, 70, 193); // деление -> котлы
+            e.Graphics.DrawLine(pBlack, 70, 120, 70, 193);          // деление -> котлы
             e.Graphics.DrawLine(pBlack, 70, 195, 75, 185);
             e.Graphics.DrawLine(pBlack, 69, 195, 64, 185);
 
             if (Red[1] == true)
             {
-                e.Graphics.DrawLine(pRed, 70, 120, 70, 193); // деление -> котлы
+                e.Graphics.DrawLine(pRed, 70, 120, 70, 193);        // деление -> котлы
                 e.Graphics.DrawLine(pRed, 70, 195, 75, 185);
                 e.Graphics.DrawLine(pRed, 69, 195, 64, 185);
             }
 
-            e.Graphics.DrawLine(pBlack, 70, 30, 70, 105); // генерация -> деление
+            e.Graphics.DrawLine(pBlack, 70, 30, 70, 105);           // генерация -> деление
             e.Graphics.DrawLine(pBlack, 70, 102, 75, 92);
             e.Graphics.DrawLine(pBlack, 69, 102, 64, 92);
 
             if (Red[0] == true)
             {
-                e.Graphics.DrawLine(pRed, 70, 30, 70, 105); // генерация -> деление
+                e.Graphics.DrawLine(pRed, 70, 30, 70, 105);         // генерация -> деление
                 e.Graphics.DrawLine(pRed, 70, 102, 75, 92);
                 e.Graphics.DrawLine(pRed, 69, 102, 64, 92);
             }
 
 
-            e.Graphics.DrawLine(pBlack, 310, 225, 340, 225); // проверка -> интенсивный поиск  горизонт
-            e.Graphics.DrawLine(pBlack, 340, 225, 340, 530); // проверка -> интенсивный поиск  вертик
-            e.Graphics.DrawLine(pBlack, 310, 530, 340, 530); // проверка -> интенсивный поиск  горизонт НУЖНА СТРЕЛОЧКА
-            e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 300+224); // Верхнее крыло повернутой стрелочки   ********
-            e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 311+225); // Нижнее крыло повернутой стрелочки   ********
+            e.Graphics.DrawLine(pBlack, 310, 225, 340, 225);        // проверка -> интенсивный поиск  горизонт
+            e.Graphics.DrawLine(pBlack, 340, 225, 340, 530);        // проверка -> интенсивный поиск  вертик
+            e.Graphics.DrawLine(pBlack, 310, 530, 340, 530);        // проверка -> интенсивный поиск  горизонт
+            e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 300+224);        // Верхнее крыло повернутой стрелочки
+            e.Graphics.DrawLine(pBlack, 310, 305+224, 321, 311+225);        // Нижнее крыло повернутой стрелочки
             
             if (Red[7] == true)
             {
-                e.Graphics.DrawLine(pRed, 310, 225, 340, 225); // проверка -> интенсивный поиск  горизонт
-                e.Graphics.DrawLine(pRed, 340, 225, 340, 530); // проверка -> интенсивный поиск  вертик
-                e.Graphics.DrawLine(pRed, 310, 530, 340, 530); // проверка -> интенсивный поиск  горизонт НУЖНА СТРЕЛОЧКА
-                e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 300 + 224); // Верхнее крыло повернутой стрелочки   ********
-                e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 311 + 225); // Нижнее крыло повернутой стрелочки   ********
+                e.Graphics.DrawLine(pRed, 310, 225, 340, 225);      // проверка -> интенсивный поиск  горизонт
+                e.Graphics.DrawLine(pRed, 340, 225, 340, 530);      // проверка -> интенсивный поиск  вертик
+                e.Graphics.DrawLine(pRed, 310, 530, 340, 530);      // проверка -> интенсивный поиск  горизонт
+                e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 300 + 224);  // Верхнее крыло повернутой стрелочки
+                e.Graphics.DrawLine(pRed, 310, 305 + 224, 321, 311 + 225);  // Нижнее крыло повернутой стрелочки 
             }
 
-            e.Graphics.DrawLine(pBlack, 70, 530, 310, 530); // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
-            e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 300 + 224); // Верхнее крыло повернутой стрелочки 
-            e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 311 + 225); // Нижнее крыло повернутой стрелочки 
+            e.Graphics.DrawLine(pBlack, 70, 530, 310, 530);         // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
+            e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 300 + 224);    // Верхнее крыло повернутой стрелочки 
+            e.Graphics.DrawLine(pBlack, 137, 305 + 224, 148, 311 + 225);    // Нижнее крыло повернутой стрелочки 
             if (Red[8] == true) 
             {
-                e.Graphics.DrawLine(pRed, 70, 530, 310, 530); // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
-                e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 300 + 224); // Верхнее крыло повернутой стрелочки 
-                e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 311 + 225); // Нижнее крыло повернутой стрелочки 
+                e.Graphics.DrawLine(pRed, 70, 530, 310, 530);       // интенсивный поиск -> окончание  горизонт НУЖНА СТРЕЛОЧКА
+                e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 300 + 224);  // Верхнее крыло повернутой стрелочки 
+                e.Graphics.DrawLine(pRed, 137, 305 + 224, 148, 311 + 225);  // Нижнее крыло повернутой стрелочки 
             }
 
         }
@@ -422,7 +416,7 @@ namespace AIS
 
                 flag = true;                   //Начало работы алгоритма
 
-                algo = new AlgorithmPerch //TODO: тут пока бред. Я в тупике. Ну что-то делает
+                algo = new AlgorithmPerch 
                 {
                     MaxCount = MaxIteration,
                     NumFlocks = NumFlocks,
@@ -431,7 +425,6 @@ namespace AIS
                     f = z,
                     D = obl,
                     NStep = NStep,
-                    //sigma = sigma,
                     lambda = lambda,
                     alfa = alfa,
                     PRmax = PRmax,
@@ -499,6 +492,7 @@ namespace AIS
             Red[3] = true;
             algo.FlocksSwim();
             algo.currentIteration++;
+            iterationGraph++;
 
             algo.best = algo.flock[0, 0];
             algo.bestFitness.Add(algo.best.fitness);
@@ -512,10 +506,7 @@ namespace AIS
             pictureBox2.Refresh();
             this.chart1.Series[0].Points.AddXY(iterationGraph, algo.bestFitness[algo.bestFitness.Count - 1]);
             this.chart1.Series[1].Points.AddXY(iterationGraph, algo.averageFitness[algo.averageFitness.Count - 1]);
-
-            iterationGraph++;
-            //chart1.Update();
-            //chart1.Refresh();
+            this.numericUpDown1.Maximum = algo.MaxCount - algo.currentIteration;
         }
 
         /// <summary>Проверка условий окончания</summary>
@@ -694,9 +685,6 @@ namespace AIS
 
         private void ChartGraph_Paint(object sender, PaintEventArgs e)
         {
-            //double iteration = 0;
-            //this.chart1.Series[0].Points.Clear(); //очищение точек. Но в перерисовке не нужно, думаю
-            // а надо ли вообще это делать...
             
         }
 
@@ -736,9 +724,46 @@ namespace AIS
 
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
+            //ВРЕМЕННО
+            iterationGraph = algo.currentIteration;
+            this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
+            int tmp = algo.currentIteration;
+            for (int i = algo.currentIteration; i < tmp + numericUpDown1.Value; i++)
+            {
+                if (algo.currentIteration == MaxIteration)
+                    break;
+                algo.MakeFlocks();
+                algo.MoveEPerchEFlock();
+                algo.FlocksSwim();
+                algo.currentIteration++;
 
+                algo.best = algo.flock[0, 0];
+                algo.bestFitness.Add(algo.best.fitness);
+                algo.AverageFitness();
+                this.chart1.Series[0].Points.AddXY(iterationGraph, algo.bestFitness[algo.bestFitness.Count - 1]);
+                this.chart1.Series[1].Points.AddXY(iterationGraph, algo.averageFitness[algo.averageFitness.Count - 1]);
+                iterationGraph++;
+
+            }
+            pictureBox1.Refresh();
+            pictureBox2.Refresh();
+
+            flag = false;
+
+            dataGridView3.RowCount = 4;
+            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
+            dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
+            dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
+            dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
+
+            dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
+            dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
+            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+            dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count - 1]:F8}");
+
+            dataGridView3.Refresh();
         }
     }
 }
