@@ -405,6 +405,7 @@ namespace AIS
         /// <summary>Создание начальной популяции</summary>
         private void buttonInitialPopulation_Click(object sender, EventArgs e)
         {
+            button1.Enabled = true;
             iterationGraph = 0;
             this.chart1.Series[0].Points.Clear();
             this.chart1.Series[1].Points.Clear();
@@ -487,12 +488,10 @@ namespace AIS
         /// <summary>Плавание стай</summary>
         private void buttonFlocksSwim_Click(object sender, EventArgs e)
         {
-           
+
             Red[2] = false;
             Red[3] = true;
             algo.FlocksSwim();
-            algo.currentIteration++;
-            iterationGraph++;
 
             algo.best = algo.flock[0, 0];
             algo.bestFitness.Add(algo.best.fitness);
@@ -504,8 +503,11 @@ namespace AIS
             //pictureBoxGraph.Refresh();
             pictureBox1.Refresh();
             pictureBox2.Refresh();
-            this.chart1.Series[0].Points.AddXY(iterationGraph, algo.bestFitness[algo.bestFitness.Count - 1]);
-            this.chart1.Series[1].Points.AddXY(iterationGraph, algo.averageFitness[algo.averageFitness.Count - 1]);
+            this.chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
+            this.chart1.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
+            
+            algo.currentIteration++;
+            iterationGraph++;
             this.numericUpDown1.Maximum = algo.MaxCount - algo.currentIteration;
         }
 
@@ -691,6 +693,8 @@ namespace AIS
         private void buttonAnswer_Click(object sender, EventArgs e)
         {
             this.buttonAnswer.Enabled = false;
+            buttonInitialPopulation.Enabled = true;
+            button1.Enabled = false;
             for (int i = algo.currentIteration; i < algo.MaxCount; i++)
             {
                 algo.MakeFlocks();
@@ -726,9 +730,6 @@ namespace AIS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //ВРЕМЕННО
-            iterationGraph = algo.currentIteration;
-            this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
             int tmp = algo.currentIteration;
             for (int i = algo.currentIteration; i < tmp + numericUpDown1.Value; i++)
             {
@@ -764,6 +765,7 @@ namespace AIS
             dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count - 1]:F8}");
 
             dataGridView3.Refresh();
+            this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
         }
     }
 }

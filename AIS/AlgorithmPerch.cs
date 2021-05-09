@@ -71,7 +71,7 @@ namespace AIS
 
         /// <summary>Сортировка ВСЕХ окуней</summary>
         
-        private void Sort(List<Perch> list) // TODO: протестить на предмет правильно сортировки
+        private void Sort(List<Perch> list)
         {
 
             for (int i = 0; i < list.Count; i++)
@@ -168,6 +168,13 @@ namespace AIS
                     {
                         x = flock[i, j].coords[0] + k * ((flock[i, 0].coords[0] - flock[i, j].coords[0]) / (NStep));
                         y = flock[i, j].coords[1] + k * ((flock[i, 0].coords[1] - flock[i, j].coords[1]) / (NStep));
+
+                        if (x < D[0,0] || x > D[0,1] || y < D[1,0] || y > D[1,1]) // если окуни вышли на границы, оставляем их прежние позиции
+                        {
+                            x = flock[i, j].coords[0];
+                            y = flock[i, j].coords[1];
+                        }
+
                         if (Double.IsNaN(x) || Double.IsNaN(y))
                             throw new Exception();
                         move.Add(new Perch(x, y, function(x, y, f)));
@@ -215,6 +222,12 @@ namespace AIS
                 {
                     x = flock[i, j].coords[0] + k * ((flock[i, 0].coords[0] - flock[i, j].coords[0]) / (NStep));
                     y = flock[i, j].coords[1] + k * ((flock[i, 0].coords[1] - flock[i, j].coords[1]) / (NStep));
+
+                    if (x < D[0,0] || x > D[0,1] || y < D[1,0] || y > D[1,1]) // если окуни вышли за границы, оставляем их прежние позиции
+                    {
+                        x = flock[i, j].coords[0];
+                        y = flock[i, j].coords[1];
+                    }
                     if (Double.IsNaN(x) || Double.IsNaN(y))
                         throw new Exception();
                     move.Add(new Perch(x, y, function(x, y, f)));
@@ -251,7 +264,7 @@ namespace AIS
         {
             sigma = rand.NextDouble() / 20 + 0.6; // sigma [0.6,  0.8]
 
-            for (int l = 1; l < NumFlocks - 1; l++)
+            for (int l = 1; l < NumFlocks - 1; l++) // если не изменяет память, передвижение лидеров средних стай
             {
                 double x = 0;
                 double y = 0;
@@ -264,6 +277,12 @@ namespace AIS
                     y = flock[l, 0].coords[1] + k * ((flock[0, 0].coords[1] - flock[l, 0].coords[1]) / (NStep));
                     if (Double.IsNaN(x) || Double.IsNaN(y))
                         throw new Exception();
+
+                    if (x < D[0, 0] || x > D[0, 1] || y < D[1, 0] || y > D[1, 1]) // если лидеры вышли за границу, оставляем их прежние позиции
+                    {
+                        x = flock[l, 0].coords[0];
+                        y = flock[l, 0].coords[1];
+                    }
                     move.Add(new Perch(x, y, function(x, y, f)));
                 }
 
@@ -285,6 +304,11 @@ namespace AIS
                         y1 = flock[l, j].coords[1] + k * ((flock[l, 0].coords[1] - flock[l, j].coords[1]) / (NStep));
                         if (Double.IsNaN(x1) || Double.IsNaN(y1))
                             throw new Exception();
+                        if (x1 < D[0, 0] || x1 > D[0, 1] || y1 < D[1, 0] || y1 > D[1, 1]) // если не-лидеры средних стай вышли за гранмцы, оставляем их прежние позиции
+                        {
+                            x1 = flock[l, j].coords[0];
+                            y1 = flock[l, j].coords[1];
+                        }
                         move1.Add(new Perch(x1, y1, function(x1, y1, f)));
                     }
                     //Sort(move1);
@@ -336,6 +360,11 @@ namespace AIS
             {
                 double x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[0] - xMin);
                 double y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[1] - yMin);
+                while (x > D[0,1] || x < D[0,0] || y > D[1,1] || y < D[1,0]) // TODO: Добавлены ограничения на x,y
+                {
+                    x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[0] - xMin);
+                    y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[1] - yMin);
+                }
                 if (Double.IsNaN(x) || Double.IsNaN(y))
                     throw new Exception();
                 flock[NumFlocks - 1, j] = new Perch(x, y, function(x, y, f));
@@ -344,7 +373,7 @@ namespace AIS
             int i = 1;
 
 
-            for (int j = 0; j < NumPerchInFlock; j++)
+            for (int j = 0; j < NumPerchInFlock; j++) // всех окуней из худших двигаем к лидеру худшей стаи
             {
                 double x = 0;
                 double y = 0;
@@ -355,6 +384,11 @@ namespace AIS
                 {
                     x = flock[i, j].coords[0] + k * ((flock[i, 0].coords[0] - flock[i, j].coords[0]) / (NStep));
                     y = flock[i, j].coords[1] + k * ((flock[i, 0].coords[1] - flock[i, j].coords[1]) / (NStep));
+                    if (x < D[0, 0] || x > D[0, 1] || y < D[1, 0] || y > D[1, 1]) // если окуни вышли за границы, оставляем их прежние позиции
+                    {
+                        x = flock[i, j].coords[0];
+                        y = flock[i, j].coords[1];
+                    }    
                     if (Double.IsNaN(x) || Double.IsNaN(y))
                         throw new Exception();
                     move.Add(new Perch(x, y, function(x, y, f)));
@@ -370,7 +404,7 @@ namespace AIS
         public void PoorLeaderSwim()
         {
 
-            //TODO: ПОЛУЧАЕТСЯ NAN, ПРОБЛЕМА С ВОЗВЕДЕНИЕМ В ДРОБНУЮ СТЕПЕНЬ ОТРИЦАТЕЛЬНОГО ЧИСЛА 
+            //TODO: ПОЛУЧАЕТСЯ NAN, ПРОБЛЕМА С ВОЗВЕДЕНИЕМ В ДРОБНУЮ СТЕПЕНЬ ОТРИЦАТЕЛЬНОГО ЧИСЛА. Вроде решено
             double a = LeviX();
             double b = LeviY();
             flock[NumFlocks - 1, 0].coords[0] = flock[NumFlocks - 1, 0].coords[0] + (alfa / currentIteration) * a;
@@ -388,10 +422,8 @@ namespace AIS
         /// <summary>Распределение Леви, координата х,  для худшей стаи</summary>
         public double LeviX()
         {
-            //R1 = rand.Next(Convert.ToInt32(D[0, 0] * 100), Convert.ToInt32(D[0,1] * 100)) / 100f;
             R1 = rand.Next(Convert.ToInt32(0), Convert.ToInt32((D[0,1] - D[0, 0]) * 100)) / 100f; // (0, b1-a1)
             thetta1 = R1 * 2 * Math.PI;
-            //L1 = Math.Pow(Math.Abs(R1 + 0.0001f), -1 / lambda);       // TODO: точно можно ставить abs? Ради эксперимента сниму модуль ниже |
             L1 = Math.Pow(R1 + 0.0001f, -1 / lambda);
 
             x = L1 * Math.Sin(thetta1);
@@ -401,13 +433,11 @@ namespace AIS
         /// <summary>Распределение Леви, координата y,  для худшей стаи</summary>
         public double LeviY()
         {
-            //R2 = rand.Next(Convert.ToInt32(D[1, 0] * 100), Convert.ToInt32(D[1, 1] * 100)) / 100f;
             R2 = rand.Next(Convert.ToInt32(0), Convert.ToInt32((D[1, 1] - D[1, 0]) * 100)) / 100f; // (0, b2-a2)
             thetta2 = R2 * 2 * Math.PI;
-            //L2 = Math.Pow(Math.Abs(R2), -1 / lambda);   //!
             L2 = Math.Pow(R2 + 0.0001f, -1 / lambda);   //!
 
-            y = L2 * Math.Cos(thetta2); // TODO: странна, менять, если что
+            y = L2 * Math.Cos(thetta2);
             return y;
         }
 
@@ -444,7 +474,7 @@ namespace AIS
 
         public Perch StartAlg(int MaxCount, double[,] D, int f, 
             int NumFlocks, int NumPerchInFlock, 
-            int NStep, //double sigma, 
+            int NStep,
             double lambda, double alfa, 
             int PRmax, int deltapr)
         {
@@ -458,7 +488,6 @@ namespace AIS
             population = NumFlocks * NumPerchInFlock;
 
             this.NStep = NStep;
-            //this.sigma = sigma;
             this.lambda = lambda;
             this.alfa = alfa;
             this.PRmax = PRmax;
