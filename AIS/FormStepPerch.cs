@@ -705,8 +705,8 @@ namespace AIS
                 algo.best = algo.flock[0, 0];
                 algo.bestFitness.Add(algo.best.fitness);
                 algo.AverageFitness();
-                this.chart1.Series[0].Points.AddXY(iterationGraph, algo.bestFitness[algo.bestFitness.Count - 1]);
-                this.chart1.Series[1].Points.AddXY(iterationGraph, algo.averageFitness[algo.averageFitness.Count - 1]);
+                this.chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
+                this.chart1.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
                 iterationGraph++;
             }
 

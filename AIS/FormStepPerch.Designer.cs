@@ -265,9 +265,9 @@
             // 
             this.groupBox1.Controls.Add(this.dataGridView3);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(380, 397);
+            this.groupBox1.Location = new System.Drawing.Point(380, 458);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(348, 247);
+            this.groupBox1.Size = new System.Drawing.Size(348, 186);
             this.groupBox1.TabIndex = 35;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Информация о текущей популяции";
@@ -295,6 +295,17 @@
             // 
             // chart1
             // 
+            chartArea1.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.SharpTriangle;
+            chartArea1.AxisX.Title = "Итерация";
+            chartArea1.AxisX.TitleAlignment = System.Drawing.StringAlignment.Far;
+            chartArea1.AxisY.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.SharpTriangle;
+            chartArea1.AxisY.Title = "f(x)";
+            chartArea1.AxisY.TitleAlignment = System.Drawing.StringAlignment.Far;
+            chartArea1.InnerPlotPosition.Auto = false;
+            chartArea1.InnerPlotPosition.Height = 84.16512F;
+            chartArea1.InnerPlotPosition.Width = 81.7837F;
+            chartArea1.InnerPlotPosition.X = 10F;
+            chartArea1.InnerPlotPosition.Y = 7F;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Location = new System.Drawing.Point(380, 48);
@@ -312,7 +323,7 @@
             series2.Name = "Series1";
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(348, 298);
+            this.chart1.Size = new System.Drawing.Size(348, 398);
             this.chart1.TabIndex = 38;
             this.chart1.Text = "chart1";
             this.chart1.Paint += new System.Windows.Forms.PaintEventHandler(this.ChartGraph_Paint);
