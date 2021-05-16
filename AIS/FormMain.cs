@@ -66,10 +66,10 @@ namespace AIS
             FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
 
             StreamWriter r = new StreamWriter(fs);
-            r.Write($"+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\r\n" +
-                    $"|  Номер  |   Размер    | Кол-во |   Кол-во окуней |  Кол-во  | PRmax | delta | lambda | alfa  | Cреднее значение отклонения  |  Наименьшее значение   | Среднеквадратическое  |   Кол-во   |\r\n" +
-                    $"| функции |  популяции  |  стай  |       в стае    | итераций |       |   pr  |        |       |    от точного решения        |       отклонения       |      отклонение       |  успехов   |\r\n" +
-                    $"+---------+-------------+--------+-----------------+----------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------+\r\n");
+            r.Write($"+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\r\n" +
+                    $"|  Номер  |   Размер    | Кол-во |   Кол-во окуней |  Кол-во  | NStep | PRmax | delta | lambda | alfa  | Cреднее значение отклонения  |  Наименьшее значение   | Среднеквадратическое  |   Кол-во   |\r\n" +
+                    $"| функции |  популяции  |  стай  |       в стае    | итераций |       |       |   pr  |        |       |    от точного решения        |       отклонения       |      отклонение       |  успехов   |\r\n" +
+                    $"+---------+-------------+--------+-----------------+----------+-------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------+\r\n");
             r.Close();
             fs.Close();
 
@@ -269,7 +269,7 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "10";
                 dataGridView1.Rows[1].Cells[1].Value = "-10";
                 dataGridView1.Rows[1].Cells[2].Value = "10";
-                exact = 0;
+                exact = -20;
 
                 exactPoints.Add(new Vector(0, 0));
 
@@ -662,67 +662,74 @@ namespace AIS
                         obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
                         obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
-                        List<double> averFuncDeviation = new List<double>();
-                        double minDeviation = 0;
-                        int successCount = 0;
-                        double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / 1000f;
-                        double averDer = 0;
-                        double normalDerivation = 0;
-                        int z = comboBox1.SelectedIndex;
-
-                        NStep           = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                        MaxIteration    = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
-
-                        NumFlocks       = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
-                        NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
-                        population      = NumFlocks * NumPerchInFlock;
-
-                        PRmax           = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
-                        deltapr         = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
-
-                        lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
-                        alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
-
-                        for (int i = 0; i < 100; i++)
+                        for (int p = 0; p < 10; p++)
                         {
-                            algPerch = new AlgorithmPerch();
-                            
-                            Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
 
-                            foreach (Vector item in exactPoints)
+
+                            List<double> averFuncDeviation = new List<double>();
+                            double minDeviation = 0;
+                            int successCount = 0;
+                            double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / 1000f;
+                            double averDer = 0;
+                            double normalDerivation = 0;
+                            int z = comboBox1.SelectedIndex;
+
+                            NStep           = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
+                            MaxIteration    = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
+
+                            NumFlocks       = Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
+                            NumPerchInFlock = Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
+                            population      = NumFlocks * NumPerchInFlock;
+
+                            PRmax           = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
+                            deltapr         = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
+
+                            lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
+                            alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
+
+                            for (int i = 0; i < 100; i++)
                             {
-                                if ((Math.Abs(result.coords[0] - item[0]) < eps) && (Math.Abs(result.coords[1] - item[1]) < eps))
+                                algPerch = new AlgorithmPerch();
+
+                                Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
+
+                                foreach (Vector item in exactPoints)
                                 {
-                                    successCount++;
-                                    break;
+                                    if ((Math.Abs(result.coords[0] - item[0]) < eps) && (Math.Abs(result.coords[1] - item[1]) < eps))
+                                    {
+                                        successCount++;
+                                        break;
+                                    }
                                 }
+
+                                averFuncDeviation.Add(Math.Abs(result.fitness - exact));
                             }
 
-                            averFuncDeviation.Add(Math.Abs(result.fitness - exact));
+                            double deltaSum = 0;
+                            for (int i = 0; i < 100; i++)
+                                deltaSum += averFuncDeviation[i];
+
+                            // СК отлонение?
+                            averDer = deltaSum / 100f;
+
+                            averFuncDeviation.Sort();/////////////////////////////////////////////////
+                            minDeviation = averFuncDeviation[0];
+
+                            double dispersion = 0;
+                            for (int i = 0; i < 100; i++)
+                                dispersion += Math.Pow(averFuncDeviation[i] - averDer, 2);
+                            normalDerivation = Math.Sqrt((dispersion / 100f));
+
+                            FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
+                            StreamWriter r = new StreamWriter(fs);
+                            r.Write(String.Format(@"|{0, 5}    |  {1, 6}     |{2, 5}   |    {3, 5}        |{4, 5}     |{5, 5}  |{6, 5}  |{7, 4}   |  {8,5:f3} | {9,5:f3} |    {10, 14:f6}            |{11, 17:f6}       |{12, 15:f6}        |{13, 7}     |  
+|---------+-------------+--------+-----------------+----------+-------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------|", z + 1, population, NumFlocks, NumPerchInFlock, MaxIteration-1, NStep, PRmax, deltapr, lambda, alfa, averDer, minDeviation, normalDerivation, successCount));
+                            r.Write("\r\n");
+
+                            r.Close();
+
+                            fs.Close();
                         }
-
-                        double deltaSum = 0;
-                        for (int i = 0; i < 100; i++)
-                            deltaSum += averFuncDeviation[i];
-
-                        // СК отлонение?
-                        averDer = deltaSum / 100f;
-
-                        averFuncDeviation.Sort();
-                        minDeviation = averFuncDeviation[0];
-
-                        double dispersion = 0;
-                        for (int i = 0; i < 100; i++)
-                            dispersion += Math.Pow(averFuncDeviation[i] - averDer, 2);
-                        normalDerivation = Math.Sqrt((dispersion / 100f));
-
-                        FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
-                        StreamWriter r = new StreamWriter(fs);
-                        r.Write(String.Format(@"| {0, 4}    |  {1, 6}     |{2, 5}   |    {3, 5}        |{4, 5}     |{5, 5}  |{6, 4}   |  {7,5:f3} | {8,5:f3} |    {9, 14:f6}            |{10, 17:f6}       |{11, 15:f6}        |{12, 7}     |  
-|---------+-------------+--------+-----------------+----------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------|", z + 1, population, NumFlocks, NumPerchInFlock, MaxIteration,  PRmax, deltapr, lambda, alfa, averDer, minDeviation, normalDerivation, successCount));
-                        r.Write("\r\n");
-                        r.Close();
-                        fs.Close();
                         Process.Start("protocol.txt");
                     }
                 }

@@ -624,15 +624,15 @@ namespace AIS
                     Perch Xr_pool = new Perch(); ;
                     p = rand.Next(0, MaxCount - 1);
                     q = rand.Next(0, MaxCount - 1);
-                    //while(q == p)
-                    //{
-                    //    q = rand.Next(0, MaxCount - 1);
-                    //}
+                    while(q == p)
+                    {
+                        q = rand.Next(0, MaxCount - 1);
+                    }
                     r = rand.Next(0, MaxCount - 1);
-                    //while(r == p || r == q)
-                    //{
-                    //    r = rand.Next(0, MaxCount - 1);
-                    //}
+                    while(r == p || r == q)
+                    {
+                        r = rand.Next(0, MaxCount - 1);
+                    }
 
                     Xp_pool = Pool[p];
                     Xq_pool = Pool[q];
@@ -657,8 +657,8 @@ namespace AIS
                     {
                         double x = perchResult.coords[0] + i * (Xr_pool.coords[0] - perchResult.coords[0]) / deltapr;
                         double y = perchResult.coords[1] + i * (Xr_pool.coords[1] - perchResult.coords[1]) / deltapr;
-                        if (Double.IsNaN(x) || Double.IsNaN(y))
-                            throw new Exception();
+                    //    if (Double.IsNaN(x) || Double.IsNaN(y))
+                    //        throw new Exception();
 
                     double res = function(x, y, f);
                         if (res < min)

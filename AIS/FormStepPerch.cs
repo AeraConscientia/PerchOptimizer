@@ -767,5 +767,10 @@ namespace AIS
             dataGridView3.Refresh();
             this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

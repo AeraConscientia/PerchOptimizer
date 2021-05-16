@@ -1,0 +1,13 @@
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\bin\Release\AIS.exe.config
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\bin\Release\AIS.exe
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\bin\Release\AIS.pdb
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.csprojAssemblyReference.cache
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.FormHelp.resources
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.FormStepByStep.resources
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.FormMain.resources
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.FormStepPerch.resources
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.Properties.Resources.resources
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.csproj.GenerateResource.cache
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.csproj.CoreCompileInputs.cache
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.exe
+K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.pdb
