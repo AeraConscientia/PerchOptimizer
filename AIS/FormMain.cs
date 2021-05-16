@@ -11,12 +11,10 @@ namespace AIS
     public partial class FormMain : Form
     {
         //Мое
-        private Algoritm alg;
 
         private AlgorithmPerch algPerch;
 
         private int MaxIteration = 0;
-        private Wolf result; // TODO: убрать
         private Perch resultBest;
         private double[,] obl = new double[2, 2];
 
@@ -159,7 +157,7 @@ namespace AIS
             if ((comboBox1.SelectedIndex != -1) )
             {
                 buttonAnswer.Enabled = true;
-                buttonStepByStep.Enabled = true;
+                button1.Enabled = true;
             }
 
             if (comboBox1.SelectedIndex == 0)
@@ -269,7 +267,7 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "10";
                 dataGridView1.Rows[1].Cells[1].Value = "-10";
                 dataGridView1.Rows[1].Cells[2].Value = "10";
-                exact = -20;
+                exact = -20; // TODO: функция Растригина не совсем та!
 
                 exactPoints.Add(new Vector(0, 0));
 
@@ -571,29 +569,6 @@ namespace AIS
             pictureBox1.Refresh();
         }
 
-        //По шагам
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if ((comboBox1.SelectedIndex != -1) )
-            {
-                obl = new double[2, 2];
-
-                obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
-                obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
-                obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
-                obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
-                population = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
-                MaxIteration = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value);
-                FormStepByStep form = new FormStepByStep(comboBox1.SelectedIndex, obl, population, MaxIteration, exact)
-                {
-                    flines = flines,
-                    showobl = showobl,
-                    Ar = Ar
-                };
-                form.Show();
-            }
-        }
-
         private void button5_Click(object sender, EventArgs e)
         {
             Close();
@@ -605,7 +580,7 @@ namespace AIS
             if ((comboBox1.SelectedIndex != -1))
             {
                 buttonAnswer.Enabled = true;
-                buttonStepByStep.Enabled = true;
+                button1.Enabled = true;
             }
         }
 

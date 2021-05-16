@@ -65,7 +65,6 @@
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonStepByStep = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -403,18 +402,6 @@
             this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.dataGridViewTextBoxColumn2.Width = 195;
             // 
-            // buttonStepByStep
-            // 
-            this.buttonStepByStep.Enabled = false;
-            this.buttonStepByStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonStepByStep.Location = new System.Drawing.Point(237, 393);
-            this.buttonStepByStep.Name = "buttonStepByStep";
-            this.buttonStepByStep.Size = new System.Drawing.Size(136, 34);
-            this.buttonStepByStep.TabIndex = 30;
-            this.buttonStepByStep.Text = "Работа по шагам";
-            this.buttonStepByStep.UseVisualStyleBackColor = true;
-            this.buttonStepByStep.Click += new System.EventHandler(this.button3_Click);
-            // 
             // button5
             // 
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -464,7 +451,6 @@
             this.groupBox3.Controls.Add(this.buttonAnswer);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.dataGridView3);
-            this.groupBox3.Controls.Add(this.buttonStepByStep);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(398, 270);
             this.groupBox3.Name = "groupBox3";
@@ -583,7 +569,6 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.Button buttonStepByStep;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox2;

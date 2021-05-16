@@ -378,7 +378,6 @@
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 42;
             this.label4.Text = "N = ";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // FormStepPerch
             // 

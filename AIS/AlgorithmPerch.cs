@@ -468,7 +468,7 @@ namespace AIS
                     int randomIndex = rand.Next(0, Pool.Count());
                     answers.Add(Pool[randomIndex]);
                 }
-                // TODO: добавить конец перекоммутации
+                // TODO: добавить конец перекоммутации. Ну он появился
             }
         }
 
@@ -614,7 +614,7 @@ namespace AIS
 
         public void Recommutation()
         {
-            int p, q, r; // TODO: три несовпадающих решения? Или могут быть одинаковые?
+            int p, q, r;
 
             for (int pr = 0; pr < PRmax; pr++)
             {
