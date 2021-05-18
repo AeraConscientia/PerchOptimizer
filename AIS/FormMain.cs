@@ -248,7 +248,7 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "5";
                 dataGridView1.Rows[1].Cells[1].Value = "-5";
                 dataGridView1.Rows[1].Cells[2].Value = "5";
-                exact = -20;
+                exact = 0;
 
                 exactPoints.Add(new Vector(0, 0));
 
@@ -267,7 +267,7 @@ namespace AIS
                 dataGridView1.Rows[0].Cells[2].Value = "10";
                 dataGridView1.Rows[1].Cells[1].Value = "-10";
                 dataGridView1.Rows[1].Cells[2].Value = "10";
-                exact = -20; // TODO: функция Растригина не совсем та!
+                exact = -20;
 
                 exactPoints.Add(new Vector(0, 0));
 
@@ -534,7 +534,7 @@ namespace AIS
             else if (f == 3)        // Шафер
                 funct = (float)(-(0.5-(Math.Pow(Math.Sin(Math.Sqrt(x1*x1+x2*x2)),2)-0.5)/(1+0.001*(x1*x1+x2*x2))));
             else if (f == 4)        // Растригин
-                funct = (float)(-((-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2*Math.PI * x2))));
+                funct = (float)(-(-20 + (-x1 * x1 + 10 * Math.Cos(2 * Math.PI * x1)) + (-x2 * x2 + 10 * Math.Cos(2*Math.PI * x2))));
             else if (f == 5)        // Эклея
                 funct = (float)(-(-Math.E + 20 * Math.Exp(-0.2 * Math.Sqrt((x1 * x1 + x2 * x2) / 2)) + Math.Exp((Math.Cos(2 * Math.PI * x1) + Math.Cos(2 * Math.PI * x2)) / 2)));
             else if (f == 6)        // skin
