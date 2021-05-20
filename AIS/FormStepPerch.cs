@@ -404,7 +404,6 @@ namespace AIS
         /// <summary>Создание начальной популяции</summary>
         private void buttonInitialPopulation_Click(object sender, EventArgs e)
         {
-            button1.Enabled = true;
             iterationGraph = 0;
             this.chart1.Series[0].Points.Clear();
             this.chart1.Series[1].Points.Clear();
@@ -451,6 +450,11 @@ namespace AIS
             buttonMakeFlocks.Enabled = false;
             buttonKettle.Enabled = true;
 
+            dataGridView3.RowCount = 1;
+            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
+
+            dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
+
             pictureBox1.Refresh();
             pictureBox2.Refresh();
         }
@@ -462,6 +466,7 @@ namespace AIS
             Red[3] = false;
             Red[4] = true;
             this.buttonAnswer.Enabled = true;
+            button1.Enabled = true;
 
             buttonLeaderToPool.Enabled = false;
             buttonCheckEndConditions.Enabled = true;
@@ -532,7 +537,14 @@ namespace AIS
             dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
             dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
 
-            dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
+            if (algo.currentIteration == algo.MaxCount)
+            {
+                dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
+            }
+            else
+            {
+                dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
+            }
             dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
             dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
             dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count-1]:F8}");
@@ -550,7 +562,8 @@ namespace AIS
 
             buttonSearchInPool.Enabled = false;
             buttonChooseTheBest.Enabled = true;
-
+            algo.Recommutation();
+            // TODO: Рекоммутация работает в холостую!
             pictureBox1.Refresh();
             pictureBox2.Refresh();
         }
@@ -562,11 +575,13 @@ namespace AIS
             {
                 pictureBox1.Refresh();
                 flag = false;
+                //Perch perch = new Perch();
+                //perch = Pool[0];
 
                 dataGridView3.RowCount = 2;
                 dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
                 dataGridView3.Rows[1].Cells[0].Value = "f*";
-
+                
                 dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
                 dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
 
@@ -583,6 +598,7 @@ namespace AIS
         private void buttonAnswer_Click(object sender, EventArgs e)
         {
             this.buttonAnswer.Enabled = false;
+            button1.Enabled = false;
             buttonInitialPopulation.Enabled = true;
             button1.Enabled = false;
             for (int i = algo.currentIteration; i < algo.MaxCount; i++)
@@ -633,8 +649,8 @@ namespace AIS
                 algo.best = algo.flock[0, 0];
                 algo.bestFitness.Add(algo.best.fitness);
                 algo.AverageFitness();
-                this.chart1.Series[0].Points.AddXY(iterationGraph, algo.bestFitness[algo.bestFitness.Count - 1]);
-                this.chart1.Series[1].Points.AddXY(iterationGraph, algo.averageFitness[algo.averageFitness.Count - 1]);
+                this.chart1.Series[0].Points.AddXY(iterationGraph+1, algo.bestFitness[algo.bestFitness.Count - 1]);
+                this.chart1.Series[1].Points.AddXY(iterationGraph+1, algo.averageFitness[algo.averageFitness.Count - 1]);
                 iterationGraph++;
 
             }
@@ -649,7 +665,7 @@ namespace AIS
             dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
             dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
 
-            dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
+            dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
             dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
             dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
             dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count - 1]:F8}");

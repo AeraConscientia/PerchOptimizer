@@ -158,6 +158,8 @@ namespace AIS
             {
                 buttonAnswer.Enabled = true;
                 button1.Enabled = true;
+                button2.Enabled = true;
+
             }
 
             if (comboBox1.SelectedIndex == 0)
