@@ -264,7 +264,7 @@ namespace AIS
             Pen p13 = new Pen(Color.DarkGreen, 2);
             Pen p14 = new Pen(Color.Red, 2);
 
-            Font font1 = new Font("TimesNewRoman", 10, FontStyle.Bold);
+            Font font1 = new Font("TimesNewRoman", 10, FontStyle.Bold | FontStyle.Italic);
             Font font2 = new Font("TimesNewRoman", 8);
 
             pictureBox2.BackColor = Color.White;
@@ -563,9 +563,8 @@ namespace AIS
             buttonSearchInPool.Enabled = false;
             buttonChooseTheBest.Enabled = true;
             algo.Recommutation();
-            // TODO: Рекоммутация работает в холостую!
             pictureBox1.Refresh();
-            pictureBox2.Refresh();
+            //pictureBox2.Refresh(); // вот зачем это тут было
         }
 
         /// <summary>Выбор самого лучшего окуня</summary>
@@ -575,15 +574,14 @@ namespace AIS
             {
                 pictureBox1.Refresh();
                 flag = false;
-                //Perch perch = new Perch();
-                //perch = Pool[0];
+
 
                 dataGridView3.RowCount = 2;
                 dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
                 dataGridView3.Rows[1].Cells[0].Value = "f*";
                 
-                dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
-                dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+                dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.Pool[0].coords[0]:F4}, {algo.Pool[0].coords[1]:F4})");
+                dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.Pool[0].fitness:F8}");
 
                 buttonChooseTheBest.Enabled = false;
                 buttonInitialPopulation.Enabled = true;
