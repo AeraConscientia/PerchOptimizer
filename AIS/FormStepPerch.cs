@@ -641,44 +641,101 @@ namespace AIS
         private void button1_Click(object sender, EventArgs e)
         {
             int tmp = algo.currentIteration;
+            bool tmpRed0, tmpRed1, tmpRed2, tmpRed3, tmpRed4, tmpRed5, tmpRed6, tmpRed7; // так сделано, потому что я запуталась, когда какое состояние
+            tmpRed0 = Red[0];
+            tmpRed1 = Red[1];
+            tmpRed2 = Red[2];
+            tmpRed3 = Red[3];
+            tmpRed4 = Red[4];
+            tmpRed5 = Red[5];
+            tmpRed6 = Red[6];
+            tmpRed7 = Red[7];
+
+
+            bool tmp2Flag = flag;
+            flag = true;
             for (int i = algo.currentIteration; i < tmp + numericUpDown1.Value; i++)
             {
+                //Red[1] = true; Red[2] = true; Red[3] = true;
                 if (algo.currentIteration == MaxIteration)
                     break;
+                if (algo.currentIteration < algo.MaxCount)
+                {
+                    Red[6] = true;
+                    //buttonMakeFlocks.Enabled = true;
+                }
+                else
+                {
+                    Red[7] = true;
+                    //buttonSearchInPool.Enabled = true;
+                }
+                Red[4] = false;
+                Red[0] = false;
+                Red[1] = true;
+                Red[6] = false;
                 algo.MakeFlocks();
+                pictureBox2.Refresh();
+
+                Red[1] = false;
+                Red[2] = true;
                 algo.MoveEPerchEFlock();
+                pictureBox2.Refresh();
+
+                Red[2] = false;
+                Red[3] = true;
                 algo.FlocksSwim();
                 algo.currentIteration++;
 
                 algo.best = algo.flock[0, 0];
                 algo.bestFitness.Add(algo.best.fitness);
                 algo.AverageFitness();
+                pictureBox2.Refresh();
+
+                Red[3] = false;
+                Red[4] = true;
+
                 this.chart1.Series[0].Points.AddXY(iterationGraph+1, algo.bestFitness[algo.bestFitness.Count - 1]);
                 this.chart1.Series[1].Points.AddXY(iterationGraph+1, algo.averageFitness[algo.averageFitness.Count - 1]);
                 iterationGraph++;
-
+                pictureBox1.Refresh();
+                //pictureBox2.Refresh();
+                
             }
+            flag = tmp2Flag;
+            Red[0] = tmpRed0;
+            Red[1] = tmpRed1;
+            Red[2] = tmpRed2;
+            Red[3] = tmpRed3;
+            Red[4] = tmpRed4;
+            Red[5] = tmpRed5;
+            Red[6] = tmpRed6;
+            Red[7] = tmpRed7;
             pictureBox1.Refresh();
-            pictureBox2.Refresh();
+            //pictureBox2.Refresh();
 
-            flag = false;
+            //flag = false;
 
             dataGridView3.RowCount = 5;
             dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
             dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
             dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
             dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
-            dataGridView3.Rows[3].Cells[0].Value = "Точное значение f";
+            dataGridView3.Rows[4].Cells[0].Value = "Точное значение f";
 
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
             dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
             dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
             dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count - 1]:F8}");
-            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{exact:F8}");
+            dataGridView3.Rows[4].Cells[1].Value = string.Format($"{exact:F8}");
 
             dataGridView3.Refresh();
             this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
+        }
+
+        private void FormStepPerch_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
