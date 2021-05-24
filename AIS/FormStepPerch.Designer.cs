@@ -210,7 +210,7 @@
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView3.Size = new System.Drawing.Size(331, 113);
+            this.dataGridView3.Size = new System.Drawing.Size(331, 135);
             this.dataGridView3.TabIndex = 31;
             // 
             // dataGridViewTextBoxColumn1
@@ -266,9 +266,9 @@
             // 
             this.groupBox1.Controls.Add(this.dataGridView3);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(380, 486);
+            this.groupBox1.Location = new System.Drawing.Point(380, 456);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(348, 158);
+            this.groupBox1.Size = new System.Drawing.Size(348, 188);
             this.groupBox1.TabIndex = 35;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Информация о текущей популяции";
@@ -334,7 +334,7 @@
             series2.Name = "Series1";
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(348, 418);
+            this.chart1.Size = new System.Drawing.Size(348, 384);
             this.chart1.TabIndex = 38;
             this.chart1.Text = "chart1";
             this.chart1.Paint += new System.Windows.Forms.PaintEventHandler(this.ChartGraph_Paint);

@@ -98,10 +98,11 @@ namespace AIS
             dataGridView2.Rows[5].Cells[0].Value = "Число шагов в перекоммутации";
             dataGridView2.Rows[5].Cells[1].Value = 5;
 
-            dataGridView3.RowCount = 3;
+            dataGridView3.RowCount = 4;
             dataGridView3.Rows[0].Cells[0].Value = "x";
             dataGridView3.Rows[1].Cells[0].Value = "y";
             dataGridView3.Rows[2].Cells[0].Value = "f*";
+            dataGridView3.Rows[3].Cells[0].Value = "Точное значение f";
 
             dataGridView4.RowCount = 2;
             dataGridView4.Rows[0].Cells[0].Value = "Параметр распределения";
@@ -146,6 +147,7 @@ namespace AIS
                     dataGridView3.Rows[0].Cells[1].Value = string.Format($"{resultBest.coords[0]:F8}");
                     dataGridView3.Rows[1].Cells[1].Value = string.Format($"{resultBest.coords[1]:F8}");
                     dataGridView3.Rows[2].Cells[1].Value = string.Format($"{resultBest.fitness:F8}");
+                    dataGridView3.Rows[3].Cells[1].Value = string.Format($"{exact:F8}");
                     //flag2 = true;
                     pictureBox1.Refresh();
                 }
@@ -488,8 +490,8 @@ namespace AIS
                         //Отрисовка результата работы алгоритма
                         if (flag2 == true)
                         {
-                            for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
-                                e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0,i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                            //for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
+                            //    e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0,i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
                             for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
                                 e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
@@ -499,11 +501,15 @@ namespace AIS
                                 for (int i = 0; i < NumPerchInFlock; i++)
                                     e.Graphics.FillEllipse(Brushes.Blue, (float)((algPerch.flock[j, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[j, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                             }
-                            //e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.alfa.coords.vector[0] * k - x1) * w / (x2 - x1) - 4), (float)(h - (algPerch.alfa.coords.vector[1] * k - y1) * h / (y2 - y1) - 4), 8, 8);
-                        }                        
 
-                        //отрисовка Осей
-                        for (int i = -6; i < 12; i++)
+                            for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
+                                e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+
+                    //e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.alfa.coords.vector[0] * k - x1) * w / (x2 - x1) - 4), (float)(h - (algPerch.alfa.coords.vector[1] * k - y1) * h / (y2 - y1) - 4), 8, 8);
+                }
+
+                //отрисовка Осей
+                for (int i = -6; i < 12; i++)
                         {
                             e.Graphics.DrawLine(p10, (float)((x1 - i*step) * w / (x1 - x2)), h - a - 5, (float)((x1 - i*step) * w / (x1 - x2)), h - a + 5);
                             e.Graphics.DrawLine(p10, a - 5, (float)(h - (y1 - i*step) * h / (y1 - y2)), a + 5, (float)(h - (y1 - i*step) * h / (y1 - y2)));

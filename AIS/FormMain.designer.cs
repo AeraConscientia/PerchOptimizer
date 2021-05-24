@@ -374,7 +374,7 @@
             this.dataGridView3.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView3.Size = new System.Drawing.Size(348, 92);
+            this.dataGridView3.Size = new System.Drawing.Size(348, 115);
             this.dataGridView3.TabIndex = 30;
             // 
             // dataGridViewTextBoxColumn1

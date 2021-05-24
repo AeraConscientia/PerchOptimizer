@@ -354,8 +354,8 @@ namespace AIS
                 if ((Red[1] == true) || (Red[2] == true) || (Red[3] == true))
                 {
 
-                    for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
-                        e.Graphics.FillEllipse(Brushes.Red, (float)((algo.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
+                    //for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
+                    //    e.Graphics.FillEllipse(Brushes.Red, (float)((algo.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
 
                     for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
                         e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algo.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
@@ -365,9 +365,9 @@ namespace AIS
                         for (int i = 0; i < NumPerchInFlock; i++)
                             e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.flock[j, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[j, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                     }
-                    //for (int i = 0; i < algo.population; i++)
-                    //    e.Graphics.FillEllipse(Brushes.Blue, (float)((algo.individuals[i].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[i].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-                    //e.Graphics.FillEllipse(Brushes.Red, (float)((algo.individuals[0].coords.vector[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.individuals[0].coords.vector[1] * k - y1) * h / (y2 - y1) - 3), 8, 8);
+
+                    for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
+                        e.Graphics.FillEllipse(Brushes.Red, (float)((algo.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algo.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                 }
                 else
                 {
@@ -531,11 +531,12 @@ namespace AIS
                 buttonSearchInPool.Enabled = true;
             }
             Red[4] = false;
-            dataGridView3.RowCount = 4;
+            dataGridView3.RowCount = 5;
             dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
             dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
             dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
             dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
+            dataGridView3.Rows[4].Cells[0].Value = "Точное значение f";
 
             if (algo.currentIteration == algo.MaxCount)
             {
@@ -548,6 +549,7 @@ namespace AIS
             dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
             dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
             dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count-1]:F8}");
+            dataGridView3.Rows[4].Cells[1].Value = string.Format($"{exact:F8}");
             pictureBox1.Refresh();
         }
 
@@ -576,12 +578,14 @@ namespace AIS
                 flag = false;
 
 
-                dataGridView3.RowCount = 2;
+                dataGridView3.RowCount = 3;
                 dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
                 dataGridView3.Rows[1].Cells[0].Value = "f*";
-                
+                dataGridView3.Rows[2].Cells[0].Value = "Точное значение f";
+
                 dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.Pool[0].coords[0]:F4}, {algo.Pool[0].coords[1]:F4})");
                 dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.Pool[0].fitness:F8}");
+                dataGridView3.Rows[2].Cells[1].Value = string.Format($"{exact:F8}");
 
                 buttonChooseTheBest.Enabled = false;
                 buttonInitialPopulation.Enabled = true;
@@ -615,18 +619,20 @@ namespace AIS
             }
 
             buttonCheckEndConditions.Enabled = false;
-
+            Red[1] = true; Red[2] = true; Red[3] = true; // TODO: очень странно... почему...
             pictureBox1.Refresh();
             pictureBox2.Refresh();
 
             flag = false;
 
-            dataGridView3.RowCount = 2;
+            dataGridView3.RowCount = 3;
             dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
             dataGridView3.Rows[1].Cells[0].Value = "f*";
+            dataGridView3.Rows[2].Cells[0].Value = "Точное значение f";
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
             dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
+            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{exact:F8}");
 
             dataGridView3.Refresh();
 
@@ -657,16 +663,19 @@ namespace AIS
 
             flag = false;
 
-            dataGridView3.RowCount = 4;
+            dataGridView3.RowCount = 5;
             dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
             dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
             dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
             dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
+            dataGridView3.Rows[3].Cells[0].Value = "Точное значение f";
+
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
             dataGridView3.Rows[1].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
             dataGridView3.Rows[2].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
             dataGridView3.Rows[3].Cells[1].Value = string.Format($"{algo.averageFitness[algo.averageFitness.Count - 1]:F8}");
+            dataGridView3.Rows[2].Cells[1].Value = string.Format($"{exact:F8}");
 
             dataGridView3.Refresh();
             this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
