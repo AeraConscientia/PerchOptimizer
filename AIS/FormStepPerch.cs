@@ -520,6 +520,8 @@ namespace AIS
         {
             this.buttonAnswer.Enabled = false;
             buttonCheckEndConditions.Enabled = false;
+            button1.Enabled = false;
+
             if (algo.currentIteration < algo.MaxCount) 
             {
                 Red[6] = true;
@@ -619,7 +621,7 @@ namespace AIS
             }
 
             buttonCheckEndConditions.Enabled = false;
-            Red[1] = true; Red[2] = true; Red[3] = true; // TODO: очень странно... почему...
+            Red[1] = true; Red[2] = true; Red[3] = true;
             pictureBox1.Refresh();
             pictureBox2.Refresh();
 
@@ -731,6 +733,10 @@ namespace AIS
 
             dataGridView3.Refresh();
             this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
+            if (numericUpDown1.Value < 0)
+            {
+                numericUpDown1.Value = 0;
+            }
         }
 
         private void FormStepPerch_Load(object sender, EventArgs e)
