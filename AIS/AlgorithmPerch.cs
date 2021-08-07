@@ -358,16 +358,25 @@ namespace AIS
 
             for (int j = 1; j < NumPerchInFlock; j++)
             {
-                double x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[0] - xMin);
-                double y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[1] - yMin);
-                while (x > D[0,1] || x < D[0,0] || y > D[1,1] || y < D[1,0]) // TODO: Добавлены ограничения на x,y
-                {
-                    x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[0] - xMin);
-                    y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[1] - yMin);
-                }
+                double x1 = (flock[NumFlocks - 1, 0].coords[0] - xMin);
+                double x2 = (flock[NumFlocks - 1, 0].coords[0] + xMin);
+                double y1 = (flock[NumFlocks - 1, 0].coords[1] - yMin);
+                double y2 = (flock[NumFlocks - 1, 0].coords[1] + yMin);
+                double xRes = 0;
+                double yRes = 0;
+                do // TODO: Добавлены ограничения на x,y
+                { // спутся пару месяцев оказалось, что это неправильно работает
+
+                    xRes = x1 + rand.NextDouble() * (x2 - x1);
+                    yRes = y1 + rand.NextDouble() * (y2 - y1);
+
+                    //x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[0] - xMin);
+                    //y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[1] - yMin);
+                } while (xRes > D[0, 1] || xRes < D[0, 0] || yRes > D[1, 1] || yRes < D[1, 0]);
+                
                 if (Double.IsNaN(x) || Double.IsNaN(y))
                     throw new Exception();
-                flock[NumFlocks - 1, j] = new Perch(x, y, function(x, y, f));
+                flock[NumFlocks - 1, j] = new Perch(xRes, yRes, function(xRes, yRes, f));
             }
 
             int i = 1;
