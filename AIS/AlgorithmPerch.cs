@@ -130,21 +130,21 @@ namespace AIS
                 int tmp;
                 Math.DivRem(i, NumFlocks, out tmp);
                 flock[tmp, i / (NumFlocks)] = individuals[i];
-                if (Double.IsNaN(flock[tmp, i / (NumFlocks)].coords[0]) || Double.IsNaN(flock[tmp, i / (NumFlocks)].coords[1]))
-                    throw new Exception();
-
-                if (Double.IsInfinity(flock[tmp, i / (NumFlocks)].coords[0]) || Double.IsInfinity(flock[tmp, i / (NumFlocks)].coords[1]))
-                    throw new Exception();
+                //if (Double.IsNaN(flock[tmp, i / (NumFlocks)].coords[0]) || Double.IsNaN(flock[tmp, i / (NumFlocks)].coords[1]))
+                //    throw new Exception();
+                //
+                //if (Double.IsInfinity(flock[tmp, i / (NumFlocks)].coords[0]) || Double.IsInfinity(flock[tmp, i / (NumFlocks)].coords[1]))
+                //    throw new Exception();
             }
 
-            for (int m = 0; m < NumFlocks; m++)
-            {
-                for (int p = 0; p < NumPerchInFlock; p++)
-                {
-                    if (Double.IsInfinity(flock[m, p].coords[0]) || Double.IsInfinity(flock[m, p].coords[1]))
-                        throw new Exception();
-                }
-            }
+            //for (int m = 0; m < NumFlocks; m++)
+            //{
+            //    for (int p = 0; p < NumPerchInFlock; p++)
+            //    {
+            //        if (Double.IsInfinity(flock[m, p].coords[0]) || Double.IsInfinity(flock[m, p].coords[1]))
+            //            throw new Exception();
+            //    }
+            //}
             //flock[0][i] - перебор окуней в первой стае
             //flock[-1][i] - перебор окуней в первой стае
 
@@ -175,8 +175,8 @@ namespace AIS
                             y = flock[i, j].coords[1];
                         }
 
-                        if (Double.IsNaN(x) || Double.IsNaN(y))
-                            throw new Exception();
+                        //if (Double.IsNaN(x) || Double.IsNaN(y))
+                        //    throw new Exception();
                         move.Add(new Perch(x, y, function(x, y, f)));
                     }
                     //Sort(move);
@@ -186,17 +186,17 @@ namespace AIS
                 Sort(flock, i);
             }
             SortFlocks();
-            if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
-                throw new Exception();
+            //if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
+            //    throw new Exception();
 
-            for (int m = 0; m < NumFlocks; m++)
-            {
-                for (int p = 0; p < NumPerchInFlock; p++)
-                {
-                    if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
-                        throw new Exception();
-                }
-            }
+            //for (int m = 0; m < NumFlocks; m++)
+            //{
+            //    for (int p = 0; p < NumPerchInFlock; p++)
+            //    {
+            //        if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+            //            throw new Exception();
+            //    }
+            //}
         }
 
         private void BestFlockSwim()
@@ -228,35 +228,35 @@ namespace AIS
                         x = flock[i, j].coords[0];
                         y = flock[i, j].coords[1];
                     }
-                    if (Double.IsNaN(x) || Double.IsNaN(y))
-                        throw new Exception();
+                    //if (Double.IsNaN(x) || Double.IsNaN(y))
+                    //    throw new Exception();
                     move.Add(new Perch(x, y, function(x, y, f)));
                 }
-                for (int m = 0; m < NumFlocks; m++)
-                {
-                    for (int p = 0; p < NumPerchInFlock; p++)
-                    {
-                        if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
-                            throw new Exception();
-                    }
-                }
+                //for (int m = 0; m < NumFlocks; m++)
+                //{
+                //    for (int p = 0; p < NumPerchInFlock; p++)
+                //    {
+                //        if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+                //            throw new Exception();
+                //    }
+                //}
                 //Sort(move);
                 move = move.OrderBy(s => s.fitness).ToList();
                 flock[i, j] = move[0];
-                if (Double.IsNaN(flock[i, j].coords[0]) || Double.IsNaN(flock[i, j].coords[1]))
-                    throw new Exception();
+                //if (Double.IsNaN(flock[i, j].coords[0]) || Double.IsNaN(flock[i, j].coords[1]))
+                //    throw new Exception();
             }
             Sort(flock, i);
-            if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
-                throw new Exception();
-            for (int m = 0; m < NumFlocks; m++)
-            {
-                for (int p = 0; p < NumPerchInFlock; p++)
-                {
-                    if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
-                        throw new Exception();
-                }
-            }
+            //if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
+            //    throw new Exception();
+            //for (int m = 0; m < NumFlocks; m++)
+            //{
+            //    for (int p = 0; p < NumPerchInFlock; p++)
+            //    {
+            //        if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+            //            throw new Exception();
+            //    }
+            //}
         }
 
         /// <summary>Движение средних окуней</summary>
@@ -275,8 +275,8 @@ namespace AIS
                 {
                     x = flock[l, 0].coords[0] + k * ((flock[0, 0].coords[0] - flock[l, 0].coords[0]) / (NStep));
                     y = flock[l, 0].coords[1] + k * ((flock[0, 0].coords[1] - flock[l, 0].coords[1]) / (NStep));
-                    if (Double.IsNaN(x) || Double.IsNaN(y))
-                        throw new Exception();
+                    //if (Double.IsNaN(x) || Double.IsNaN(y))
+                    //    throw new Exception();
 
                     if (x < D[0, 0] || x > D[0, 1] || y < D[1, 0] || y > D[1, 1]) // если лидеры вышли за границу, оставляем их прежние позиции
                     {
@@ -302,8 +302,8 @@ namespace AIS
                     {
                         x1 = flock[l, j].coords[0] + k * ((flock[l, 0].coords[0] - flock[l, j].coords[0]) / (NStep));
                         y1 = flock[l, j].coords[1] + k * ((flock[l, 0].coords[1] - flock[l, j].coords[1]) / (NStep));
-                        if (Double.IsNaN(x1) || Double.IsNaN(y1))
-                            throw new Exception();
+                        //if (Double.IsNaN(x1) || Double.IsNaN(y1))
+                        //    throw new Exception();
                         if (x1 < D[0, 0] || x1 > D[0, 1] || y1 < D[1, 0] || y1 > D[1, 1]) // если не-лидеры средних стай вышли за гранмцы, оставляем их прежние позиции
                         {
                             x1 = flock[l, j].coords[0];
@@ -318,38 +318,47 @@ namespace AIS
                 Sort(flock, l);
             }
             SortFlocks();
-            if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
-                throw new Exception();
-
-            for (int i = 0; i < NumFlocks; i++)
-            {
-                for (int j = 0; j < NumPerchInFlock; j++)
-                {
-                    if (Double.IsNaN(flock[i, j].coords[0]) || Double.IsNaN(flock[i, j].coords[1]))
-                        throw new Exception();
-                }
-            }
+            //if (Double.IsNaN(flock[NumFlocks - 1, 0].coords[0]) || Double.IsNaN(flock[NumFlocks - 1, 0].coords[1]))
+            //    throw new Exception();
+            //
+            //for (int i = 0; i < NumFlocks; i++)
+            //{
+            //    for (int j = 0; j < NumPerchInFlock; j++)
+            //    {
+            //        if (Double.IsNaN(flock[i, j].coords[0]) || Double.IsNaN(flock[i, j].coords[1]))
+            //            throw new Exception();
+            //    }
+            //}
         }
 
         private void PoorFlockSwim()
         {
-            for (int d = 0; d < NumFlocks; d++)
-            {
-                for (int p = 0; p < NumPerchInFlock; p++)
-                {
-                    if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
-                        throw new Exception();
-                }
-            }
+            //for (int d = 0; d < NumFlocks; d++)
+            //{
+            //    for (int p = 0; p < NumPerchInFlock; p++)
+            //    {
+            //        if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
+            //            throw new Exception();
+            //    }
+            //}
+            double xPoorLeader = flock[NumFlocks - 1, 0].coords[0];
+            double yPoorLeader = flock[NumFlocks - 1, 0].coords[1];
+
             PoorLeaderSwim();
-            for (int d = 0; d < NumFlocks; d++)
-            {
-                for (int p = 0; p < NumPerchInFlock; p++)
-                {
-                    if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
-                        throw new Exception();
-                }
-            }
+            //int numTries = 10;
+            //
+            if (flock[NumFlocks - 1, 0].coords[0] > D[0, 1] || flock[NumFlocks - 1, 0].coords[0] < D[0, 0]
+                || flock[NumFlocks - 1, 0].coords[1] > D[1, 1] || flock[NumFlocks - 1, 0].coords[1] < D[1, 0])
+                flock[NumFlocks - 1, 0].coords[0] = xPoorLeader;
+                flock[NumFlocks - 1, 0].coords[1] = yPoorLeader;
+            //for (int d = 0; d < NumFlocks; d++)
+            //{
+            //    for (int p = 0; p < NumPerchInFlock; p++)
+            //    {
+            //        if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
+            //            throw new Exception();
+            //    }
+            //}
 
             sigma = rand.NextDouble() * 0.4 + 0.1; // sigma [0.1,  0.5]
 
@@ -364,18 +373,18 @@ namespace AIS
                 double y2 = (flock[NumFlocks - 1, 0].coords[1] + yMin);
                 double xRes = 0;
                 double yRes = 0;
-                do // TODO: Добавлены ограничения на x,y
-                { // спутся пару месяцев оказалось, что это неправильно работает
+                //do // TODO: Добавлены ограничения на x,y
+                //{ // спутся пару месяцев оказалось, что это неправильно работает
 
                     xRes = x1 + rand.NextDouble() * (x2 - x1);
                     yRes = y1 + rand.NextDouble() * (y2 - y1);
 
                     //x = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[0] - xMin);
                     //y = ((rand.NextDouble()) * 2 - 1) * (flock[NumFlocks - 1, 0].coords[1] - yMin);
-                } while (xRes > D[0, 1] || xRes < D[0, 0] || yRes > D[1, 1] || yRes < D[1, 0]);
+                //} while (xRes > D[0, 1] || xRes < D[0, 0] || yRes > D[1, 1] || yRes < D[1, 0]);
                 
-                if (Double.IsNaN(x) || Double.IsNaN(y))
-                    throw new Exception();
+                //if (Double.IsNaN(x) || Double.IsNaN(y))
+                //    throw new Exception();
                 flock[NumFlocks - 1, j] = new Perch(xRes, yRes, function(xRes, yRes, f));
             }
 
@@ -398,8 +407,8 @@ namespace AIS
                         x = flock[i, j].coords[0];
                         y = flock[i, j].coords[1];
                     }    
-                    if (Double.IsNaN(x) || Double.IsNaN(y))
-                        throw new Exception();
+                    //if (Double.IsNaN(x) || Double.IsNaN(y))
+                    //    throw new Exception();
                     move.Add(new Perch(x, y, function(x, y, f)));
                 }
                 //Sort(move);
@@ -418,14 +427,14 @@ namespace AIS
             double b = LeviY();
             flock[NumFlocks - 1, 0].coords[0] = flock[NumFlocks - 1, 0].coords[0] + (alfa / currentIteration) * a;
             flock[NumFlocks - 1, 0].coords[1] = flock[NumFlocks - 1, 0].coords[1] + (alfa / currentIteration) * b;
-            for (int d = 0; d < NumFlocks; d++)
-            {
-                for (int p = 0; p < NumPerchInFlock; p++)
-                {
-                    if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
-                        throw new Exception();
-                }
-            }
+            //for (int d = 0; d < NumFlocks; d++)
+            //{
+            //    for (int p = 0; p < NumPerchInFlock; p++)
+            //    {
+            //        if (Double.IsNaN(flock[d, p].coords[0]) || Double.IsNaN(flock[d, p].coords[1]))
+            //            throw new Exception();
+            //    }
+            //}
         }
 
         /// <summary>Распределение Леви, координата х,  для худшей стаи</summary>
@@ -460,8 +469,8 @@ namespace AIS
 
                 x = D[0, 0] + rand.NextDouble() * (D[0, 1] - D[0, 0]);
                 y = D[1, 0] + rand.NextDouble() * (D[1, 1] - D[1, 0]);
-                if (Double.IsNaN(x) || Double.IsNaN(y))
-                    throw new Exception();
+                //if (Double.IsNaN(x) || Double.IsNaN(y))
+                //    throw new Exception();
                 Perch perch = new Perch(x, y, function(x, y, f)); // TODO: добавить iter += 1
                 individuals.Add(perch);
             }
@@ -536,16 +545,16 @@ namespace AIS
                 }
             }
             Pool.Add(flock[0, 0]);
-            if (Double.IsNaN(flock[0, 0].coords[0]) || Double.IsNaN(flock[0, 0].coords[1]))
-                throw new Exception();
-            for (int m = 0; m < NumFlocks; m++)
-            {
-                for (int p = 0; p < NumPerchInFlock; p++)
-                {
-                    if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
-                        throw new Exception();
-                }
-            }
+            //if (Double.IsNaN(flock[0, 0].coords[0]) || Double.IsNaN(flock[0, 0].coords[1]))
+            //    throw new Exception();
+            //for (int m = 0; m < NumFlocks; m++)
+            //{
+            //    for (int p = 0; p < NumPerchInFlock; p++)
+            //    {
+            //        if (Double.IsNaN(flock[m, p].coords[0]) || Double.IsNaN(flock[m, p].coords[1]))
+            //            throw new Exception();
+            //    }
+            //}
         }
 
         private float function(double x1, double x2, int f)
@@ -682,8 +691,8 @@ namespace AIS
             //Sort(Pool);
             Pool = Pool.OrderBy(s => s.fitness).ToList();
             result = Pool[0];
-            if (Double.IsNaN(result.coords[0]) || Double.IsNaN(result.coords[1]))
-                throw new Exception();
+            //if (Double.IsNaN(result.coords[0]) || Double.IsNaN(result.coords[1]))
+            //    throw new Exception();
         }
     }
 }
