@@ -451,7 +451,7 @@ namespace AIS
             buttonKettle.Enabled = true;
 
             dataGridView3.RowCount = 1;
-            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
+            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
 
@@ -534,11 +534,11 @@ namespace AIS
             }
             Red[4] = false;
             dataGridView3.RowCount = 5;
-            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
+            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
             dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
-            dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
-            dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
-            dataGridView3.Rows[4].Cells[0].Value = "Точное значение f";
+            dataGridView3.Rows[2].Cells[0].Value = "f* of the best perch";
+            dataGridView3.Rows[3].Cells[0].Value = "f* average";
+            dataGridView3.Rows[4].Cells[0].Value = "Exact value of f";
 
             if (algo.currentIteration == algo.MaxCount)
             {
@@ -583,7 +583,7 @@ namespace AIS
                 dataGridView3.RowCount = 3;
                 dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
                 dataGridView3.Rows[1].Cells[0].Value = "f*";
-                dataGridView3.Rows[2].Cells[0].Value = "Точное значение f";
+                dataGridView3.Rows[2].Cells[0].Value = "Exact value of f";
 
                 dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.Pool[0].coords[0]:F4}, {algo.Pool[0].coords[1]:F4})");
                 dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.Pool[0].fitness:F8}");
@@ -630,7 +630,7 @@ namespace AIS
             dataGridView3.RowCount = 3;
             dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
             dataGridView3.Rows[1].Cells[0].Value = "f*";
-            dataGridView3.Rows[2].Cells[0].Value = "Точное значение f";
+            dataGridView3.Rows[2].Cells[0].Value = "Exact value of f";
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
             dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
@@ -718,11 +718,11 @@ namespace AIS
             //flag = false;
 
             dataGridView3.RowCount = 5;
-            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
+            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
             dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
-            dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
-            dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
-            dataGridView3.Rows[4].Cells[0].Value = "Точное значение f";
+            dataGridView3.Rows[2].Cells[0].Value = "f* of the best perch";
+            dataGridView3.Rows[3].Cells[0].Value = "f* average";
+            dataGridView3.Rows[4].Cells[0].Value = "Exact value of f";
 
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");

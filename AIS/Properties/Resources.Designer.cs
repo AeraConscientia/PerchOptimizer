@@ -83,6 +83,26 @@ namespace AIS.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FlockColor2 {
+            get {
+                object obj = ResourceManager.GetObject("FlockColor2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlockColor2_Eng {
+            get {
+                object obj = ResourceManager.GetObject("FlockColor2_Eng", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SkinMin {
             get {
                 object obj = ResourceManager.GetObject("SkinMin", resourceCulture);
@@ -196,6 +216,16 @@ namespace AIS.Properties {
         internal static System.Drawing.Bitmap ПостановкаМинимум {
             get {
                 object obj = ResourceManager.GetObject("ПостановкаМинимум", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ПостановкаМинимум__Eng_ {
+            get {
+                object obj = ResourceManager.GetObject("ПостановкаМинимум__Eng_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -29,6 +29,9 @@ namespace AIS
         /// <summary>Глубина продвижения внутри котла</summary>
         public double sigma = 0;
 
+        public int functionCount = 0;
+        public ulong functionCallsAverage = 0;
+
         /// <summary>Параметр распределения Леви</summary>
         public double lambda = 0;
         /// <summary>Величина шага</summary>
@@ -83,13 +86,13 @@ namespace AIS
             dataGridView2.Rows[0].Cells[0].Value = "Кол-во шагов до окончания движения";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
-            dataGridView2.Rows[1].Cells[0].Value = "Максимальное количество итераций";
+            dataGridView2.Rows[1].Cells[0].Value = "Maximum iteration count";// "Максимальное количество итераций";
             dataGridView2.Rows[1].Cells[1].Value = 4;
 
-            dataGridView2.Rows[2].Cells[0].Value = "Количество стай";
+            dataGridView2.Rows[2].Cells[0].Value = "Number of flocks";//"Количество стай"; 
             dataGridView2.Rows[2].Cells[1].Value = 4;
 
-            dataGridView2.Rows[3].Cells[0].Value = "Количество окуней в стае";
+            dataGridView2.Rows[3].Cells[0].Value = "Number of perches";//"Количество окуней в стае";
             dataGridView2.Rows[3].Cells[1].Value = 3;
 
             dataGridView2.Rows[4].Cells[0].Value = "Число перекоммутаций";
@@ -102,10 +105,10 @@ namespace AIS
             dataGridView3.Rows[0].Cells[0].Value = "x";
             dataGridView3.Rows[1].Cells[0].Value = "y";
             dataGridView3.Rows[2].Cells[0].Value = "f*";
-            dataGridView3.Rows[3].Cells[0].Value = "Точное значение f";
+            dataGridView3.Rows[3].Cells[0].Value = "Exact value of f";
 
             dataGridView4.RowCount = 2;
-            dataGridView4.Rows[0].Cells[0].Value = "Параметр распределения";
+            dataGridView4.Rows[0].Cells[0].Value = "Distribution parameter";//"Параметр распределения";
             dataGridView4.Rows[0].Cells[1].Value = (1.5).ToString();
 
             dataGridView4.Rows[1].Cells[0].Value = "Величина шага";
@@ -142,6 +145,7 @@ namespace AIS
 
                     resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
                     flag2 = true;
+
 
                     //result = algPerch.StartAlg(population, MaxIteration, obl, z, param);
                     dataGridView3.Rows[0].Cells[1].Value = string.Format($"{resultBest.coords[0]:F8}");
@@ -645,7 +649,9 @@ namespace AIS
                         obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
                         obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
-                        for (int p = 0; p < 10; p++)
+
+                        functionCallsAverage = 0;
+                        for (int p = 0; p < 1; p++)
                         {
 
 
@@ -670,11 +676,12 @@ namespace AIS
                             lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
                             alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
 
-                            for (int i = 0; i < 100; i++)
+                            for (int i = 0; i < 1000; i++)
                             {
                                 algPerch = new AlgorithmPerch();
 
                                 Perch result = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
+                                functionCallsAverage += algPerch.functionCalls;
 
                                 foreach (Vector item in exactPoints)
                                 {
@@ -687,21 +694,22 @@ namespace AIS
 
                                 averFuncDeviation.Add(Math.Abs(result.fitness - exact));
                             }
+                            Console.WriteLine(functionCallsAverage / 1000);
 
                             double deltaSum = 0;
-                            for (int i = 0; i < 100; i++)
+                            for (int i = 0; i < 1000; i++)
                                 deltaSum += averFuncDeviation[i];
 
                             // СК отлонение?
-                            averDer = deltaSum / 100f;
+                            averDer = deltaSum / 1000f;
 
                             averFuncDeviation.Sort();/////////////////////////////////////////////////
                             minDeviation = averFuncDeviation[0];
 
                             double dispersion = 0;
-                            for (int i = 0; i < 100; i++)
+                            for (int i = 0; i < 1000; i++)
                                 dispersion += Math.Pow(averFuncDeviation[i] - averDer, 2);
-                            normalDerivation = Math.Sqrt((dispersion / 100f));
+                            normalDerivation = Math.Sqrt((dispersion / 1000f));
 
                             FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
                             StreamWriter r = new StreamWriter(fs);

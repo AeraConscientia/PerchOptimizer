@@ -42,6 +42,8 @@ namespace AIS
         /// <summary>Номер выбранной функции</summary>
         public int f;
 
+
+        public ulong functionCalls = 0;
         /// <summary>Область определения</summary>
         public double[,] D;
 
@@ -151,7 +153,7 @@ namespace AIS
         }
 
         /// <summary>Движения каждого окуня в каждой стае, создание котлов</summary>
-        public void MoveEPerchEFlock()
+        public void MoveEPerchEFlock() // пересчет функции: 0.5 * Nstep * population
         {
             sigma = rand.NextDouble()*0.4 + 0.1; // sigma [0.1,  0.5]
 
@@ -199,7 +201,7 @@ namespace AIS
             //}
         }
 
-        private void BestFlockSwim()
+        private void BestFlockSwim() // пересчет функции: 1.5 * NStep * перчей в одной стае
         {
             for (int m = 0; m < NumFlocks; m++)
             {
@@ -260,9 +262,9 @@ namespace AIS
         }
 
         /// <summary>Движение средних окуней</summary>
-        private void AverFlockSwim()
+        private void AverFlockSwim() // пересчет функции: 0.8 * NStep * все окуни, кроме лучших и худших
         {
-            sigma = rand.NextDouble() / 20 + 0.6; // sigma [0.6,  0.8]
+            sigma = rand.NextDouble() / 20 + 0.6; // sigma [0.6,  0.8] 
 
             for (int l = 1; l < NumFlocks - 1; l++) // если не изменяет память, передвижение лидеров средних стай
             {
@@ -331,7 +333,7 @@ namespace AIS
             //}
         }
 
-        private void PoorFlockSwim()
+        private void PoorFlockSwim() // пересчет функции: 0.5 * NStep * окуней в одной стае (худшей)
         {
             //for (int d = 0; d < NumFlocks; d++)
             //{
@@ -460,7 +462,7 @@ namespace AIS
         }
 
         /// <summary>Начальное формирование популяции </summary>
-        public void FormingPopulation()
+        public void FormingPopulation() // пересчет функции: Количество окуней в популяции
         {
             for (int i = 0; i < population; i++)
             {
@@ -510,8 +512,9 @@ namespace AIS
             this.alfa = alfa;
             this.PRmax = PRmax;
             this.deltapr = deltapr;
+            functionCalls = 0;
 
-            
+
             FormingPopulation();
 
 
@@ -525,6 +528,7 @@ namespace AIS
             Recommutation();
             //perch = individuals[0];
             perch = Pool[0];
+            Console.WriteLine("Запусков целевой функции: {0}", functionCalls);
             return perch;
         }
 
@@ -555,11 +559,13 @@ namespace AIS
             //            throw new Exception();
             //    }
             //}
+
         }
 
         private float function(double x1, double x2, int f)
         {
             float funct = 0;
+            functionCalls += 1;
             if (f == 0) // Швефель
             {
                 funct = (float)(-(x1 * Math.Sin(Math.Sqrt(Math.Abs(x1))) + x2 * Math.Sin(Math.Sqrt(Math.Abs(x2)))));

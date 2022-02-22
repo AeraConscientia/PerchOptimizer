@@ -212,6 +212,15 @@
   <ItemGroup>
     <None Include="Resources\Min\SkinMin.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Min\ПостановкаМинимум %28Eng%29.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FlockColor2 Eng.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FlockColor2.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

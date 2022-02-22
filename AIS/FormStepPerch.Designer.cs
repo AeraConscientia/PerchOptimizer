@@ -30,12 +30,12 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStepPerch));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStepPerch));
             this.buttonInitialPopulation = new System.Windows.Forms.Button();
             this.buttonMakeFlocks = new System.Windows.Forms.Button();
             this.buttonKettle = new System.Windows.Forms.Button();
@@ -44,12 +44,7 @@
             this.buttonCheckEndConditions = new System.Windows.Forms.Button();
             this.buttonSearchInPool = new System.Windows.Forms.Button();
             this.buttonChooseTheBest = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.buttonAnswer = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -59,122 +54,130 @@
             this.button1 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonInitialPopulation
             // 
+            this.buttonInitialPopulation.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonInitialPopulation.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonInitialPopulation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonInitialPopulation.Location = new System.Drawing.Point(24, 30);
             this.buttonInitialPopulation.Name = "buttonInitialPopulation";
             this.buttonInitialPopulation.Size = new System.Drawing.Size(127, 61);
             this.buttonInitialPopulation.TabIndex = 1;
             this.buttonInitialPopulation.Text = "Генерация начальной популяции";
-            this.buttonInitialPopulation.UseVisualStyleBackColor = true;
+            this.buttonInitialPopulation.UseVisualStyleBackColor = false;
             this.buttonInitialPopulation.Click += new System.EventHandler(this.buttonInitialPopulation_Click);
             // 
             // buttonMakeFlocks
             // 
+            this.buttonMakeFlocks.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonMakeFlocks.Enabled = false;
+            this.buttonMakeFlocks.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonMakeFlocks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMakeFlocks.Location = new System.Drawing.Point(24, 118);
             this.buttonMakeFlocks.Name = "buttonMakeFlocks";
             this.buttonMakeFlocks.Size = new System.Drawing.Size(127, 61);
             this.buttonMakeFlocks.TabIndex = 1;
             this.buttonMakeFlocks.Text = "Деление популяции на стаи";
-            this.buttonMakeFlocks.UseVisualStyleBackColor = true;
+            this.buttonMakeFlocks.UseVisualStyleBackColor = false;
             this.buttonMakeFlocks.Click += new System.EventHandler(this.buttonMakeFlocks_Click);
             // 
             // buttonKettle
             // 
+            this.buttonKettle.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonKettle.Enabled = false;
+            this.buttonKettle.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonKettle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonKettle.Location = new System.Drawing.Point(24, 207);
             this.buttonKettle.Name = "buttonKettle";
             this.buttonKettle.Size = new System.Drawing.Size(127, 61);
             this.buttonKettle.TabIndex = 1;
-            this.buttonKettle.Text = "Реализация окуневого котла \r\nв стаях";
-            this.buttonKettle.UseVisualStyleBackColor = true;
+            this.buttonKettle.Text = "Реализация окуневого котла в стаях";
+            this.buttonKettle.UseVisualStyleBackColor = false;
             this.buttonKettle.Click += new System.EventHandler(this.buttonKettle_Click);
             // 
             // buttonFlocksSwim
             // 
+            this.buttonFlocksSwim.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonFlocksSwim.Enabled = false;
+            this.buttonFlocksSwim.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonFlocksSwim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonFlocksSwim.Location = new System.Drawing.Point(24, 296);
             this.buttonFlocksSwim.Name = "buttonFlocksSwim";
             this.buttonFlocksSwim.Size = new System.Drawing.Size(127, 61);
             this.buttonFlocksSwim.TabIndex = 1;
             this.buttonFlocksSwim.Text = "Плавание стай";
-            this.buttonFlocksSwim.UseVisualStyleBackColor = true;
+            this.buttonFlocksSwim.UseVisualStyleBackColor = false;
             this.buttonFlocksSwim.Click += new System.EventHandler(this.buttonFlocksSwim_Click);
             // 
             // buttonLeaderToPool
             // 
+            this.buttonLeaderToPool.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonLeaderToPool.Enabled = false;
+            this.buttonLeaderToPool.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonLeaderToPool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLeaderToPool.Location = new System.Drawing.Point(24, 385);
             this.buttonLeaderToPool.Name = "buttonLeaderToPool";
             this.buttonLeaderToPool.Size = new System.Drawing.Size(127, 61);
             this.buttonLeaderToPool.TabIndex = 1;
-            this.buttonLeaderToPool.Text = "Помещение лидера популяции \r\nв множество Pool";
-            this.buttonLeaderToPool.UseVisualStyleBackColor = true;
+            this.buttonLeaderToPool.Text = "Перемещение лидера стай в множество Pool";
+            this.buttonLeaderToPool.UseVisualStyleBackColor = false;
             this.buttonLeaderToPool.Click += new System.EventHandler(this.buttonLeaderToPool_Click);
             // 
             // buttonCheckEndConditions
             // 
+            this.buttonCheckEndConditions.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonCheckEndConditions.Enabled = false;
+            this.buttonCheckEndConditions.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonCheckEndConditions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCheckEndConditions.Location = new System.Drawing.Point(206, 208);
             this.buttonCheckEndConditions.Name = "buttonCheckEndConditions";
             this.buttonCheckEndConditions.Size = new System.Drawing.Size(117, 61);
             this.buttonCheckEndConditions.TabIndex = 1;
             this.buttonCheckEndConditions.Text = "Проверка условий завершения поиска";
-            this.buttonCheckEndConditions.UseVisualStyleBackColor = true;
+            this.buttonCheckEndConditions.UseVisualStyleBackColor = false;
             this.buttonCheckEndConditions.Click += new System.EventHandler(this.buttonCheckEndConditions_Click);
             // 
             // buttonSearchInPool
             // 
+            this.buttonSearchInPool.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonSearchInPool.Enabled = false;
+            this.buttonSearchInPool.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonSearchInPool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchInPool.Location = new System.Drawing.Point(206, 515);
             this.buttonSearchInPool.Name = "buttonSearchInPool";
             this.buttonSearchInPool.Size = new System.Drawing.Size(117, 60);
             this.buttonSearchInPool.TabIndex = 1;
             this.buttonSearchInPool.Text = "Интенсивный поиск в множестве Pool";
-            this.buttonSearchInPool.UseVisualStyleBackColor = true;
+            this.buttonSearchInPool.UseVisualStyleBackColor = false;
             this.buttonSearchInPool.Click += new System.EventHandler(this.buttonSearchInPool_Click);
             // 
             // buttonChooseTheBest
             // 
+            this.buttonChooseTheBest.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonChooseTheBest.Enabled = false;
+            this.buttonChooseTheBest.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonChooseTheBest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonChooseTheBest.Location = new System.Drawing.Point(24, 515);
             this.buttonChooseTheBest.Name = "buttonChooseTheBest";
             this.buttonChooseTheBest.Size = new System.Drawing.Size(127, 60);
             this.buttonChooseTheBest.TabIndex = 1;
             this.buttonChooseTheBest.Text = "Выбор наилучшего решения";
-            this.buttonChooseTheBest.UseVisualStyleBackColor = true;
+            this.buttonChooseTheBest.UseVisualStyleBackColor = false;
             this.buttonChooseTheBest.Click += new System.EventHandler(this.buttonChooseTheBest_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Location = new System.Drawing.Point(750, 48);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(490, 490);
-            this.pictureBox2.TabIndex = 2;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(349, 573);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // dataGridView3
             // 
@@ -213,53 +216,19 @@
             this.dataGridView3.Size = new System.Drawing.Size(331, 135);
             this.dataGridView3.TabIndex = 31;
             // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTextBoxColumn1.Frozen = true;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Характеристика";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn1.Width = 195;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N0";
-            dataGridViewCellStyle3.NullValue = null;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Значения";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn2.Width = 136;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.InitialImage")));
-            this.pictureBox3.Location = new System.Drawing.Point(750, 563);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(490, 81);
-            this.pictureBox3.TabIndex = 32;
-            this.pictureBox3.TabStop = false;
-            // 
             // buttonAnswer
             // 
+            this.buttonAnswer.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonAnswer.Enabled = false;
+            this.buttonAnswer.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.buttonAnswer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAnswer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonAnswer.Location = new System.Drawing.Point(12, 591);
             this.buttonAnswer.Name = "buttonAnswer";
             this.buttonAnswer.Size = new System.Drawing.Size(89, 53);
             this.buttonAnswer.TabIndex = 34;
             this.buttonAnswer.Text = "Получить ответ";
-            this.buttonAnswer.UseVisualStyleBackColor = true;
+            this.buttonAnswer.UseVisualStyleBackColor = false;
             this.buttonAnswer.Click += new System.EventHandler(this.buttonAnswer_Click);
             // 
             // groupBox1
@@ -349,14 +318,17 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.button1.Enabled = false;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.Location = new System.Drawing.Point(206, 591);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(155, 30);
             this.button1.TabIndex = 40;
             this.button1.Text = "Выполнить N итераций";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // numericUpDown1
@@ -384,6 +356,64 @@
             this.label4.Size = new System.Drawing.Size(27, 13);
             this.label4.TabIndex = 42;
             this.label4.Text = "N = ";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewTextBoxColumn1.Frozen = true;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Характеристика";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn1.Width = 195;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Значение";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn2.Width = 136;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox3.Image = global::AIS.Properties.Resources.FlockColor2;
+            this.pictureBox3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.InitialImage")));
+            this.pictureBox3.Location = new System.Drawing.Point(750, 563);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(490, 81);
+            this.pictureBox3.TabIndex = 32;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox2.Location = new System.Drawing.Point(750, 48);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(490, 490);
+            this.pictureBox2.TabIndex = 2;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(349, 573);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // FormStepPerch
             // 
@@ -414,13 +444,13 @@
             this.Name = "FormStepPerch";
             this.Text = "Метод окуней. Работа по шагам";
             this.Load += new System.EventHandler(this.FormStepPerch_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -442,8 +472,6 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Button buttonAnswer;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
@@ -451,5 +479,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     }
 }
