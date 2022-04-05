@@ -10,3 +10,15 @@ K:\МАИ\3 курс 6 сем\Методы оптимизации\пока ещ�
 K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.csproj.CoreCompileInputs.cache
 K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.exe
 K:\МАИ\3 курс 6 сем\Методы оптимизации\пока еще рабочий\PerchOptimizer\AIS\obj\Release\AIS.pdb
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\bin\Release\AIS.exe.config
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\bin\Release\AIS.exe
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\bin\Release\AIS.pdb
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.csprojAssemblyReference.cache
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.FormHelp.resources
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.FormMain.resources
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.FormStepPerch.resources
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.Properties.Resources.resources
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.csproj.GenerateResource.cache
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.csproj.CoreCompileInputs.cache
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.exe
+C:\Users\Caelum\Documents\GitHub\PerchOptimizer\AIS\obj\Release\AIS.pdb

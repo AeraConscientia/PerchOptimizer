@@ -38,7 +38,7 @@ namespace AIS
 
         int NumFlocks;
         int NumPerchInFlock;
-        int population;
+        //int population;
         int NStep;
 
         double lambda;
@@ -59,7 +59,7 @@ namespace AIS
         public double[,] showoblbase = new double[2, 2];
         public double[,] oblbase = new double[2, 2];
         public double[,] obl;
-        public int stepsCount = 9; // TODO: Что это вообще?
+        public int stepsCount = 9; // Сколько шагов в работе по шагам
 
         public AlgorithmPerch algo = new AlgorithmPerch();
 
@@ -451,7 +451,7 @@ namespace AIS
             buttonKettle.Enabled = true;
 
             dataGridView3.RowCount = 1;
-            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
+            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
 
@@ -462,7 +462,6 @@ namespace AIS
         /// <summary>Помещение лидера в множество Pool</summary>
         private void buttonLeaderToPool_Click(object sender, EventArgs e)
         {
-
             Red[3] = false;
             Red[4] = true;
             this.buttonAnswer.Enabled = true;
@@ -477,7 +476,6 @@ namespace AIS
         /// <summary>Реализация котлов</summary>
         private void buttonKettle_Click(object sender, EventArgs e)
         {
-
             Red[1] = false;
             Red[2] = true;
             algo.MoveEPerchEFlock();
@@ -492,7 +490,6 @@ namespace AIS
         /// <summary>Плавание стай</summary>
         private void buttonFlocksSwim_Click(object sender, EventArgs e)
         {
-
             Red[2] = false;
             Red[3] = true;
             algo.FlocksSwim();
@@ -504,7 +501,6 @@ namespace AIS
             buttonFlocksSwim.Enabled = false;
             buttonLeaderToPool.Enabled = true;
 
-            //pictureBoxGraph.Refresh();
             pictureBox1.Refresh();
             pictureBox2.Refresh();
             this.chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
@@ -512,7 +508,7 @@ namespace AIS
             
             algo.currentIteration++;
             iterationGraph++;
-            this.numericUpDown1.Maximum = algo.MaxCount - algo.currentIteration;
+            this.numericUpDownNIteration.Maximum = algo.MaxCount - algo.currentIteration;
         }
 
         /// <summary>Проверка условий окончания</summary>
@@ -534,11 +530,11 @@ namespace AIS
             }
             Red[4] = false;
             dataGridView3.RowCount = 5;
-            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
+            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация";
             dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
-            dataGridView3.Rows[2].Cells[0].Value = "f* of the best perch";
-            dataGridView3.Rows[3].Cells[0].Value = "f* average";
-            dataGridView3.Rows[4].Cells[0].Value = "Exact value of f";
+            dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня";
+            dataGridView3.Rows[3].Cells[0].Value = "f* среднее";
+            dataGridView3.Rows[4].Cells[0].Value = "Точное значение f";
 
             if (algo.currentIteration == algo.MaxCount)
             {
@@ -583,7 +579,7 @@ namespace AIS
                 dataGridView3.RowCount = 3;
                 dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
                 dataGridView3.Rows[1].Cells[0].Value = "f*";
-                dataGridView3.Rows[2].Cells[0].Value = "Exact value of f";
+                dataGridView3.Rows[2].Cells[0].Value = "Точное значение f";
 
                 dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.Pool[0].coords[0]:F4}, {algo.Pool[0].coords[1]:F4})");
                 dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.Pool[0].fitness:F8}");
@@ -630,7 +626,7 @@ namespace AIS
             dataGridView3.RowCount = 3;
             dataGridView3.Rows[0].Cells[0].Value = "Положение лучшего окуня";
             dataGridView3.Rows[1].Cells[0].Value = "f*";
-            dataGridView3.Rows[2].Cells[0].Value = "Exact value of f";
+            dataGridView3.Rows[2].Cells[0].Value = "Точное значение f";
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"({algo.best.coords[0]:F4}, {algo.best.coords[1]:F4})");
             dataGridView3.Rows[1].Cells[1].Value = string.Format($"{algo.best.fitness:F8}");
@@ -656,7 +652,7 @@ namespace AIS
 
             bool tmp2Flag = flag;
             flag = true;
-            for (int i = algo.currentIteration; i < tmp + numericUpDown1.Value; i++)
+            for (int i = algo.currentIteration; i < tmp + numericUpDownNIteration.Value; i++)
             {
                 //Red[1] = true; Red[2] = true; Red[3] = true;
                 if (algo.currentIteration == MaxIteration)
@@ -718,11 +714,11 @@ namespace AIS
             //flag = false;
 
             dataGridView3.RowCount = 5;
-            dataGridView3.Rows[0].Cells[0].Value = "Current iteration";
+            dataGridView3.Rows[0].Cells[0].Value = "Текущая итерация"; //Current iteration
             dataGridView3.Rows[1].Cells[0].Value = "Положение лучшего окуня";
-            dataGridView3.Rows[2].Cells[0].Value = "f* of the best perch";
-            dataGridView3.Rows[3].Cells[0].Value = "f* average";
-            dataGridView3.Rows[4].Cells[0].Value = "Exact value of f";
+            dataGridView3.Rows[2].Cells[0].Value = "f* лучшего окуня"; //f* of the best perch
+            dataGridView3.Rows[3].Cells[0].Value = "f* среднее";//f* average
+            dataGridView3.Rows[4].Cells[0].Value = "Точное значение f"; //Exact value of f
 
 
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration - 1}");
@@ -732,10 +728,10 @@ namespace AIS
             dataGridView3.Rows[4].Cells[1].Value = string.Format($"{exact:F8}");
 
             dataGridView3.Refresh();
-            this.numericUpDown1.Maximum = numericUpDown1.Maximum - numericUpDown1.Value;
-            if (numericUpDown1.Value < 0)
+            this.numericUpDownNIteration.Maximum = numericUpDownNIteration.Maximum - numericUpDownNIteration.Value;
+            if (numericUpDownNIteration.Value < 0)
             {
-                numericUpDown1.Value = 0;
+                numericUpDownNIteration.Value = 0;
             }
         }
 

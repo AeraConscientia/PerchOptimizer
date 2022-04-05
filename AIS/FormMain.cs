@@ -16,6 +16,7 @@ namespace AIS
 
         private int MaxIteration = 0;
         private Perch resultBest;
+        /// <summary>Область определения</summary>
         private double[,] obl = new double[2, 2];
 
         List<Vector> exactPoints = new List<Vector>();
@@ -45,7 +46,7 @@ namespace AIS
         //private int population = 0;
         public int population = 0;
 
-        //Не мое
+        //Не мое. НЕ ТРОГАТЬ
         private bool[] flines = new bool[8];
         private float k = 1;
         /// <summary>Константы для линий уровня. Тут - для минимума функции сделаны. Нужно переделать под максимум - умножить все коэффициенты на -1</summary>
@@ -73,7 +74,6 @@ namespace AIS
                     $"+---------+-------------+--------+-----------------+----------+-------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------+\r\n");
             r.Close();
             fs.Close();
-
         }
 
         private void InitDataGridView()
@@ -86,13 +86,13 @@ namespace AIS
             dataGridView2.Rows[0].Cells[0].Value = "Кол-во шагов до окончания движения";
             dataGridView2.Rows[0].Cells[1].Value = 100;
 
-            dataGridView2.Rows[1].Cells[0].Value = "Maximum iteration count";// "Максимальное количество итераций";
+            dataGridView2.Rows[1].Cells[0].Value = "Максимальное количество итераций";// "Maximum iteration count";
             dataGridView2.Rows[1].Cells[1].Value = 4;
 
-            dataGridView2.Rows[2].Cells[0].Value = "Number of flocks";//"Количество стай"; 
+            dataGridView2.Rows[2].Cells[0].Value = "Количество стай";//"Number of flocks"; 
             dataGridView2.Rows[2].Cells[1].Value = 4;
 
-            dataGridView2.Rows[3].Cells[0].Value = "Number of perches";//"Количество окуней в стае";
+            dataGridView2.Rows[3].Cells[0].Value = "Количество окуней в стае";//"Number of perches";
             dataGridView2.Rows[3].Cells[1].Value = 3;
 
             dataGridView2.Rows[4].Cells[0].Value = "Число перекоммутаций";
@@ -105,70 +105,68 @@ namespace AIS
             dataGridView3.Rows[0].Cells[0].Value = "x";
             dataGridView3.Rows[1].Cells[0].Value = "y";
             dataGridView3.Rows[2].Cells[0].Value = "f*";
-            dataGridView3.Rows[3].Cells[0].Value = "Exact value of f";
+            dataGridView3.Rows[3].Cells[0].Value = "Точное значение f";
 
             dataGridView4.RowCount = 2;
-            dataGridView4.Rows[0].Cells[0].Value = "Distribution parameter";//"Параметр распределения";
+            dataGridView4.Rows[0].Cells[0].Value = "Параметр распределения";//"Distribution parameter";
             dataGridView4.Rows[0].Cells[1].Value = (1.5).ToString();
 
             dataGridView4.Rows[1].Cells[0].Value = "Величина шага";
             dataGridView4.Rows[1].Cells[1].Value = (0.6).ToString();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonAnswer_Click(object sender, EventArgs e)
         {
             {
                 //создать начальную популяцию
-                if ((comboBox1.SelectedIndex != -1) )
+                if ((comboBoxObjectiveFunction.SelectedIndex != -1) )
                 {
-                    int z = comboBox1.SelectedIndex;
-
+                    int z = comboBoxObjectiveFunction.SelectedIndex;
+        
                     // область определения
                     obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
                     obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
                     obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
                     obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
-
+        
                     NStep           =   Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
                     MaxIteration    =   Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
-
+        
                     NumFlocks       =   Convert.ToInt32(dataGridView2.Rows[2].Cells[1].Value);
                     NumPerchInFlock =   Convert.ToInt32(dataGridView2.Rows[3].Cells[1].Value);
-
+        
                     lambda          =   Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
                     alfa            =   Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
-
+        
                     PRmax           =   Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
                     deltapr         =   Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
-
+        
                     algPerch = new AlgorithmPerch();
-
+        
                     resultBest = algPerch.StartAlg(MaxIteration, obl, z, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr);
                     flag2 = true;
-
-
-                    //result = algPerch.StartAlg(population, MaxIteration, obl, z, param);
+        
                     dataGridView3.Rows[0].Cells[1].Value = string.Format($"{resultBest.coords[0]:F8}");
                     dataGridView3.Rows[1].Cells[1].Value = string.Format($"{resultBest.coords[1]:F8}");
                     dataGridView3.Rows[2].Cells[1].Value = string.Format($"{resultBest.fitness:F8}");
                     dataGridView3.Rows[3].Cells[1].Value = string.Format($"{exact:F8}");
-                    //flag2 = true;
+        
                     pictureBox1.Refresh();
                 }
             }
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxObjectiveFunction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if ((comboBox1.SelectedIndex != -1) )
+            if ((comboBoxObjectiveFunction.SelectedIndex != -1) )
             {
                 buttonAnswer.Enabled = true;
-                button1.Enabled = true;
-                button2.Enabled = true;
+                buttonStepByStep.Enabled = true;
+                buttonReport.Enabled = true;
 
             }
 
-            if (comboBox1.SelectedIndex == 0)
+            if (comboBoxObjectiveFunction.SelectedIndex == 0) // Швефель
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-500";
                 dataGridView1.Rows[0].Cells[2].Value = "500";
@@ -185,7 +183,7 @@ namespace AIS
                 flag = true;
                 pictureBox2.Image = Properties.Resources.ШвефельМин;
             }
-            else if (comboBox1.SelectedIndex == 1)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 1) // Мульти
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-2";
                 dataGridView1.Rows[0].Cells[2].Value = "2";
@@ -207,7 +205,7 @@ namespace AIS
                 pictureBox2.Image = Properties.Resources.МультиМин;
 
             }
-            else if (comboBox1.SelectedIndex == 2)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 2) // Корневая
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-2";
                 dataGridView1.Rows[0].Cells[2].Value = "2";
@@ -231,7 +229,7 @@ namespace AIS
                 pictureBox2.Image = Properties.Resources.КорневаяМин;
 
             }
-            else if (comboBox1.SelectedIndex == 3)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 3) // Шаффер
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-10";
                 dataGridView1.Rows[0].Cells[2].Value = "10";
@@ -250,7 +248,7 @@ namespace AIS
                 pictureBox2.Image = Properties.Resources.ШаферМин;
 
             }
-            else if (comboBox1.SelectedIndex == 4)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 4) // Растригин
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-5";
                 dataGridView1.Rows[0].Cells[2].Value = "5";
@@ -260,16 +258,17 @@ namespace AIS
 
                 exactPoints.Add(new Vector(0, 0));
 
-                Ar[0] = 20F;
-                Ar[1] = 10F;
-                Ar[2] = -0F;//0.5000001F;
-                Ar[3] = -10F;
-                Ar[4] = -19F;
+                // У меня в начале формулы есть константа 20. Поэтому гарфик и поднят, отсюда прибавка 20F
+                Ar[0] = 20F + 20F;
+                Ar[1] = 10F + 20F;
+                Ar[2] = -0F + 20F;//0.5000001F;
+                Ar[3] = -10F+ 20F;
+                Ar[4] = -19F+ 20F;
                 flag = true;
                 pictureBox2.Image = Properties.Resources.РастригинМин;
 
             }
-            else if (comboBox1.SelectedIndex == 5)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 5) // Экли
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-10";
                 dataGridView1.Rows[0].Cells[2].Value = "10";
@@ -287,7 +286,7 @@ namespace AIS
                 flag = true;
                 pictureBox2.Image = Properties.Resources.ЭклеяМин;
             }
-            else if (comboBox1.SelectedIndex == 6)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 6) // Кожа
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-5";
                 dataGridView1.Rows[0].Cells[2].Value = "5";
@@ -305,7 +304,7 @@ namespace AIS
                 flag = true;
                 pictureBox2.Image = Properties.Resources.SkinMin;
             }
-            else if (comboBox1.SelectedIndex == 7)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 7) // Западня
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-5";
                 dataGridView1.Rows[0].Cells[2].Value = "5";
@@ -323,7 +322,7 @@ namespace AIS
                 flag = true;
                 pictureBox2.Image = Properties.Resources.TrapfallMin;
             }
-            else if (comboBox1.SelectedIndex == 8)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 8) // Розенброк
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-3";
                 dataGridView1.Rows[0].Cells[2].Value = "3";
@@ -341,7 +340,7 @@ namespace AIS
                 flag = true;
                 pictureBox2.Image = Properties.Resources.РозенброкМин;
             }
-            else if (comboBox1.SelectedIndex == 9)
+            else if (comboBoxObjectiveFunction.SelectedIndex == 9) // Параболическая
             {
                 dataGridView1.Rows[0].Cells[1].Value = "-5";
                 dataGridView1.Rows[0].Cells[2].Value = "5";
@@ -359,7 +358,7 @@ namespace AIS
                 flag = true;
                 pictureBox2.Image = Properties.Resources.ПараболическаяМин;
             }
-            Ar[5] = 0;
+            Ar[5] = 0; // дополнительные линии уровня, если нужно
             Ar[6] = 0;
             Ar[7] = 0;
             for (int i = 0; i < 5; i++)
@@ -413,7 +412,7 @@ namespace AIS
                 double y1 = showobl[1, 0];
                 double y2 = showobl[1, 1];
 
-                int z = comboBox1.SelectedIndex;
+                int z = comboBoxObjectiveFunction.SelectedIndex;
                 double a1 = Ar[0];//5
                 double a3 = Ar[1];//4
                 double a5 = Ar[2];//3
@@ -488,15 +487,11 @@ namespace AIS
                                 else if (((f2 < a10) || (f3 < a10) || (f4 < a10) || (f5 < a10) || (f6 < a10) || (f7 < a10) || (f8 < a10) || (f9 < a10)) && (f > a10) && (flines[5] == true)) e.Graphics.FillRectangle(Brushes.Pink, (float)(ii), (float)(h - jj), 1, 1);
                                 else if (((f2 < a11) || (f3 < a11) || (f4 < a11) || (f5 < a11) || (f6 < a11) || (f7 < a11) || (f8 < a11) || (f9 < a11)) && (f > a11) && (flines[6] == true)) e.Graphics.FillRectangle(Brushes.Violet, (float)(ii), (float)(h - jj), 1, 1);
                                 else if (((f2 < a12) || (f3 < a12) || (f4 < a12) || (f5 < a12) || (f6 < a12) || (f7 < a12) || (f8 < a12) || (f9 < a12)) && (f > a12) && (flines[7] == true)) e.Graphics.FillRectangle(Brushes.MediumOrchid, (float)(ii), (float)(h - jj), 1, 1);
-
                             }
 
                         //Отрисовка результата работы алгоритма
                         if (flag2 == true)
                         {
-                            //for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
-                            //    e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0,i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-
                             for (int i = 0; i < NumPerchInFlock; i++) // раскраска худших окуней
                                 e.Graphics.FillEllipse(Brushes.DarkGreen, (float)((algPerch.flock[NumFlocks - 1, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[NumFlocks - 1, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
                             for (int j = 1; j < NumFlocks-1; j++) // раскраска остальных окуней
@@ -508,18 +503,16 @@ namespace AIS
 
                             for (int i = 0; i < NumPerchInFlock; i++) // раскраска лучших окуней
                                 e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.flock[0, i].coords[0] * k - x1) * w / (x2 - x1) - 3), (float)(h - (algPerch.flock[0, i].coords[1] * k - y1) * h / (y2 - y1) - 3), 6, 6);
-
-                    //e.Graphics.FillEllipse(Brushes.Red, (float)((algPerch.alfa.coords.vector[0] * k - x1) * w / (x2 - x1) - 4), (float)(h - (algPerch.alfa.coords.vector[1] * k - y1) * h / (y2 - y1) - 4), 8, 8);
                 }
 
                 //отрисовка Осей
                 for (int i = -6; i < 12; i++)
-                        {
-                            e.Graphics.DrawLine(p10, (float)((x1 - i*step) * w / (x1 - x2)), h - a - 5, (float)((x1 - i*step) * w / (x1 - x2)), h - a + 5);
-                            e.Graphics.DrawLine(p10, a - 5, (float)(h - (y1 - i*step) * h / (y1 - y2)), a + 5, (float)(h - (y1 - i*step) * h / (y1 - y2)));
-                            e.Graphics.DrawString((i * step).ToString(), font2, Brushes.Black, (float)((x1 - i * step) * w / (x1 - x2)), h - a + 5);
-                            e.Graphics.DrawString((i * step).ToString(), font2, Brushes.Black, a - 30, (float)(h -5- (y1 - i * step) * h / (y1 - y2)));
-                        }
+                {
+                    e.Graphics.DrawLine(p10, (float)((x1 - i*step) * w / (x1 - x2)), h - a - 5, (float)((x1 - i*step) * w / (x1 - x2)), h - a + 5);
+                    e.Graphics.DrawLine(p10, a - 5, (float)(h - (y1 - i*step) * h / (y1 - y2)), a + 5, (float)(h - (y1 - i*step) * h / (y1 - y2)));
+                    e.Graphics.DrawString((i * step).ToString(), font2, Brushes.Black, (float)((x1 - i * step) * w / (x1 - x2)), h - a + 5);
+                    e.Graphics.DrawString((i * step).ToString(), font2, Brushes.Black, a - 30, (float)(h -5- (y1 - i * step) * h / (y1 - y2)));
+                }
             }
             
             //Стрелочки абцисс и ординат
@@ -588,11 +581,10 @@ namespace AIS
 
         private void comboBoxSelectParams_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if ((comboBox1.SelectedIndex != -1))
+            if ((comboBoxObjectiveFunction.SelectedIndex != -1))
             {
                 buttonAnswer.Enabled = true;
-                button1.Enabled = true;
+                buttonStepByStep.Enabled = true;
             }
         }
 
@@ -602,7 +594,7 @@ namespace AIS
             Process.Start("HelpPerchMethod.pdf");
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void buttonStepByStep_Click_(object sender, EventArgs e)
         {
             obl = new double[2, 2];
 
@@ -624,17 +616,17 @@ namespace AIS
             PRmax           = Convert.ToInt32(dataGridView2.Rows[4].Cells[1].Value);
             deltapr         = Convert.ToInt32(dataGridView2.Rows[5].Cells[1].Value);
            
-            FormStepPerch formPerch = new FormStepPerch(comboBox1.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr, exact)
+            FormStepPerch formPerch = new FormStepPerch(comboBoxObjectiveFunction.SelectedIndex, obl, MaxIteration, NumFlocks, NumPerchInFlock, NStep, lambda, alfa, PRmax, deltapr, exact)
             {
                 flines = flines,
                 showobl = showobl,
                 Ar = Ar
             };
-            formPerch.Show();
-            
+            formPerch.Show(); 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        /// <summary>Запуск протокола (1000 раз)</summary>
+        private void buttonReport_Click(object sender, EventArgs e)
         {
             {
                 if (dataGridView1.Rows[0].Cells[1].Value != null &&
@@ -642,26 +634,23 @@ namespace AIS
                     dataGridView1.Rows[1].Cells[1].Value != null &&
                     dataGridView1.Rows[1].Cells[2].Value != null)
                 {
-                    if (comboBox1.SelectedIndex != -1)
+                    if (comboBoxObjectiveFunction.SelectedIndex != -1)
                     {
                         obl[0, 0] = Convert.ToDouble(dataGridView1.Rows[0].Cells[1].Value);
                         obl[0, 1] = Convert.ToDouble(dataGridView1.Rows[0].Cells[2].Value);
                         obl[1, 0] = Convert.ToDouble(dataGridView1.Rows[1].Cells[1].Value);
                         obl[1, 1] = Convert.ToDouble(dataGridView1.Rows[1].Cells[2].Value);
 
-
                         functionCallsAverage = 0;
                         for (int p = 0; p < 1; p++)
                         {
-
-
                             List<double> averFuncDeviation = new List<double>();
                             double minDeviation = 0;
                             int successCount = 0;
                             double eps = Math.Max(Math.Abs(obl[0, 0] - obl[0, 1]), Math.Abs(obl[1, 0] - obl[1, 1])) / 1000f;
                             double averDer = 0;
                             double normalDerivation = 0;
-                            int z = comboBox1.SelectedIndex;
+                            int z = comboBoxObjectiveFunction.SelectedIndex;
 
                             NStep           = Convert.ToInt32(dataGridView2.Rows[0].Cells[1].Value);
                             MaxIteration    = Convert.ToInt32(dataGridView2.Rows[1].Cells[1].Value) + 1;
@@ -676,7 +665,7 @@ namespace AIS
                             lambda          = Convert.ToDouble(dataGridView4.Rows[0].Cells[1].Value);
                             alfa            = Convert.ToDouble(dataGridView4.Rows[1].Cells[1].Value);
 
-                            for (int i = 0; i < 1000; i++)
+                            for (int i = 0; i < 1000; i++) // вот тут запуск на 1000 
                             {
                                 algPerch = new AlgorithmPerch();
 
@@ -700,10 +689,9 @@ namespace AIS
                             for (int i = 0; i < 1000; i++)
                                 deltaSum += averFuncDeviation[i];
 
-                            // СК отлонение?
                             averDer = deltaSum / 1000f;
 
-                            averFuncDeviation.Sort();/////////////////////////////////////////////////
+                            averFuncDeviation.Sort();
                             minDeviation = averFuncDeviation[0];
 
                             double dispersion = 0;
