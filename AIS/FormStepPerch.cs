@@ -742,11 +742,15 @@ namespace AIS
 
         private void buttonSavePictures_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap = new Bitmap(pictureBoxLevelLines.Width, pictureBoxLevelLines.Height);
-            bitmap.SetResolution(300, 300); // dpi
-            pictureBoxLevelLines.DrawToBitmap(bitmap, pictureBoxLevelLines.ClientRectangle);
-            bitmap.Save($"Iteration{iterationGraph}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //$"Iteration{iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); 
-            chartGraph.SaveImage($"Fitness.tiff", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Tiff);
+            Bitmap bitmapPictureBox = new Bitmap(pictureBoxLevelLines.Width, pictureBoxLevelLines.Height);
+            bitmapPictureBox.SetResolution(300, 300); // dpi
+            pictureBoxLevelLines.DrawToBitmap(bitmapPictureBox, pictureBoxLevelLines.ClientRectangle);
+            bitmapPictureBox.Save($"Iteration{iterationGraph}.tiff", System.Drawing.Imaging.ImageFormat.Tiff);
+
+            Bitmap bitmapChart = new Bitmap(chartGraph.Width, chartGraph.Height);
+            bitmapChart.SetResolution(300,300);
+            chartGraph.DrawToBitmap(bitmapChart, chartGraph.ClientRectangle);
+            bitmapChart.Save($"Fitness.tiff", System.Drawing.Imaging.ImageFormat.Tiff);
         }
     }
 }
