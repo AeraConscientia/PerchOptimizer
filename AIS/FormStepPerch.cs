@@ -240,8 +240,8 @@ namespace AIS
 
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
         {
-            float w = pictureBox2.Width;
-            float h = pictureBox2.Height;
+            float w = pictureBoxLevelLines.Width;
+            float h = pictureBoxLevelLines.Height;
             float x0 = w / 2;
             float y0 = h / 2;
             float a = 30;
@@ -267,7 +267,7 @@ namespace AIS
             Font font1 = new Font("TimesNewRoman", 10, FontStyle.Bold | FontStyle.Italic);
             Font font2 = new Font("TimesNewRoman", 8);
 
-            pictureBox2.BackColor = Color.White;
+            pictureBoxLevelLines.BackColor = Color.White;
 
             double x1 = showobl[0, 0];
             double x2 = showobl[0, 1];
@@ -405,8 +405,8 @@ namespace AIS
         private void buttonInitialPopulation_Click(object sender, EventArgs e)
         {
             iterationGraph = 0;
-            this.chart1.Series[0].Points.Clear();
-            this.chart1.Series[1].Points.Clear();
+            this.chartGraph.Series[0].Points.Clear();
+            this.chartGraph.Series[1].Points.Clear();
             if (!flag)
             {
                 Red[0] = true;
@@ -435,7 +435,7 @@ namespace AIS
 
 
                 pictureBox1.Refresh();
-                pictureBox2.Refresh();
+                pictureBoxLevelLines.Refresh();
             }
         }
 
@@ -456,7 +456,7 @@ namespace AIS
             dataGridView3.Rows[0].Cells[1].Value = string.Format($"{algo.currentIteration}");
 
             pictureBox1.Refresh();
-            pictureBox2.Refresh();
+            pictureBoxLevelLines.Refresh();
         }
 
         /// <summary>Помещение лидера в множество Pool</summary>
@@ -484,7 +484,7 @@ namespace AIS
             buttonKettle.Enabled = false;
 
             pictureBox1.Refresh();
-            pictureBox2.Refresh();
+            pictureBoxLevelLines.Refresh();
         }
 
         /// <summary>Плавание стай</summary>
@@ -502,9 +502,9 @@ namespace AIS
             buttonLeaderToPool.Enabled = true;
 
             pictureBox1.Refresh();
-            pictureBox2.Refresh();
-            this.chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
-            this.chart1.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
+            pictureBoxLevelLines.Refresh();
+            this.chartGraph.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
+            this.chartGraph.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
             
             algo.currentIteration++;
             iterationGraph++;
@@ -611,15 +611,15 @@ namespace AIS
                 algo.best = algo.flock[0, 0];
                 algo.bestFitness.Add(algo.best.fitness);
                 algo.AverageFitness();
-                this.chart1.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
-                this.chart1.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
+                this.chartGraph.Series[0].Points.AddXY(iterationGraph + 1, algo.bestFitness[algo.bestFitness.Count - 1]);
+                this.chartGraph.Series[1].Points.AddXY(iterationGraph + 1, algo.averageFitness[algo.averageFitness.Count - 1]);
                 iterationGraph++;
             }
 
             buttonCheckEndConditions.Enabled = false;
             Red[1] = true; Red[2] = true; Red[3] = true;
             pictureBox1.Refresh();
-            pictureBox2.Refresh();
+            pictureBoxLevelLines.Refresh();
 
             flag = false;
 
@@ -672,12 +672,12 @@ namespace AIS
                 Red[1] = true;
                 Red[6] = false;
                 algo.MakeFlocks();
-                pictureBox2.Refresh();
+                pictureBoxLevelLines.Refresh();
 
                 Red[1] = false;
                 Red[2] = true;
                 algo.MoveEPerchEFlock();
-                pictureBox2.Refresh();
+                pictureBoxLevelLines.Refresh();
 
                 Red[2] = false;
                 Red[3] = true;
@@ -687,13 +687,13 @@ namespace AIS
                 algo.best = algo.flock[0, 0];
                 algo.bestFitness.Add(algo.best.fitness);
                 algo.AverageFitness();
-                pictureBox2.Refresh();
+                pictureBoxLevelLines.Refresh();
 
                 Red[3] = false;
                 Red[4] = true;
 
-                this.chart1.Series[0].Points.AddXY(iterationGraph+1, algo.bestFitness[algo.bestFitness.Count - 1]);
-                this.chart1.Series[1].Points.AddXY(iterationGraph+1, algo.averageFitness[algo.averageFitness.Count - 1]);
+                this.chartGraph.Series[0].Points.AddXY(iterationGraph+1, algo.bestFitness[algo.bestFitness.Count - 1]);
+                this.chartGraph.Series[1].Points.AddXY(iterationGraph+1, algo.averageFitness[algo.averageFitness.Count - 1]);
                 iterationGraph++;
                 pictureBox1.Refresh();
                 //pictureBox2.Refresh();
@@ -738,6 +738,15 @@ namespace AIS
         private void FormStepPerch_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonSavePictures_Click(object sender, EventArgs e)
+        {
+            Bitmap bitmap = new Bitmap(pictureBoxLevelLines.Width, pictureBoxLevelLines.Height);
+            bitmap.SetResolution(300, 300); // dpi
+            pictureBoxLevelLines.DrawToBitmap(bitmap, pictureBoxLevelLines.ClientRectangle);
+            bitmap.Save($"Iteration{iterationGraph}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); //$"Iteration{iteration}.tiff", System.Drawing.Imaging.ImageFormat.Tiff); 
+            chartGraph.SaveImage($"Fitness.tiff", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Tiff);
         }
     }
 }

@@ -702,7 +702,8 @@ namespace AIS
                             FileStream fs = new FileStream("protocol.txt", FileMode.Append, FileAccess.Write);
                             StreamWriter r = new StreamWriter(fs);
                             r.Write(String.Format(@"|{0, 5}    |  {1, 6}     |{2, 5}   |    {3, 5}        |{4, 5}     |{5, 5}  |{6, 5}  |{7, 4}   |  {8,5:f3} | {9,5:f3} |    {10, 14:f6}            |{11, 17:f6}       |{12, 15:f6}        |{13, 7}     |  
-|---------+-------------+--------+-----------------+----------+-------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------|", z + 1, population, NumFlocks, NumPerchInFlock, MaxIteration-1, NStep, PRmax, deltapr, lambda, alfa, averDer, minDeviation, normalDerivation, successCount));
+|---------+-------------+--------+-----------------+----------+-------+-------+-------+--------+-------+------------------------------+------------------------+-----------------------+------------|", 
+z + 1,      population, NumFlocks, NumPerchInFlock, MaxIteration-1, NStep, PRmax, deltapr, lambda, alfa, averDer, minDeviation, normalDerivation, successCount));
                             r.Write("\r\n");
 
                             r.Close();

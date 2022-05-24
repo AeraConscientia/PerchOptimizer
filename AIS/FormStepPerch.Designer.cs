@@ -51,20 +51,21 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.numericUpDownNIteration = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
+            this.buttonSavePictures = new System.Windows.Forms.Button();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxLevelLines = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartGraph)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNIteration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLevelLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -260,7 +261,7 @@
             // 
             this.groupBox1.Controls.Add(this.dataGridView3);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(380, 456);
+            this.groupBox1.Location = new System.Drawing.Point(388, 474);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(348, 188);
             this.groupBox1.TabIndex = 35;
@@ -271,7 +272,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(377, 12);
+            this.label1.Location = new System.Drawing.Point(385, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(354, 30);
             this.label1.TabIndex = 36;
@@ -282,13 +283,13 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(747, 27);
+            this.label2.Location = new System.Drawing.Point(755, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(377, 15);
             this.label2.TabIndex = 37;
             this.label2.Text = "Графическое изображение популяции и линий уровня функции ";
             // 
-            // chart1
+            // chartGraph
             // 
             chartArea1.AxisX.ArrowStyle = System.Windows.Forms.DataVisualization.Charting.AxisArrowStyle.SharpTriangle;
             chartArea1.AxisX.IsLabelAutoFit = false;
@@ -312,10 +313,10 @@
             chartArea1.Position.Width = 94F;
             chartArea1.Position.X = 5F;
             chartArea1.Position.Y = 3F;
-            this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.Location = new System.Drawing.Point(380, 48);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            this.chartGraph.ChartAreas.Add(chartArea1);
+            this.chartGraph.Location = new System.Drawing.Point(388, 48);
+            this.chartGraph.Name = "chartGraph";
+            this.chartGraph.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
             series1.BorderWidth = 3;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -326,12 +327,12 @@
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series2.Color = System.Drawing.Color.Green;
             series2.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(348, 384);
-            this.chart1.TabIndex = 38;
-            this.chart1.Text = "chart1";
-            this.chart1.Paint += new System.Windows.Forms.PaintEventHandler(this.ChartGraph_Paint);
+            this.chartGraph.Series.Add(series1);
+            this.chartGraph.Series.Add(series2);
+            this.chartGraph.Size = new System.Drawing.Size(348, 410);
+            this.chartGraph.TabIndex = 38;
+            this.chartGraph.Text = "chartGraph";
+            this.chartGraph.Paint += new System.Windows.Forms.PaintEventHandler(this.ChartGraph_Paint);
             // 
             // label3
             // 
@@ -382,28 +383,40 @@
             this.label4.TabIndex = 42;
             this.label4.Text = "N = ";
             // 
+            // buttonSavePictures
+            // 
+            this.buttonSavePictures.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
+            this.buttonSavePictures.FlatAppearance.MouseDownBackColor = System.Drawing.Color.OliveDrab;
+            this.buttonSavePictures.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
+            this.buttonSavePictures.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSavePictures.Image = global::AIS.Properties.Resources.Save;
+            this.buttonSavePictures.Location = new System.Drawing.Point(1212, 11);
+            this.buttonSavePictures.Name = "buttonSavePictures";
+            this.buttonSavePictures.Size = new System.Drawing.Size(36, 37);
+            this.buttonSavePictures.TabIndex = 54;
+            this.buttonSavePictures.UseVisualStyleBackColor = true;
+            this.buttonSavePictures.Click += new System.EventHandler(this.buttonSavePictures_Click);
+            // 
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox3.Image = global::AIS.Properties.Resources.FlockColor2;
             this.pictureBox3.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.InitialImage")));
-            this.pictureBox3.Location = new System.Drawing.Point(750, 563);
+            this.pictureBox3.Location = new System.Drawing.Point(758, 563);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(490, 81);
             this.pictureBox3.TabIndex = 32;
             this.pictureBox3.TabStop = false;
             // 
-            // pictureBox2
+            // pictureBoxLevelLines
             // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Location = new System.Drawing.Point(750, 48);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(490, 490);
-            this.pictureBox2.TabIndex = 2;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint);
+            this.pictureBoxLevelLines.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureBoxLevelLines.Location = new System.Drawing.Point(758, 68);
+            this.pictureBoxLevelLines.Name = "pictureBoxLevelLines";
+            this.pictureBoxLevelLines.Size = new System.Drawing.Size(490, 490);
+            this.pictureBoxLevelLines.TabIndex = 2;
+            this.pictureBoxLevelLines.TabStop = false;
+            this.pictureBoxLevelLines.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint);
             // 
             // pictureBox1
             // 
@@ -420,17 +433,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 667);
+            this.Controls.Add(this.buttonSavePictures);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.numericUpDownNIteration);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.chartGraph);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonAnswer);
             this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBoxLevelLines);
             this.Controls.Add(this.buttonChooseTheBest);
             this.Controls.Add(this.buttonSearchInPool);
             this.Controls.Add(this.buttonCheckEndConditions);
@@ -446,10 +460,10 @@
             this.Load += new System.EventHandler(this.FormStepPerch_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartGraph)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNIteration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLevelLines)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -467,19 +481,20 @@
         private System.Windows.Forms.Button buttonCheckEndConditions;
         private System.Windows.Forms.Button buttonSearchInPool;
         private System.Windows.Forms.Button buttonChooseTheBest;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBoxLevelLines;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Button buttonAnswer;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartGraph;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.NumericUpDown numericUpDownNIteration;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.Button buttonSavePictures;
     }
 }
