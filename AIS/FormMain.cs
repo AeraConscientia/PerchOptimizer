@@ -628,6 +628,7 @@ namespace AIS
         /// <summary>Запуск протокола (1000 раз)</summary>
         private void buttonReport_Click(object sender, EventArgs e)
         {
+            buttonReport.Enabled = false;
             {
                 if (dataGridView1.Rows[0].Cells[1].Value != null &&
                     dataGridView1.Rows[0].Cells[2].Value != null &&
@@ -716,6 +717,7 @@ z + 1,      population, NumFlocks, NumPerchInFlock, MaxIteration-1, NStep, PRmax
                 else
                     MessageBox.Show("Введите корректные параметры", "Ошибка при запуске алгоритма", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            buttonReport.Enabled = true;
         }
     }
 }
